@@ -1,3 +1,4 @@
+// "/about" にマッチするルートを定義
 export const Route = createFileRoute({
   component: About,
 });

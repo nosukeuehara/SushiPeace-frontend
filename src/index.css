@@ -1,68 +1,148 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* === ベースカラー（背景・面） === */
+  --color-background: #faf9f6; /* やさしい生成り */
+  --color-surface: #ffffff; /* ホワイト */
+  --color-surface-alt: #f5f3ee; /* わずかにトーンを落とした背景 */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* === 境界・UI線・影 === */
+  --color-border: #dddcd8; /* ソフトなグレー */
+  --color-shadow: rgba(0, 0, 0, 0.08);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* === プライマリカラー（主役） === */
+  --color-primary: #ffa07a; /* 明るめのサーモン */
+  --color-primary-dark: #ff7043; /* 焼きサーモンっぽい濃い橙 */
+
+  /* === セカンダリカラー（サポート色） === */
+  --color-secondary: #87bba2; /* 和風ミントグリーン */
+  --color-secondary-dark: #6aae91;
+
+  /* === アクセントカラー（ハイライトやアラート） === */
+  --color-accent-salmon: #ff8b6a; /* サーモン */
+  --color-accent-tuna: #e63e3a; /* 赤身マグロ */
+  --color-accent-ebi: #ffd1c1; /* 甘エビピンク */
+  --color-accent-egg: #fff3b0; /* 玉子の黄色 */
+  --color-accent-wasabi: #b4c969; /* わさび色 */
+  --color-accent-nori: #3e4a2c; /* 海苔の深緑 */
+  --color-accent-shoyu: #5c3b1e; /* 醤油ブラウン */
+
+  /* === サポートカラー（背景変化や選択状態） === */
+  --color-highlight: #ffecd1; /* やわらかいオレンジベージュ */
+  --color-selected: #d2e4dd; /* 穏やかな青緑 */
+
+  /* === テキストカラー === */
+  --color-text: #333333; /* メイン */
+  --color-text-subtle: #555555;
+  --color-text-muted: #888888;
+  --color-link: #c7584c; /* 和っぽい渋い赤系 */
+
+  /* === ステータスカラー（通知・エラー等） === */
+  --color-success: #a1c181; /* 青菜のようなグリーン */
+  --color-warning: #f4c95d; /* 柚子のような黄橙 */
+  --color-error: #d45d5d; /* 梅干しのような赤 */
+  --color-info: #89cff0; /* さっぱりした空色 */
+
+  --color-hover: rgba(0, 0, 0, 0.04); /* 汎用ホバー背景 */
+  --color-focus-ring: #ffa07a66; /* プライマリ色の透過フォーカスリング */
+  --color-disabled-bg: #f0f0f0; /* 無効化されたボタン背景 */
+  --color-disabled-text: #aaaaaa; /* 無効状態のテキスト色 */
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --heading-1-size: 2rem; /* 約32px */
+  --heading-2-size: 1.75rem; /* 約28px */
+  --heading-3-size: 1.5rem; /* 約24px */
+  --heading-4-size: 1.25rem; /* 約20px */
+  --heading-5-size: 1rem; /* 約16px */
+  --heading-6-size: 0.875rem; /* 約14px */
+
+  --heading-weight: 700;
+  --heading-line-height: 1.4;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  line-height: 1.4;
 }
 
 body {
+  font-family: "Noto Sans JP", sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: var(--font-size-md);
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-size: var(--font-size-md);
+  padding: var(--space-sm) var(--space-md);
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: transparent;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:disabled {
+  background-color: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+input:focus,
+button:focus {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-line-height);
+  margin-bottom: 0.5em;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--heading-1-size);
+}
+h2 {
+  font-size: var(--heading-2-size);
+}
+h3 {
+  font-size: var(--heading-3-size);
+}
+h4 {
+  font-size: var(--heading-4-size);
+}
+h5 {
+  font-size: var(--heading-5-size);
+}
+h6 {
+  font-size: var(--heading-6-size);
 }

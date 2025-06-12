@@ -1,3 +1,4 @@
+// "/new" にマッチするルートを定義
 export const Route = createFileRoute({
   component: NewRoom,
 });
@@ -35,31 +36,35 @@ export default function NewRoom() {
   return (
     <div>
       <h1>グループ作成</h1>
-      <input
-        value={groupName}
-        onChange={(e) => setGroupName(e.target.value)}
-        placeholder="グループ名（任意）"
-      />
-      {members.map((m, i) => (
+      <form action="">
         <input
-          key={i}
-          value={m.name}
-          onChange={(e) => {
-            const newMembers = [...members];
-            newMembers[i].name = e.target.value;
-            setMembers(newMembers);
-          }}
-          placeholder={`メンバー ${i + 1}`}
+          value={groupName}
+          name="groupName"
+          onChange={(e) => setGroupName(e.target.value)}
+          placeholder="グループ名（任意）"
         />
-      ))}
-      <button
-        onClick={() => setMembers([...members, { userId: "", name: "" }])}
-      >
-        ＋ メンバー追加
-      </button>
-      <button onClick={handleSubmit} disabled={isPending}>
-        {isPending ? "作成中..." : "ルームを作成"}
-      </button>
+        {members.map((m, i) => (
+          <input
+            key={i}
+            name="memberName"
+            value={m.name}
+            onChange={(e) => {
+              const newMembers = [...members];
+              newMembers[i].name = e.target.value;
+              setMembers(newMembers);
+            }}
+            placeholder={`メンバー ${i + 1}`}
+          />
+        ))}
+        <button
+          onClick={() => setMembers([...members, { userId: "", name: "" }])}
+        >
+          ＋ メンバー追加
+        </button>
+        <button onClick={handleSubmit} disabled={isPending}>
+          {isPending ? "作成中..." : "ルームを作成"}
+        </button>
+      </form>
     </div>
   );
 }
