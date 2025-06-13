@@ -179,16 +179,38 @@ function RouteComponent() {
       </p>
 
       <div className="group-room__member-list">
-        {members.map((m) => (
-          <MemberPlateCounter
-            key={m.userId}
-            member={m}
-            onAdd={handleAdd}
-            onRemove={handleRemove}
-            readonly={m.userId !== userId}
-            prices={template.prices}
-          />
-        ))}
+        {/* ✅ 自分 */}
+        {members
+          .filter((m) => m.userId === userId)
+          .map((m) => (
+            <div key={m.userId} className="member-wrapper member-wrapper--self">
+              <MemberPlateCounter
+                member={m}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+                readonly={false}
+                prices={template.prices}
+              />
+            </div>
+          ))}
+
+        {/* ✅ 他人 */}
+        {members
+          .filter((m) => m.userId !== userId)
+          .map((m) => (
+            <div
+              key={m.userId}
+              className="member-wrapper member-wrapper--readonly"
+            >
+              <MemberPlateCounter
+                member={m}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+                readonly={true}
+                prices={template.prices}
+              />
+            </div>
+          ))}
       </div>
 
       <button
