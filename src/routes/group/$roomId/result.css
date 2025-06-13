@@ -1,0 +1,75 @@
+.sushi-result {
+  max-width: 640px;
+  margin: 32px auto;
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px var(--color-shadow);
+}
+
+.sushi-result__heading {
+  font-size: var(--heading-2-size);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.sushi-result__list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-md);
+}
+
+.sushi-result__item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-md);
+}
+
+.sushi-result__name {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.sushi-result__amount {
+  color: var(--color-text-subtle);
+}
+
+.sushi-result__total {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  margin: var(--space-md) 0;
+  color: var(--color-primary-dark);
+}
+
+.sushi-result__textarea {
+  width: 100%;
+  height: 150px;
+  padding: var(--space-sm);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface-alt);
+  margin-bottom: var(--space-md);
+  resize: none;
+}
+
+.sushi-result__button {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-secondary);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.sushi-result__button:hover {
+  background-color: var(--color-secondary-dark);
+}
