@@ -1,14 +1,14 @@
-// "/new" にマッチするルートを定義
-export const Route = createFileRoute({
-  component: NewRoom,
-});
-
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useCreateRoom } from "../hooks/useCreateRoom";
 import { type Member } from "../api/room";
 import { plateTemplates } from "../constants/templates";
 import { createInitialCounts } from "../util/initCounts";
+import "./new.css";
+
+export const Route = createFileRoute({
+  component: NewRoom,
+});
 
 export default function NewRoom() {
   const navigate = useNavigate();
@@ -43,34 +43,17 @@ export default function NewRoom() {
     mutate({
       groupName,
       members: validMembers,
-      templateId: selectedTemplateId, // これをバックエンドに渡して保存
+      templateId: selectedTemplateId,
     });
   };
 
   return (
-    <div>
-      <h1>グループ作成</h1>
-      <input
-        value={groupName}
-        name="groupName"
-        onChange={(e) => setGroupName(e.target.value)}
-        placeholder="グループ名（任意）"
-      />
-      {members.map((m, i) => (
-        <input
-          key={i}
-          name="memberName"
-          value={m.name}
-          onChange={(e) => {
-            const newMembers = [...members];
-            newMembers[i].name = e.target.value;
-            setMembers(newMembers);
-          }}
-          placeholder={`メンバー ${i + 1}`}
-        />
-      ))}
-      <h3>お寿司の店を選んでください</h3>
+    <main className="new-room">
+      <h1 className="new-room__heading">グループ作成</h1>
+
+      <h3 className="new-room__subheading">お寿司の店を選んでください</h3>
       <select
+        className="new-room__select"
         value={selectedTemplateId}
         onChange={(e) => setSelectedTemplateId(e.target.value)}
       >
@@ -81,14 +64,49 @@ export default function NewRoom() {
           </option>
         ))}
       </select>
-      <button
-        onClick={() => setMembers([...members, { userId: "", name: "" }])}
-      >
-        ＋ メンバー追加
-      </button>
-      <button onClick={handleSubmit} disabled={isPending}>
-        {isPending ? "作成中..." : "ルームを作成"}
-      </button>
-    </div>
+
+      <hr></hr>
+
+      <input
+        className="new-room__input"
+        value={groupName}
+        name="groupName"
+        onChange={(e) => setGroupName(e.target.value)}
+        placeholder="グループ名（任意）"
+      />
+
+      {members.map((m, i) => (
+        <input
+          key={i}
+          className="new-room__input"
+          name="memberName"
+          value={m.name}
+          onChange={(e) => {
+            const newMembers = [...members];
+            newMembers[i].name = e.target.value;
+            setMembers(newMembers);
+          }}
+          placeholder={`メンバー ${i + 1}`}
+        />
+      ))}
+
+      <div className="new-room__actions">
+        <button
+          type="button"
+          className="new-room__button new-room__button--add"
+          onClick={() => setMembers([...members, { userId: "", name: "" }])}
+        >
+          ＋ メンバー追加
+        </button>
+        <button
+          type="button"
+          className="new-room__button new-room__button--create"
+          onClick={handleSubmit}
+          disabled={isPending}
+        >
+          {isPending ? "作成中..." : "ルームを作成"}
+        </button>
+      </div>
+    </main>
   );
 }

@@ -12,7 +12,6 @@ import type { CreateFileRoute, FileRoutesByPath } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as NewRouteImport } from './routes/new'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GroupIndexRouteImport } from './routes/group/index'
 import { Route as GroupRoomIdIndexRouteImport } from './routes/group/$roomId/index'
@@ -22,11 +21,6 @@ import { Route as GroupRoomIdResultRouteImport } from './routes/group/$roomId/re
 const NewRoute = NewRouteImport.update({
   id: '/new',
   path: '/new',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -57,7 +51,6 @@ const GroupRoomIdResultRoute = GroupRoomIdResultRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/new': typeof NewRoute
   '/group': typeof GroupIndexRoute
   '/group/$roomId/result': typeof GroupRoomIdResultRoute
@@ -66,7 +59,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/new': typeof NewRoute
   '/group': typeof GroupIndexRoute
   '/group/$roomId/result': typeof GroupRoomIdResultRoute
@@ -76,7 +68,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/new': typeof NewRoute
   '/group/': typeof GroupIndexRoute
   '/group/$roomId/result': typeof GroupRoomIdResultRoute
@@ -87,7 +78,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
     | '/new'
     | '/group'
     | '/group/$roomId/result'
@@ -96,7 +86,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/new'
     | '/group'
     | '/group/$roomId/result'
@@ -105,7 +94,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/about'
     | '/new'
     | '/group/'
     | '/group/$roomId/result'
@@ -115,7 +103,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   NewRoute: typeof NewRoute
   GroupIndexRoute: typeof GroupIndexRoute
   GroupRoomIdResultRoute: typeof GroupRoomIdResultRoute
@@ -130,13 +117,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new': {
@@ -184,15 +164,6 @@ declare module './routes/index' {
     FileRoutesByPath['/']['id'],
     FileRoutesByPath['/']['path'],
     FileRoutesByPath['/']['fullPath']
-  >
-}
-declare module './routes/about' {
-  const createFileRoute: CreateFileRoute<
-    '/about',
-    FileRoutesByPath['/about']['parentRoute'],
-    FileRoutesByPath['/about']['id'],
-    FileRoutesByPath['/about']['path'],
-    FileRoutesByPath['/about']['fullPath']
   >
 }
 declare module './routes/new' {
@@ -243,7 +214,6 @@ declare module './routes/group/$roomId/index' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   NewRoute: NewRoute,
   GroupIndexRoute: GroupIndexRoute,
   GroupRoomIdResultRoute: GroupRoomIdResultRoute,
