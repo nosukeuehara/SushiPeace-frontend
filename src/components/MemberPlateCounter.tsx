@@ -1,15 +1,11 @@
-import {
-  plateColors,
-  type MemberPlates,
-  type PlateColor,
-} from "../types/plate";
+import type { MemberPlates } from "../types/plate";
 
 type Props = {
   member: MemberPlates;
-  onAdd: (userId: string, color: PlateColor) => void;
-  onRemove: (userId: string, color: PlateColor) => void;
+  onAdd: (userId: string, color: string) => void;
+  onRemove: (userId: string, color: string) => void;
   readonly?: boolean;
-  prices: Record<PlateColor, number>;
+  prices: Record<string, number>;
 };
 
 export const MemberPlateCounter = ({
@@ -19,20 +15,18 @@ export const MemberPlateCounter = ({
   readonly,
   prices,
 }: Props) => {
+  const total = Object.entries(member.counts).reduce(
+    (sum, [color, count]) => sum + count * (prices[color] ?? 0),
+    0
+  );
+
   return (
     <div>
-      <p>
-        合計:{" "}
-        {Object.entries(member.counts).reduce(
-          (sum, [color, count]) => sum + count * prices[color as PlateColor],
-          0
-        )}{" "}
-        円
-      </p>
+      <p>合計: {total} 円</p>
       <h4>{member.name}</h4>
-      {plateColors.map((color) => (
+      {Object.keys(prices).map((color) => (
         <div key={color}>
-          {color}皿: {member.counts[color]}
+          {color}皿: {member.counts[color] ?? 0}
           {!readonly && (
             <>
               <button onClick={() => onAdd(member.userId, color)}>＋</button>
