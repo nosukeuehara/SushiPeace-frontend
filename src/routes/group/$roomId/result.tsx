@@ -2,6 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { useRoom } from "../../../hooks/useRoom";
 import { plateTemplates } from "../../../constants/templates";
 import { generateShareText } from "../../../util/shareText";
+import "./result.css";
 
 export const Route = createFileRoute({
   component: SushiResultComponent,
@@ -16,7 +17,7 @@ function SushiResultComponent() {
   if (error || !data) return <p>データの取得に失敗しました</p>;
   if (!template) return <p>テンプレートが見つかりません</p>;
 
-  const shareUrl = `http://localhost:5173/group/${roomId}/result`;
+  const shareUrl = `${window.location.origin}/group/${roomId}/result`;
   const shareText = generateShareText(
     data.groupName,
     data.members,
@@ -25,10 +26,10 @@ function SushiResultComponent() {
   );
 
   return (
-    <div>
-      <h2>📋 {data.groupName} の会計結果</h2>
+    <div className="sushi-result">
+      <h2 className="sushi-result__heading">📋 {data.groupName} の会計結果</h2>
 
-      <ul>
+      <ul className="sushi-result__list">
         {data.members.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
             (sum, [color, count]) =>
@@ -36,15 +37,17 @@ function SushiResultComponent() {
             0
           );
           return (
-            <li key={m.userId}>
-              {m.name}：{subtotal.toLocaleString()}円
+            <li key={m.userId} className="sushi-result__item">
+              <span className="sushi-result__name">{m.name}</span>
+              <span className="sushi-result__amount">
+                {subtotal.toLocaleString()}円
+              </span>
             </li>
           );
         })}
       </ul>
 
-      <hr />
-      <p>
+      <p className="sushi-result__total">
         合計金額：{" "}
         {data.members
           .reduce(
@@ -61,15 +64,10 @@ function SushiResultComponent() {
         円
       </p>
 
-      <hr />
-
-      <textarea
-        readOnly
-        style={{ width: "100%", height: "150px" }}
-        value={shareText}
-      />
+      <textarea className="sushi-result__textarea" readOnly value={shareText} />
 
       <button
+        className="sushi-result__button"
         onClick={() => {
           navigator.clipboard.writeText(shareText);
           alert("共有テキストをコピーしました！");
