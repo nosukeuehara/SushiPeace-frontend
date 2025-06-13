@@ -6,6 +6,7 @@ import type { MemberPlates, PlateTemplate } from "../../../types/plate";
 import { plateTemplates } from "../../../constants/templates";
 import { socket } from "../../../lib/socket";
 import { generateShareText } from "../../../util/shareText";
+import "./index.css";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -38,7 +39,6 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!roomId || !userId) return;
-
     socket.connect();
     socket.emit("join", { roomId, userId });
 
@@ -67,7 +67,18 @@ function RouteComponent() {
     socket.emit("count", { roomId, userId, color, remove: true });
   };
 
+  const total = members.reduce(
+    (sum, m) =>
+      sum +
+      Object.entries(m.counts).reduce(
+        (s, [color, count]) => s + count * (template?.prices[color] ?? 0),
+        0
+      ),
+    0
+  );
+
   if (isLoading) return <p>読み込み中...</p>;
+
   if (error) {
     const message = (error as Error).message;
     return (
@@ -81,17 +92,23 @@ function RouteComponent() {
       </div>
     );
   }
+
   if (!data) return <p>データが存在しません</p>;
   if (!template) return <p>テンプレートが見つかりません</p>;
 
   if (!userId) {
     return (
-      <div>
-        <h2>あなたは誰ですか？</h2>
-        <ul>
+      <div className="group-room group-room--select">
+        <h2 className="group-room__subheading">あなたは誰ですか？</h2>
+        <ul className="group-room__member-list">
           {members.map((m) => (
             <li key={m.userId}>
-              <button onClick={() => handleSelect(m.userId)}>{m.name}</button>
+              <button
+                className="group-room__select-button"
+                onClick={() => handleSelect(m.userId)}
+              >
+                {m.name}
+              </button>
             </li>
           ))}
         </ul>
@@ -100,52 +117,55 @@ function RouteComponent() {
   }
 
   return (
-    <div>
-      <h2>🍣 グループ名: {data.groupName}</h2>
-      <span>ルームID: {roomId}</span>
+    <div className="group-room">
+      <div className="group-room__header">
+        <h2>🍣 グループ名: {data.groupName}</h2>
+        <span className="group-room__room-id">ルームID: {roomId}</span>
+      </div>
 
-      <h3>🥇 食べた皿ランキング</h3>
-      <ol>
-        {[...members]
-          .map((m) => ({
-            ...m,
-            totalCount: Object.values(m.counts).reduce((a, b) => a + b, 0),
-          }))
-          .sort((a, b) => b.totalCount - a.totalCount)
-          .slice(0, 3)
-          .map((m, i) => (
-            <li key={m.userId}>
-              {i + 1}位: {m.name}（{m.totalCount}皿）
-            </li>
-          ))}
-      </ol>
+      <section className="group-room__ranking">
+        <h3>🥇 食べた皿ランキング</h3>
+        <ul>
+          {[...members]
+            .map((m) => ({
+              ...m,
+              totalCount: Object.values(m.counts).reduce((a, b) => a + b, 0),
+            }))
+            .sort((a, b) => b.totalCount - a.totalCount)
+            .slice(0, 3)
+            .map((m, i) => (
+              <li key={m.userId}>
+                {i + 1}位: {m.name}（{m.totalCount}皿）
+              </li>
+            ))}
+        </ul>
 
-      <h3>💰 金額ランキング</h3>
-      <ol>
-        {[...members]
-          .map((m, idx) => {
-            const subtotal = Object.entries(m.counts).reduce(
-              (sum, [color, count]) =>
-                sum + count * (template.prices[color as string] ?? 0),
-              0
-            );
-            return { ...m, subtotal, originalIndex: idx };
-          })
-          .sort((a, b) => {
-            if (b.subtotal !== a.subtotal) {
-              return b.subtotal - a.subtotal;
-            }
-            return a.originalIndex - b.originalIndex; // タイブレーク：先に現れた人
-          })
-          .slice(0, 3)
-          .map((m, i) => (
-            <li key={m.userId}>
-              {i + 1}位: {m.name}（{m.subtotal.toLocaleString()}円）
-            </li>
-          ))}
-      </ol>
+        <h3>💰 金額ランキング</h3>
+        <ul>
+          {[...members]
+            .map((m, idx) => {
+              const subtotal = Object.entries(m.counts).reduce(
+                (sum, [color, count]) =>
+                  sum + count * (template.prices[color] ?? 0),
+                0
+              );
+              return { ...m, subtotal, originalIndex: idx };
+            })
+            .sort((a, b) => {
+              if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal;
+              return a.originalIndex - b.originalIndex;
+            })
+            .slice(0, 3)
+            .map((m, i) => (
+              <li key={m.userId}>
+                {i + 1}位: {m.name}（{m.subtotal.toLocaleString()}円）
+              </li>
+            ))}
+        </ul>
+      </section>
 
       <button
+        className="group-room__switch-user"
         onClick={() => {
           localStorage.removeItem(userKey);
           setUserId(null);
@@ -154,33 +174,25 @@ function RouteComponent() {
         🔄 ユーザーを選び直す
       </button>
 
-      <p>
-        🧾 グループ全体の合計:{" "}
-        {members.reduce(
-          (total, m) =>
-            total +
-            Object.entries(m.counts).reduce(
-              (sum, [color, count]) =>
-                sum + count * template.prices[color as string],
-              0
-            ),
-          0
-        )}{" "}
-        円
+      <p className="group-room__summary">
+        🧾 グループ全体の合計: {total.toLocaleString()} 円
       </p>
 
-      {members.map((m) => (
-        <MemberPlateCounter
-          key={m.userId}
-          member={m}
-          onAdd={handleAdd}
-          onRemove={handleRemove}
-          readonly={m.userId !== userId}
-          prices={template.prices}
-        />
-      ))}
+      <div className="group-room__member-list">
+        {members.map((m) => (
+          <MemberPlateCounter
+            key={m.userId}
+            member={m}
+            onAdd={handleAdd}
+            onRemove={handleRemove}
+            readonly={m.userId !== userId}
+            prices={template.prices}
+          />
+        ))}
+      </div>
 
       <button
+        className="group-room__share-button"
         onClick={() => {
           const text = generateShareText(
             data.groupName,

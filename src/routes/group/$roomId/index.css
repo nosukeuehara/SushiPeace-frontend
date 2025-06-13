@@ -1,0 +1,110 @@
+.group-room {
+  max-width: 720px;
+  margin: 32px auto;
+  padding: var(--space-lg);
+  border-radius: 16px;
+}
+
+.group-room__header {
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.group-room__room-id {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.group-room__ranking {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm);
+  border-radius: 8px;
+  background-color: var(--color-surface-alt);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-subtle);
+}
+
+.group-room__ranking h3 {
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.group-room__ranking ol {
+  padding-left: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.group-room__switch-user {
+  display: block;
+  margin: 0 auto var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-accent-wasabi);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+  box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.group-room__summary {
+  font-size: var(--font-size-md);
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-lg);
+}
+
+.group-room__member-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.group-room__share-button {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: var(--font-weight-bold);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.group-room__share-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.group-room--select {
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.group-room__subheading {
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.group-room__member-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.group-room__select-button {
+  margin: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+}
+
+.group-room__select-button:hover {
+  background-color: var(--color-secondary-dark);
+}

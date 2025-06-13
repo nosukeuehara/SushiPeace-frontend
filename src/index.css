@@ -116,6 +116,10 @@ button:focus {
   outline-offset: 2px;
 }
 
+ul {
+  list-style: none;
+}
+
 h1,
 h2,
 h3,

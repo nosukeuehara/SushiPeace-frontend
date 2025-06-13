@@ -1,0 +1,42 @@
+.index {
+  padding: var(--space-xl);
+  border-radius: 16px;
+  margin: 24px 16px;
+  text-align: center;
+}
+
+.index__heading {
+  font-size: var(--heading-2-size);
+  margin-bottom: var(--space-lg);
+  color: var(--color-text);
+}
+
+.index__description {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--space-md);
+  color: var(--color-text-subtle);
+}
+
+.index__link {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 9999px;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  box-shadow: 0 2px 4px var(--color-shadow);
+  transition: background-color 0.2s ease;
+}
+
+.index__link:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* タブレット以上 */
+@media (min-width: 640px) {
+  .index {
+    max-width: 480px;
+    margin: 40px auto;
+  }
+}

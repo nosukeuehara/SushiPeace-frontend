@@ -1,8 +1,10 @@
 import { Link, useLocation, useParams } from "@tanstack/react-router";
+import "./share.css";
 
 export const Route = createFileRoute({
   component: RouteComponent,
 });
+
 const SHARE_SUFFIX = "/share";
 
 function RouteComponent() {
@@ -17,20 +19,35 @@ function RouteComponent() {
   const roomUrl = `${basePath}${path}`;
 
   if (!roomId) return null;
+
   return (
-    <div>
-      <input type="text" value={roomUrl} readOnly />
+    <main className="share-room">
+      <h1 className="share-room__heading">ルーム共有</h1>
+
+      <input
+        type="text"
+        value={roomUrl}
+        readOnly
+        className="share-room__input"
+      />
+
       <button
+        className="share-room__button share-room__button--copy"
         onClick={async () => {
           await navigator.clipboard.writeText(roomUrl);
           alert("コピーしました");
         }}
       >
-        コピー
+        リンクをコピー
       </button>
-      <Link to="/group/$roomId" params={{ roomId }}>
-        お寿司ルームへ
+
+      <Link
+        to="/group/$roomId"
+        params={{ roomId }}
+        className="share-room__link"
+      >
+        お寿司ルームへ移動
       </Link>
-    </div>
+    </main>
   );
 }
