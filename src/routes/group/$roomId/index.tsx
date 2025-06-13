@@ -2,13 +2,10 @@ import { useParams } from "@tanstack/react-router";
 import { useRoom } from "../../../hooks/useRoom";
 import { MemberPlateCounter } from "../../../components/MemberPlateCounter";
 import { useState, useEffect } from "react";
-import type {
-  MemberPlates,
-  PlateColor,
-  PlateTemplate,
-} from "../../../types/plate";
-import { updateRoomCounts } from "../../../api/room";
+import type { MemberPlates, PlateTemplate } from "../../../types/plate";
 import { plateTemplates } from "../../../constants/templates";
+import { socket } from "../../../lib/socket";
+import { generateShareText } from "../../../util/shareText";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -39,41 +36,51 @@ function RouteComponent() {
     setUserId(selectedId);
   };
 
-  const handleAdd = (userId: string, color: PlateColor) => {
-    setMembers((prev) => {
-      const updated = prev.map((m) =>
-        m.userId === userId
-          ? {
-              ...m,
-              counts: { ...m.counts, [color]: m.counts[color] + 1 },
-            }
-          : m
-      );
-      updateRoomCounts(roomId!, updated);
-      return updated;
+  useEffect(() => {
+    if (!roomId || !userId) return;
+
+    socket.connect();
+    socket.emit("join", { roomId, userId });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [roomId, userId]);
+
+  useEffect(() => {
+    socket.on("sync", (updatedMembers: MemberPlates[]) => {
+      setMembers(updatedMembers);
     });
+
+    return () => {
+      socket.off("sync");
+    };
+  }, []);
+
+  const handleAdd = (userId: string, color: string) => {
+    if (!roomId) return;
+    socket.emit("count", { roomId, userId, color });
   };
 
-  const handleRemove = (userId: string, color: PlateColor) => {
-    setMembers((prev) => {
-      const updated = prev.map((m) =>
-        m.userId === userId
-          ? {
-              ...m,
-              counts: {
-                ...m.counts,
-                [color]: Math.max(0, m.counts[color] - 1),
-              },
-            }
-          : m
-      );
-      updateRoomCounts(roomId!, updated);
-      return updated;
-    });
+  const handleRemove = (userId: string, color: string) => {
+    if (!roomId) return;
+    socket.emit("count", { roomId, userId, color, remove: true });
   };
 
   if (isLoading) return <p>読み込み中...</p>;
-  if (error) return <p>エラーが発生しました: {(error as Error).message}</p>;
+  if (error) {
+    const message = (error as Error).message;
+    return (
+      <div>
+        <p>エラーが発生しました: {message}</p>
+        {message.includes("有効期限") && (
+          <p>
+            ルームの有効期限が切れています。新しいルームを作成してください。
+          </p>
+        )}
+      </div>
+    );
+  }
   if (!data) return <p>データが存在しません</p>;
   if (!template) return <p>テンプレートが見つかりません</p>;
 
@@ -95,6 +102,48 @@ function RouteComponent() {
   return (
     <div>
       <h2>🍣 グループ名: {data.groupName}</h2>
+      <span>ルームID: {roomId}</span>
+
+      <h3>🥇 食べた皿ランキング</h3>
+      <ol>
+        {[...members]
+          .map((m) => ({
+            ...m,
+            totalCount: Object.values(m.counts).reduce((a, b) => a + b, 0),
+          }))
+          .sort((a, b) => b.totalCount - a.totalCount)
+          .slice(0, 3)
+          .map((m, i) => (
+            <li key={m.userId}>
+              {i + 1}位: {m.name}（{m.totalCount}皿）
+            </li>
+          ))}
+      </ol>
+
+      <h3>💰 金額ランキング</h3>
+      <ol>
+        {[...members]
+          .map((m, idx) => {
+            const subtotal = Object.entries(m.counts).reduce(
+              (sum, [color, count]) =>
+                sum + count * (template.prices[color as string] ?? 0),
+              0
+            );
+            return { ...m, subtotal, originalIndex: idx };
+          })
+          .sort((a, b) => {
+            if (b.subtotal !== a.subtotal) {
+              return b.subtotal - a.subtotal;
+            }
+            return a.originalIndex - b.originalIndex; // タイブレーク：先に現れた人
+          })
+          .slice(0, 3)
+          .map((m, i) => (
+            <li key={m.userId}>
+              {i + 1}位: {m.name}（{m.subtotal.toLocaleString()}円）
+            </li>
+          ))}
+      </ol>
 
       <button
         onClick={() => {
@@ -112,7 +161,7 @@ function RouteComponent() {
             total +
             Object.entries(m.counts).reduce(
               (sum, [color, count]) =>
-                sum + count * template.prices[color as PlateColor],
+                sum + count * template.prices[color as string],
               0
             ),
           0
@@ -131,7 +180,33 @@ function RouteComponent() {
         />
       ))}
 
-      <p>ルームID: {roomId}</p>
+      <button
+        onClick={() => {
+          const text = generateShareText(
+            data.groupName,
+            members,
+            template.prices,
+            window.location.href
+          );
+
+          if (navigator.share) {
+            navigator
+              .share({
+                title: `${data.groupName}の会計`,
+                text,
+                url: `${window.location.href}/result`,
+              })
+              .catch((err) => console.error("共有に失敗しました", err));
+          } else {
+            navigator.clipboard.writeText(text);
+            alert(
+              "共有機能が使えないため、テキストをクリップボードにコピーしました！"
+            );
+          }
+        }}
+      >
+        📤 会計を共有する
+      </button>
     </div>
   );
 }
