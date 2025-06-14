@@ -4,7 +4,7 @@ import { MemberPlateCounter } from "../../../components/MemberPlateCounter";
 import { useState, useEffect } from "react";
 import type { MemberPlates, PlateTemplate } from "../../../types/plate";
 import { plateTemplates } from "../../../constants/templates";
-import { socket } from "../../../lib/socket";
+import { useSocket, emitCount } from "../../../hooks/useSocket";
 import { generateShareText } from "../../../util/shareText";
 import "./index.css";
 
@@ -21,6 +21,13 @@ function RouteComponent() {
     roomId ? localStorage.getItem(userKey) : null
   );
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
+  useSocket({
+    roomId,
+    userId,
+    onSync: (updatedMembers) => {
+      setMembers(updatedMembers);
+    },
+  });
 
   useEffect(() => {
     if (data?.members) {
@@ -37,34 +44,32 @@ function RouteComponent() {
     setUserId(selectedId);
   };
 
-  useEffect(() => {
-    if (!roomId || !userId) return;
-    socket.connect();
-    socket.emit("join", { roomId, userId });
+  // useEffect(() => {
+  //   if (!roomId || !userId) return;
+  //   socket.connect();
+  //   socket.emit("join", { roomId, userId });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [roomId, userId]);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [roomId, userId]);
 
-  useEffect(() => {
-    socket.on("sync", (updatedMembers: MemberPlates[]) => {
-      setMembers(updatedMembers);
-    });
+  // useEffect(() => {
+  //   socket.on("sync", (updatedMembers: MemberPlates[]) => {
+  //     setMembers(updatedMembers);
+  //   });
 
-    return () => {
-      socket.off("sync");
-    };
-  }, []);
+  //   return () => {
+  //     socket.off("sync");
+  //   };
+  // }, []);
 
   const handleAdd = (userId: string, color: string) => {
-    if (!roomId) return;
-    socket.emit("count", { roomId, userId, color });
+    emitCount(roomId, userId, color);
   };
 
   const handleRemove = (userId: string, color: string) => {
-    if (!roomId) return;
-    socket.emit("count", { roomId, userId, color, remove: true });
+    emitCount(roomId, userId, color, true);
   };
 
   const total = members.reduce(
