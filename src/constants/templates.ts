@@ -2,7 +2,7 @@ import type { PlateTemplate } from "../types/plate";
 
 export const plateTemplates: PlateTemplate[] = [
   {
-    id: "template1",
+    id: "sushiro",
     name: "スシロー",
     prices: {
       赤: 120,
@@ -11,7 +11,7 @@ export const plateTemplates: PlateTemplate[] = [
     },
   },
   {
-    id: "template2",
+    id: "kurasushi",
     name: "くら寿司",
     prices: {
       赤: 115,
