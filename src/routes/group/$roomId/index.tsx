@@ -44,26 +44,6 @@ function RouteComponent() {
     setUserId(selectedId);
   };
 
-  // useEffect(() => {
-  //   if (!roomId || !userId) return;
-  //   socket.connect();
-  //   socket.emit("join", { roomId, userId });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [roomId, userId]);
-
-  // useEffect(() => {
-  //   socket.on("sync", (updatedMembers: MemberPlates[]) => {
-  //     setMembers(updatedMembers);
-  //   });
-
-  //   return () => {
-  //     socket.off("sync");
-  //   };
-  // }, []);
-
   const handleAdd = (userId: string, color: string) => {
     emitCount(roomId, userId, color);
   };

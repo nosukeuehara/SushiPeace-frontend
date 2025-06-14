@@ -2,9 +2,7 @@
   max-width: 640px;
   margin: 32px auto;
   padding: var(--space-lg);
-  background-color: var(--color-surface);
   border-radius: 16px;
-  box-shadow: 0 4px 12px var(--color-shadow);
 }
 
 .sushi-result__heading {
@@ -46,7 +44,7 @@
 
 .sushi-result__textarea {
   width: 100%;
-  height: 150px;
+  min-height: 300px;
   padding: var(--space-sm);
   font-size: var(--font-size-sm);
   border: 1px solid var(--color-border);
