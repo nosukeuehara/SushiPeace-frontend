@@ -1,7 +1,7 @@
 export const Route = createFileRoute({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/group/"!</div>
+  return <div></div>;
 }

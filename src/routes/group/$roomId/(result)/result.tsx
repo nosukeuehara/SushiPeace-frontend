@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router";
-import { useRoom } from "../../../hooks/useRoom";
-import { plateTemplates } from "../../../constants/templates";
-import { generateShareText } from "../../../util/shareText";
+import { useRoom } from "../../../../hooks/useRoom";
+import { plateTemplates } from "../../../../constants/templates";
+import { generateShareText } from "../../../../util/shareText";
 import "./result.css";
 
 export const Route = createFileRoute({

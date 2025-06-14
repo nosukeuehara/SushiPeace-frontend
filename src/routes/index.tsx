@@ -12,7 +12,7 @@ function Index() {
     <main className="index">
       <h1 className="index__heading">ようこそ</h1>
       <p className="index__description">
-        みんなで楽しくお寿司を割り勘しましょう 🍣
+        みんなで楽しくお寿司を割り勘しましょう
       </p>
       <Link to="/new" className="index__link">
         お寿司ルームを作成する

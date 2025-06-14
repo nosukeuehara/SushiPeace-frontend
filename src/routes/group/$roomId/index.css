@@ -117,13 +117,11 @@
   transition: all 0.2s ease;
 }
 
-/* ✅ 自分：大きく目立つ */
 .member-wrapper--self {
   transform: scale(1.03);
   padding: var(--space-sm);
 }
 
-/* ✅ 他人：小さく・控えめ */
 .member-wrapper--readonly {
   opacity: 0.6;
   transform: scale(0.95);
