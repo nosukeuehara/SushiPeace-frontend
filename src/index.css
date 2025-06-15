@@ -47,9 +47,9 @@
   --color-disabled-text: #aaaaaa; /* 無効状態のテキスト色 */
 
   /* === 通知系 === */
-  --ranking-bg-pink: #ffb8a7;
+  --ranking-bg-blue: #a7daff;
   --ranking-bg-yellow: #f1db2c;
-  --ranking-color-text-1: #e63e3a;
+  --ranking-color-text-1: #3a65e6;
   --ranking-color-text-2: #f57f17;
 
   --font-size-xs: 0.75rem;
@@ -107,6 +107,7 @@ a:hover {
 button {
   font-size: var(--font-size-md);
   padding: var(--space-sm) var(--space-md);
+  color: var(--color-text);
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -136,7 +137,6 @@ h5,
 h6 {
   font-weight: var(--heading-weight);
   line-height: var(--heading-line-height);
-  margin-bottom: 0.5em;
   color: var(--color-text);
 }
 

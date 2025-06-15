@@ -36,17 +36,20 @@
   margin-bottom: var(--space-sm);
 }
 
+.group-room__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
 .group-room__switch-user {
   display: block;
-  margin: 0 auto var(--space-md);
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-accent-wasabi);
-  color: white;
+  color: var(--color-text);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: var(--font-weight-bold);
-  box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 .group-room__summary {
@@ -164,7 +167,7 @@
 }
 
 .rank-banner--personal {
-  background-color: var(--ranking-bg-pink);
+  background-color: var(--ranking-bg-blue);
   color: var(--ranking-color-text-1);
   border-left: solid 3px var(--ranking-color-text-1);
 }
