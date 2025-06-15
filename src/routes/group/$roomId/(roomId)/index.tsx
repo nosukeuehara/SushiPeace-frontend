@@ -1,12 +1,14 @@
 import { useParams } from "@tanstack/react-router";
 import { useRoom } from "../../../../hooks/useRoom";
 import { MemberPlateCounter } from "../../../../components/MemberPlateCounter";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { MemberPlates, PlateTemplate } from "../../../../types/plate";
 import { plateTemplates } from "../../../../constants/templates";
 import { useSocket, emitCount } from "../../../../hooks/useSocket";
 import { generateShareText } from "../../../../util/shareText";
 import "./index.css";
+
+const BANNER_TIMEOUT_MS = 2000; // 5秒
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -21,6 +23,44 @@ function RouteComponent() {
     roomId ? localStorage.getItem(userKey) : null
   );
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
+
+  const lastGroupTotal = useRef<number>(0);
+  const lastPersonalTotalMap = useRef<Record<string, number>>({});
+  const lastNotifiedGroup = useRef<number>(0);
+  const lastNotifiedPersonal: React.RefObject<Record<string, number>> = useRef(
+    {}
+  );
+
+  const getGroupThreshold = (amount: number) =>
+    Math.floor(amount / 1000) * 1000;
+  const getPersonalThreshold = (amount: number) =>
+    Math.floor(amount / 600) * 600;
+
+  const [rankNotifications, setRankNotifications] = useState<
+    { id: number; type: "group" | "personal"; message: string }[]
+  >([]);
+
+  const notificationIdRef = useRef(0);
+
+  const pushNotification = (type: "group" | "personal", message: string) => {
+    const id = notificationIdRef.current++;
+    setRankNotifications((prev) => {
+      const next = [{ id, type, message }, ...prev];
+      return next.slice(0, 3);
+    });
+    setTimeout(() => {
+      setRankNotifications((prev) => prev.filter((n) => n.id !== id));
+    }, BANNER_TIMEOUT_MS);
+  };
+
+  const getNextGroupThreshold = (current: number) => {
+    if (current < 3000) return 3000;
+    return 3000 + Math.floor((current - 3000) / 700) * 700;
+  };
+
+  const getNextPersonalThreshold = (current: number) =>
+    Math.floor(current / 700) * 700;
+
   useSocket({
     roomId,
     userId,
@@ -30,14 +70,85 @@ function RouteComponent() {
   });
 
   useEffect(() => {
-    if (data?.members) {
-      setMembers(data.members);
-    }
+    if (data?.members) setMembers(data.members);
     if (data?.templateId) {
       const matched = plateTemplates.find((t) => t.id === data.templateId);
       if (matched) setTemplate(matched);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (!template || members.length === 0) return;
+
+    // === グループ合計の通知 ===
+    const total = members.reduce(
+      (sum, m) =>
+        sum +
+        Object.entries(m.counts).reduce(
+          (s, [color, count]) => s + count * (template.prices[color] ?? 0),
+          0
+        ),
+      0
+    );
+
+    const totalThreshold = getGroupThreshold(total);
+
+    const prevTotal = lastGroupTotal.current;
+    const isIncreased = total > prevTotal;
+    lastGroupTotal.current = total;
+
+    if (isIncreased) {
+      const groupThreshold = getNextGroupThreshold(total);
+      if (
+        total >= groupThreshold &&
+        lastNotifiedGroup.current < groupThreshold
+      ) {
+        pushNotification(
+          "group",
+          `グループ合計が${totalThreshold.toLocaleString()}円 に到達！`
+        );
+        lastNotifiedGroup.current = groupThreshold;
+      }
+    } else if (total < lastNotifiedGroup.current) {
+      // 減算時はリセットのみ（通知は出さない）
+      lastNotifiedGroup.current = 0;
+    }
+
+    // === 個人合計の通知 ===
+    const self = members.find((m) => m.userId === userId);
+    if (self) {
+      const personal = Object.entries(self.counts).reduce(
+        (sum, [color, count]) => sum + count * (template.prices[color] ?? 0),
+        0
+      );
+      const personalThreshold = getPersonalThreshold(personal);
+
+      const prevPersonal = lastPersonalTotalMap.current[userId!] ?? 0;
+      const isPersonalIncreased = personal > prevPersonal;
+      lastPersonalTotalMap.current[userId!] = personal;
+
+      if (!lastNotifiedPersonal.current[userId!]) {
+        lastNotifiedPersonal.current[userId!] = 0;
+      }
+
+      if (
+        isPersonalIncreased &&
+        personal >= getNextPersonalThreshold(personal) &&
+        lastNotifiedPersonal.current[userId!] <
+          getNextPersonalThreshold(personal)
+      ) {
+        pushNotification(
+          "personal",
+          `${self.name}が${personalThreshold.toLocaleString()}円 に到達！`
+        );
+
+        lastNotifiedPersonal.current[userId!] =
+          getNextPersonalThreshold(personal);
+      } else if (personal < lastNotifiedPersonal.current[userId!]) {
+        lastNotifiedPersonal.current[userId!] = 0;
+      }
+    }
+  }, [members, template, userId]);
 
   const handleSelect = (selectedId: string) => {
     localStorage.setItem(userKey, selectedId);
@@ -103,12 +214,29 @@ function RouteComponent() {
 
   return (
     <div className="group-room">
+      {rankNotifications && (
+        <div className="rank-banners">
+          {rankNotifications.map((n) => (
+            <div
+              key={n.id}
+              className={`rank-banner ${
+                n.type === "group"
+                  ? "rank-banner--group"
+                  : "rank-banner--personal"
+              }`}
+            >
+              {n.message}
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="group-room__header">
-        <h2>🍣 グループ名: {data.groupName}</h2>
+        <h2>{data.groupName}</h2>
         <span className="group-room__room-id">ルームID: {roomId}</span>
       </div>
 
-      <section className="group-room__ranking">
+      <div className="group-room__ranking">
         <h3>🥇 食べた皿ランキング</h3>
         <ul>
           {[...members]
@@ -147,7 +275,7 @@ function RouteComponent() {
               </li>
             ))}
         </ul>
-      </section>
+      </div>
 
       <button
         className="group-room__switch-user"
@@ -164,7 +292,7 @@ function RouteComponent() {
       </p>
 
       <div className="group-room__member-list">
-        {/* ✅ 自分 */}
+        {/* 自分 */}
         {members
           .filter((m) => m.userId === userId)
           .map((m) => (
@@ -179,7 +307,7 @@ function RouteComponent() {
             </div>
           ))}
 
-        {/* ✅ 他人 */}
+        {/* 他人 */}
         {members
           .filter((m) => m.userId !== userId)
           .map((m) => (
