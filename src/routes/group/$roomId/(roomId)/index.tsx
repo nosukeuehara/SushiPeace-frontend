@@ -23,6 +23,7 @@ function RouteComponent() {
     roomId ? localStorage.getItem(userKey) : null
   );
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
+  const [showRanking, setShowRanking] = useState(false);
 
   const lastGroupTotal = useRef<number>(0);
   const lastPersonalTotalMap = useRef<Record<string, number>>({});
@@ -236,59 +237,70 @@ function RouteComponent() {
         <span className="group-room__room-id">ルームID: {roomId}</span>
       </div>
 
-      <div className="group-room__ranking">
-        <h3>🥇 食べた皿ランキング</h3>
-        <ul>
-          {[...members]
-            .map((m) => ({
-              ...m,
-              totalCount: Object.values(m.counts).reduce((a, b) => a + b, 0),
-            }))
-            .sort((a, b) => b.totalCount - a.totalCount)
-            .slice(0, 3)
-            .map((m, i) => (
-              <li key={m.userId}>
-                {i + 1}位: {m.name}（{m.totalCount}皿）
-              </li>
-            ))}
-        </ul>
+      <div className="group-room__controls">
+        <button
+          className="group-room__ranking-toggle"
+          onClick={() => setShowRanking((prev) => !prev)}
+        >
+          {showRanking ? "ランキングを隠す" : "ランキングを見る"}
+        </button>
 
-        <h3>💰 金額ランキング</h3>
-        <ul>
-          {[...members]
-            .map((m, idx) => {
-              const subtotal = Object.entries(m.counts).reduce(
-                (sum, [color, count]) =>
-                  sum + count * (template.prices[color] ?? 0),
-                0
-              );
-              return { ...m, subtotal, originalIndex: idx };
-            })
-            .sort((a, b) => {
-              if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal;
-              return a.originalIndex - b.originalIndex;
-            })
-            .slice(0, 3)
-            .map((m, i) => (
-              <li key={m.userId}>
-                {i + 1}位: {m.name}（{m.subtotal.toLocaleString()}円）
-              </li>
-            ))}
-        </ul>
+        <button
+          className="group-room__switch-user"
+          onClick={() => {
+            localStorage.removeItem(userKey);
+            setUserId(null);
+          }}
+        >
+          ユーザーを選び直す
+        </button>
       </div>
 
-      <button
-        className="group-room__switch-user"
-        onClick={() => {
-          localStorage.removeItem(userKey);
-          setUserId(null);
-        }}
-      >
-        🔄 ユーザーを選び直す
-      </button>
+      {showRanking && (
+        <div className="group-room__ranking">
+          <h3>🥇 食べた皿ランキング</h3>
+          <ul>
+            {[...members]
+              .map((m) => ({
+                ...m,
+                totalCount: Object.values(m.counts).reduce((a, b) => a + b, 0),
+              }))
+              .sort((a, b) => b.totalCount - a.totalCount)
+              .slice(0, 3)
+              .map((m, i) => (
+                <li key={m.userId}>
+                  {i + 1}位: {m.name}（{m.totalCount}皿）
+                </li>
+              ))}
+          </ul>
+
+          <h3>💰 金額ランキング</h3>
+          <ul>
+            {[...members]
+              .map((m, idx) => {
+                const subtotal = Object.entries(m.counts).reduce(
+                  (sum, [color, count]) =>
+                    sum + count * (template.prices[color] ?? 0),
+                  0
+                );
+                return { ...m, subtotal, originalIndex: idx };
+              })
+              .sort((a, b) => {
+                if (b.subtotal !== a.subtotal) return b.subtotal - a.subtotal;
+                return a.originalIndex - b.originalIndex;
+              })
+              .slice(0, 3)
+              .map((m, i) => (
+                <li key={m.userId}>
+                  {i + 1}位: {m.name}（{m.subtotal.toLocaleString()}円）
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
 
       <p className="group-room__summary">
-        🧾 グループ全体の合計: {total.toLocaleString()} 円
+        グループ全体の合計: {total.toLocaleString()} 円
       </p>
 
       <div className="group-room__member-list">

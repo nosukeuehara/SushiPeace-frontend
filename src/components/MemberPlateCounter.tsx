@@ -1,4 +1,5 @@
 import type { MemberPlates } from "../types/plate";
+import "./MemberPlateCounter.css";
 
 type Props = {
   member: MemberPlates;
@@ -22,8 +23,10 @@ export const MemberPlateCounter = ({
 
   return (
     <div>
-      <p>合計: {total} 円</p>
-      <h4>{member.name}</h4>
+      <div className="member-header">
+        <h4>{member.name}</h4>
+        <p>合計: {total} 円</p>
+      </div>
       {Object.keys(prices).map((color) => (
         <div key={color}>
           {color}皿: {member.counts[color] ?? 0}
