@@ -1,11 +1,11 @@
 import { useParams } from "@tanstack/react-router";
-import { useRoom } from "../../../hooks/useRoom";
-import { MemberPlateCounter } from "../../../components/MemberPlateCounter";
+import { useRoom } from "../../../../hooks/useRoom";
+import { MemberPlateCounter } from "../../../../components/MemberPlateCounter";
 import { useState, useEffect } from "react";
-import type { MemberPlates, PlateTemplate } from "../../../types/plate";
-import { plateTemplates } from "../../../constants/templates";
-import { useSocket, emitCount } from "../../../hooks/useSocket";
-import { generateShareText } from "../../../util/shareText";
+import type { MemberPlates, PlateTemplate } from "../../../../types/plate";
+import { plateTemplates } from "../../../../constants/templates";
+import { useSocket, emitCount } from "../../../../hooks/useSocket";
+import { generateShareText } from "../../../../util/shareText";
 import "./index.css";
 
 export const Route = createFileRoute({

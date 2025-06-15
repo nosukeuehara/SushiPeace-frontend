@@ -14,7 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as NewRouteImport } from './routes/new'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GroupIndexRouteImport } from './routes/group/index'
-import { Route as GroupRoomIdIndexRouteImport } from './routes/group/$roomId/index'
+import { Route as GroupRoomIdroomIdIndexRouteImport } from './routes/group/$roomId/(roomId)/index'
 import { Route as GroupRoomIdshareShareRouteImport } from './routes/group/$roomId/(share)/share'
 import { Route as GroupRoomIdresultResultRouteImport } from './routes/group/$roomId/(result)/result'
 
@@ -33,8 +33,8 @@ const GroupIndexRoute = GroupIndexRouteImport.update({
   path: '/group/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GroupRoomIdIndexRoute = GroupRoomIdIndexRouteImport.update({
-  id: '/group/$roomId/',
+const GroupRoomIdroomIdIndexRoute = GroupRoomIdroomIdIndexRouteImport.update({
+  id: '/group/$roomId/(roomId)/',
   path: '/group/$roomId/',
   getParentRoute: () => rootRouteImport,
 } as any)
@@ -53,26 +53,26 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/new': typeof NewRoute
   '/group': typeof GroupIndexRoute
-  '/group/$roomId': typeof GroupRoomIdIndexRoute
   '/group/$roomId/result': typeof GroupRoomIdresultResultRoute
   '/group/$roomId/share': typeof GroupRoomIdshareShareRoute
+  '/group/$roomId': typeof GroupRoomIdroomIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/new': typeof NewRoute
   '/group': typeof GroupIndexRoute
-  '/group/$roomId': typeof GroupRoomIdIndexRoute
   '/group/$roomId/result': typeof GroupRoomIdresultResultRoute
   '/group/$roomId/share': typeof GroupRoomIdshareShareRoute
+  '/group/$roomId': typeof GroupRoomIdroomIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/new': typeof NewRoute
   '/group/': typeof GroupIndexRoute
-  '/group/$roomId/': typeof GroupRoomIdIndexRoute
   '/group/$roomId/(result)/result': typeof GroupRoomIdresultResultRoute
   '/group/$roomId/(share)/share': typeof GroupRoomIdshareShareRoute
+  '/group/$roomId/(roomId)/': typeof GroupRoomIdroomIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,34 +80,34 @@ export interface FileRouteTypes {
     | '/'
     | '/new'
     | '/group'
-    | '/group/$roomId'
     | '/group/$roomId/result'
     | '/group/$roomId/share'
+    | '/group/$roomId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/new'
     | '/group'
-    | '/group/$roomId'
     | '/group/$roomId/result'
     | '/group/$roomId/share'
+    | '/group/$roomId'
   id:
     | '__root__'
     | '/'
     | '/new'
     | '/group/'
-    | '/group/$roomId/'
     | '/group/$roomId/(result)/result'
     | '/group/$roomId/(share)/share'
+    | '/group/$roomId/(roomId)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   NewRoute: typeof NewRoute
   GroupIndexRoute: typeof GroupIndexRoute
-  GroupRoomIdIndexRoute: typeof GroupRoomIdIndexRoute
   GroupRoomIdresultResultRoute: typeof GroupRoomIdresultResultRoute
   GroupRoomIdshareShareRoute: typeof GroupRoomIdshareShareRoute
+  GroupRoomIdroomIdIndexRoute: typeof GroupRoomIdroomIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,13 +133,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/group/$roomId/': {
-      id: '/group/$roomId/'
-      path: '/group/$roomId'
-      fullPath: '/group/$roomId'
-      preLoaderRoute: typeof GroupRoomIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/group/$roomId/(result)/result': {
       id: '/group/$roomId/(result)/result'
       path: '/group/$roomId/result'
@@ -152,6 +145,13 @@ declare module '@tanstack/react-router' {
       path: '/group/$roomId/share'
       fullPath: '/group/$roomId/share'
       preLoaderRoute: typeof GroupRoomIdshareShareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/group/$roomId/(roomId)/': {
+      id: '/group/$roomId/(roomId)/'
+      path: '/group/$roomId'
+      fullPath: '/group/$roomId'
+      preLoaderRoute: typeof GroupRoomIdroomIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -184,15 +184,6 @@ declare module './routes/group/index' {
     FileRoutesByPath['/group/']['fullPath']
   >
 }
-declare module './routes/group/$roomId/index' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/',
-    FileRoutesByPath['/group/$roomId/']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/']['id'],
-    FileRoutesByPath['/group/$roomId/']['path'],
-    FileRoutesByPath['/group/$roomId/']['fullPath']
-  >
-}
 declare module './routes/group/$roomId/(result)/result' {
   const createFileRoute: CreateFileRoute<
     '/group/$roomId/(result)/result',
@@ -211,14 +202,23 @@ declare module './routes/group/$roomId/(share)/share' {
     FileRoutesByPath['/group/$roomId/(share)/share']['fullPath']
   >
 }
+declare module './routes/group/$roomId/(roomId)/index' {
+  const createFileRoute: CreateFileRoute<
+    '/group/$roomId/(roomId)/',
+    FileRoutesByPath['/group/$roomId/(roomId)/']['parentRoute'],
+    FileRoutesByPath['/group/$roomId/(roomId)/']['id'],
+    FileRoutesByPath['/group/$roomId/(roomId)/']['path'],
+    FileRoutesByPath['/group/$roomId/(roomId)/']['fullPath']
+  >
+}
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   NewRoute: NewRoute,
   GroupIndexRoute: GroupIndexRoute,
-  GroupRoomIdIndexRoute: GroupRoomIdIndexRoute,
   GroupRoomIdresultResultRoute: GroupRoomIdresultResultRoute,
   GroupRoomIdshareShareRoute: GroupRoomIdshareShareRoute,
+  GroupRoomIdroomIdIndexRoute: GroupRoomIdroomIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
