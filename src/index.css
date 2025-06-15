@@ -46,6 +46,12 @@
   --color-disabled-bg: #f0f0f0; /* 無効化されたボタン背景 */
   --color-disabled-text: #aaaaaa; /* 無効状態のテキスト色 */
 
+  /* === 通知系 === */
+  --ranking-bg-pink: #ffb8a7;
+  --ranking-bg-yellow: #f1db2c;
+  --ranking-color-text-1: #e63e3a;
+  --ranking-color-text-2: #f57f17;
+
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
