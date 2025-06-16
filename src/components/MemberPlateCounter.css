@@ -3,4 +3,54 @@
   align-items: baseline;
   justify-content: flex-start;
   gap: 10px;
+  padding-bottom: 10px;
+}
+
+.sushi-plates {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: var(--space-lg);
+}
+
+.sushi-plate {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sushi-plate__label {
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.sushi-plate__counter {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.sushi-plate__counter--readonly {
+  display: block;
+  margin: 0 auto;
+}
+
+.sushi-plate__num {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.sushi-plate__counter--minus {
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+}
+
+.sushi-pate__counter--plus {
+  cursor: pointer;
+  font-size: var(--font-size-lg);
 }

@@ -16,3 +16,10 @@ export type RoomData = {
   templateId: string;
   createdAt: string;
 };
+
+export type RoomHistory = {
+  roomId: string;
+  groupName: string;
+  createdAt: string;
+  lastAccessedAt: string;
+};

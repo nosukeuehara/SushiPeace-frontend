@@ -37,15 +37,13 @@
 }
 
 .group-room__controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-lg);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 20px;
 }
 
 .group-room__switch-user {
   display: block;
-  padding: var(--space-sm) var(--space-md);
   color: var(--color-text);
   border: none;
   border-radius: 8px;
@@ -62,7 +60,7 @@
 .group-room__member-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 10px;
   margin-bottom: var(--space-lg);
 }
 
@@ -88,7 +86,7 @@
 }
 
 .group-room__subheading {
-  margin-bottom: var(--space-sm);
+  margin-bottom: 20px;
   color: var(--color-text);
 }
 
@@ -100,10 +98,8 @@
 .group-room__select-button {
   margin: var(--space-xs);
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-secondary);
-  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
   font-weight: var(--font-weight-bold);
 }

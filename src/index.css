@@ -98,6 +98,7 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--text-text);
 }
 
 a:hover {
@@ -106,7 +107,6 @@ a:hover {
 
 button {
   font-size: var(--font-size-md);
-  padding: var(--space-sm) var(--space-md);
   color: var(--color-text);
   border: none;
   cursor: pointer;
@@ -117,12 +117,6 @@ button:disabled {
   background-color: var(--color-disabled-bg);
   color: var(--color-disabled-text);
   cursor: not-allowed;
-}
-
-input:focus,
-button:focus {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
 }
 
 ul {

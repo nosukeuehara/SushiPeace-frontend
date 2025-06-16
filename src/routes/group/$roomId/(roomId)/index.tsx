@@ -7,8 +7,9 @@ import { plateTemplates } from "../../../../constants/templates";
 import { useSocket, emitCount } from "../../../../hooks/useSocket";
 import { generateShareText } from "../../../../util/shareText";
 import "./index.css";
+import { updateRoomHistory } from "../../../../util/roomHistory";
 
-const BANNER_TIMEOUT_MS = 2000; // 5秒
+const BANNER_TIMEOUT_MS = 2000;
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -76,12 +77,14 @@ function RouteComponent() {
       const matched = plateTemplates.find((t) => t.id === data.templateId);
       if (matched) setTemplate(matched);
     }
-  }, [data]);
+    if (data && roomId) {
+      updateRoomHistory(roomId, data.groupName, data.createdAt);
+    }
+  }, [data, roomId]);
 
   useEffect(() => {
     if (!template || members.length === 0) return;
 
-    // === グループ合計の通知 ===
     const total = members.reduce(
       (sum, m) =>
         sum +
@@ -111,11 +114,9 @@ function RouteComponent() {
         lastNotifiedGroup.current = groupThreshold;
       }
     } else if (total < lastNotifiedGroup.current) {
-      // 減算時はリセットのみ（通知は出さない）
       lastNotifiedGroup.current = 0;
     }
 
-    // === 個人合計の通知 ===
     const self = members.find((m) => m.userId === userId);
     if (self) {
       const personal = Object.entries(self.counts).reduce(
@@ -242,7 +243,7 @@ function RouteComponent() {
           className="group-room__ranking-toggle"
           onClick={() => setShowRanking((prev) => !prev)}
         >
-          {showRanking ? "ランキングを隠す" : "ランキングを見る"}
+          ランキング
         </button>
 
         <button
