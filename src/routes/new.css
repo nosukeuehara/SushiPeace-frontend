@@ -13,7 +13,6 @@
 
 .new-room__subheading {
   font-size: var(--heading-4-size);
-  margin-top: var(--space-lg);
   margin-bottom: var(--space-sm);
   color: var(--color-text-subtle);
 }
@@ -23,16 +22,11 @@
   width: 100%;
   padding: var(--space-sm);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 2px;
   font-size: var(--font-size-md);
   background-color: var(--color-surface-alt);
   color: var(--color-text);
-}
-
-.new-room__input:focus,
-.new-room__select:focus {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  margin-bottom: var(--space-md);
 }
 
 .new-room__actions {
@@ -47,27 +41,19 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   border: none;
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
   box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 .new-room__button--add {
-  background-color: var(--color-secondary);
-  color: white;
-}
-
-.new-room__button--add:hover {
   background-color: var(--color-secondary-dark);
+  color: var(--color-surface);
 }
 
 .new-room__button--create {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.new-room__button--create:hover {
   background-color: var(--color-primary-dark);
+  color: var(--color-surface);
 }
 
 .new-room__button:disabled {
@@ -76,11 +62,13 @@
   cursor: not-allowed;
 }
 
-hr {
-  margin: var(--space-md) 0;
+.new-room__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 40px;
 }
 
-/* タブレット以上で横並び */
 @media (min-width: 640px) {
   .new-room__actions {
     flex-direction: row;

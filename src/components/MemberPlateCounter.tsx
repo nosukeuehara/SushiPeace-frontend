@@ -27,18 +27,38 @@ export const MemberPlateCounter = ({
         <h4>{member.name}</h4>
         <p>合計: {total} 円</p>
       </div>
-      {Object.keys(prices).map((color) => (
-        <div key={color}>
-          {color}皿: {member.counts[color] ?? 0}
-          {!readonly && (
-            <>
-              <button onClick={() => onAdd(member.userId, color)}>＋</button>
-              <button onClick={() => onRemove(member.userId, color)}>−</button>
-            </>
-          )}
-        </div>
-      ))}
-      <hr />
+      <div className="sushi-plates">
+        {Object.keys(prices).map((color) => (
+          <div key={color} className="sushi-plate">
+            <div className="sushi-plate__label">{color}皿</div>
+            {!readonly ? (
+              <div className="sushi-plate__counter">
+                <button
+                  className="sushi-plate__counter--minus"
+                  onClick={() => onRemove(member.userId, color)}
+                >
+                  −
+                </button>
+                <div className="sushi-plate__num">
+                  {member.counts[color] ?? 0}
+                </div>
+                <button
+                  className="sushi-pate__counter--plus"
+                  onClick={() => onAdd(member.userId, color)}
+                >
+                  ＋
+                </button>
+              </div>
+            ) : (
+              <div className="sushi-plate__counter--readonly">
+                <div className="sushi-plate__num--readonly">
+                  {member.counts[color] ?? 0} 枚
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

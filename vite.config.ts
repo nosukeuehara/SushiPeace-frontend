@@ -12,4 +12,8 @@ export default defineConfig({
     }),
     react(),
   ],
+  server: {
+    host: true, // もしくは "0.0.0.0"
+    port: 5173, // 必要に応じて変更
+  },
 })
