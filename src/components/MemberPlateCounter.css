@@ -15,8 +15,7 @@
 
 .sushi-plate {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  flex-direction: row;
 }
 
 .sushi-plate__label {
@@ -26,12 +25,10 @@
 }
 
 .sushi-plate__counter {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  align-items: center;
   width: 200px;
-  margin: 0 auto;
+  display: inline-flex;
+  padding-left: 20px;
+  gap: 30px;
 }
 
 .sushi-plate__counter--readonly {
@@ -47,10 +44,10 @@
 
 .sushi-plate__counter--minus {
   cursor: pointer;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
 }
 
 .sushi-pate__counter--plus {
   cursor: pointer;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
 }
