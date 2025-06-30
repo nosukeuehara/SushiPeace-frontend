@@ -3,7 +3,6 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCreateRoom } from "../hooks/useCreateRoom";
 import { type Member } from "../api/room";
 import { plateTemplates } from "../constants/templates";
-import { createInitialCounts } from "../util/initCounts";
 import "./new.css";
 
 export const Route = createFileRoute({
@@ -21,18 +20,11 @@ export default function NewRoom() {
   });
 
   const handleSubmit = () => {
-    const template = plateTemplates.find((t) => t.id === selectedTemplateId);
-    if (!template) {
-      alert("テンプレートを選択してください");
-      return;
-    }
-
     const validMembers = members
       .filter((m) => m.name.trim() !== "")
       .map((m, i) => ({
         userId: `u${i}-${m.name}`,
         name: m.name,
-        counts: createInitialCounts(template),
       }));
 
     if (groupName === "") {
@@ -48,7 +40,7 @@ export default function NewRoom() {
     mutate({
       groupName,
       members: validMembers,
-      templateId: selectedTemplateId,
+      templateId: selectedTemplateId || undefined, // 空文字の場合 undefined に
     });
   };
 
