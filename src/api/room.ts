@@ -6,7 +6,7 @@ export type Member = {
 export type CreateRoomPayload = {
   groupName: string;
   members: Member[];
-  templateId: string
+  templateId?: string
 };
 
 export type CreateRoomResponse = {
