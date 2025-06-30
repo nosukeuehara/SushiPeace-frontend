@@ -11,7 +11,6 @@ export function removeRoomHistory(roomId: string) {
 export function getRoomHistory(): RoomHistory[] {
   const key = "sushi-room-history";
   const raw = localStorage.getItem(key);
-  console.log("getRoomHistory", raw);
   return raw ? JSON.parse(raw) : [];
 }
 
