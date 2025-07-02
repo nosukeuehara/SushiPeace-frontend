@@ -34,6 +34,12 @@ function RouteComponent() {
   const [rankNotifications, setRankNotifications] = useState<
     { id: number; type: "group" | "personal"; message: string }[]
   >([]);
+  const [editingPlate, setEditingPlate] = useState<{
+    color: string;
+    price: number;
+  } | null>(null);
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [bulkEntries, setBulkEntries] = useState([{ color: "", price: 0 }]);
 
   const lastGroupTotal = useRef<number>(0);
   const lastPersonalTotalMap = useRef<Record<string, number>>({});
@@ -57,11 +63,12 @@ function RouteComponent() {
     onSync: (updatedMembers, updatedTemplateData) => {
       setMembers(updatedMembers);
       if (updatedTemplateData) {
-        setTemplate({
+        const newTemplate = {
           id: "custom",
           name: "カスタムテンプレート",
           prices: updatedTemplateData,
-        });
+        };
+        setTemplate(newTemplate);
       }
     },
   });
@@ -159,18 +166,6 @@ function RouteComponent() {
     });
     setNewPlate("");
     setNewPrice(0);
-  };
-
-  const handleEditPlate = (color: string, newPrice: number) => {
-    const currentPrices = template?.prices ?? {};
-    const updatedPrices = { ...currentPrices, [color]: newPrice };
-
-    emitTemplateUpdate(roomId, updatedPrices);
-    setTemplate({
-      id: "custom",
-      name: "カスタムテンプレート",
-      prices: updatedPrices,
-    });
   };
 
   const handleRemovePlate = (color: string) => {
@@ -278,19 +273,17 @@ function RouteComponent() {
       </div>
       <div className="group-room__template-editor">
         <h3>皿の設定</h3>
+        <button onClick={() => setShowBulkModal(true)}>📝 一括登録</button>
 
         {template && (
           <ul>
             {Object.entries(template.prices).map(([color, price]) => (
-              <li key={color}>
+              <li key={`plate-${color}`}>
                 <span>{color}</span>
-                <input
-                  type="number"
-                  value={price}
-                  onChange={(e) =>
-                    handleEditPlate(color, Number(e.target.value))
-                  }
-                />
+                <span>{price} 円</span>
+                <button onClick={() => setEditingPlate({ color, price })}>
+                  編集
+                </button>
                 <button onClick={() => handleRemovePlate(color)}>削除</button>
               </li>
             ))}
@@ -356,6 +349,137 @@ function RouteComponent() {
       >
         📤 会計を共有する
       </button>
+      {/* 編集モーダル */}
+      {editingPlate && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>皿の情報を編集</h3>
+
+            <label>
+              名前（皿の種類）:
+              <input
+                type="text"
+                value={editingPlate.color}
+                onChange={(e) =>
+                  setEditingPlate((prev) =>
+                    prev ? { ...prev, color: e.target.value } : null
+                  )
+                }
+              />
+            </label>
+
+            <label>
+              金額（円）:
+              <input
+                type="number"
+                value={editingPlate.price}
+                onChange={(e) =>
+                  setEditingPlate((prev) =>
+                    prev ? { ...prev, price: Number(e.target.value) } : null
+                  )
+                }
+              />
+            </label>
+
+            <button
+              onClick={() => {
+                const oldColor = Object.entries(template!.prices).find(
+                  ([, price]) => price === editingPlate.price
+                )?.[0];
+
+                const updatedPrices = { ...template!.prices };
+
+                if (editingPlate.color !== oldColor) {
+                  delete updatedPrices[oldColor!];
+                }
+
+                updatedPrices[editingPlate.color] = editingPlate.price;
+
+                emitTemplateUpdate(roomId, updatedPrices);
+                setTemplate({
+                  id: "custom",
+                  name: "カスタムテンプレート",
+                  prices: updatedPrices,
+                });
+                setEditingPlate(null);
+              }}
+            >
+              保存
+            </button>
+            <button onClick={() => setEditingPlate(null)}>キャンセル</button>
+          </div>
+        </div>
+      )}
+      {showBulkModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>皿の一括登録</h3>
+            <p>皿の名前と金額を入力してください。</p>
+
+            {bulkEntries.map((entry, index) => (
+              <div
+                key={index}
+                style={{ display: "flex", gap: "8px", marginBottom: "8px" }}
+              >
+                <input
+                  type="text"
+                  placeholder="皿の名前"
+                  value={entry.color}
+                  onChange={(e) => {
+                    const newEntries = [...bulkEntries];
+                    newEntries[index].color = e.target.value;
+                    setBulkEntries(newEntries);
+                  }}
+                />
+                <input
+                  type="number"
+                  placeholder="金額"
+                  value={entry.price}
+                  onChange={(e) => {
+                    const newEntries = [...bulkEntries];
+                    newEntries[index].price = Number(e.target.value);
+                    setBulkEntries(newEntries);
+                  }}
+                />
+              </div>
+            ))}
+
+            <button
+              onClick={() =>
+                setBulkEntries([...bulkEntries, { color: "", price: 0 }])
+              }
+            >
+              ＋行を追加
+            </button>
+
+            <button
+              onClick={() => {
+                const updatedPrices = { ...template?.prices };
+
+                bulkEntries.forEach(({ color, price }) => {
+                  if (color.trim() && price > 0) {
+                    updatedPrices[color.trim()] = price;
+                  }
+                });
+
+                emitTemplateUpdate(roomId, updatedPrices);
+                setTemplate({
+                  id: "custom",
+                  name: "カスタムテンプレート",
+                  prices: updatedPrices,
+                });
+
+                setShowBulkModal(false);
+                setBulkEntries([{ color: "", price: 0 }]);
+              }}
+            >
+              保存
+            </button>
+
+            <button onClick={() => setShowBulkModal(false)}>キャンセル</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
