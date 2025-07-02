@@ -28,7 +28,7 @@ function RouteComponent() {
 
   const [members, setMembers] = useState<MemberPlates[]>([]);
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
-  const [newColor, setNewColor] = useState("");
+  const [newPlate, setNewPlate] = useState("");
   const [newPrice, setNewPrice] = useState(0);
   const [showRanking, setShowRanking] = useState(false);
   const [rankNotifications, setRankNotifications] = useState<
@@ -145,7 +145,7 @@ function RouteComponent() {
   };
 
   const handleAddPlate = () => {
-    const color = newColor.trim();
+    const color = newPlate.trim();
     if (!color || newPrice <= 0) return;
 
     const currentPrices = template?.prices ?? {};
@@ -157,7 +157,7 @@ function RouteComponent() {
       name: "カスタムテンプレート",
       prices: updatedPrices,
     });
-    setNewColor("");
+    setNewPlate("");
     setNewPrice(0);
   };
 
@@ -271,9 +271,13 @@ function RouteComponent() {
         </div>
       )}
 
-      <p>グループ全体の合計: {total.toLocaleString()} 円</p>
+      <div className="group-accountant">
+        <p className="group-accountant__price">
+          合計：{total.toLocaleString()} 円
+        </p>
+      </div>
       <div className="group-room__template-editor">
-        <h3>🍣 皿の設定</h3>
+        <h3>皿の設定</h3>
 
         {template && (
           <ul>
@@ -294,13 +298,13 @@ function RouteComponent() {
         )}
 
         <input
-          placeholder="新しい色"
-          value={newColor}
-          onChange={(e) => setNewColor(e.target.value)}
+          placeholder="新しい皿"
+          value={newPlate}
+          onChange={(e) => setNewPlate(e.target.value)}
         />
         <input
           placeholder="金額"
-          type="number"
+          type="text"
           value={newPrice}
           onChange={(e) => setNewPrice(Number(e.target.value))}
         />

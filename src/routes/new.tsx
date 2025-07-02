@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useCreateRoom } from "../hooks/useCreateRoom";
 import { type Member } from "../api/room";
-import { plateTemplates } from "../constants/templates";
 import "./new.css";
 
 export const Route = createFileRoute({
@@ -13,7 +12,6 @@ export default function NewRoom() {
   const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
   const [members, setMembers] = useState<Member[]>([{ userId: "", name: "" }]);
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
 
   const { mutate, isPending } = useCreateRoom((data) => {
     navigate({ to: `/group/${data.roomId}/share` });
@@ -40,28 +38,12 @@ export default function NewRoom() {
     mutate({
       groupName,
       members: validMembers,
-      templateId: selectedTemplateId || undefined, // 空文字の場合 undefined に
     });
   };
 
   return (
     <main className="new-room">
       <h1 className="new-room__heading">グループ作成</h1>
-
-      <h3 className="new-room__subheading">店を選んでください</h3>
-      <select
-        name="templateId"
-        className="new-room__select"
-        value={selectedTemplateId}
-        onChange={(e) => setSelectedTemplateId(e.target.value)}
-      >
-        <option value="">店舗を選択</option>
-        {plateTemplates.map((t) => (
-          <option key={t.id} value={t.id}>
-            {t.name}
-          </option>
-        ))}
-      </select>
 
       <div className="new-room__form">
         <h3 className="new-room__subheading">グループ名</h3>
