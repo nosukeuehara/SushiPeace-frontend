@@ -21,12 +21,10 @@ export const useSocket = ({ roomId, userId, onSync, onTemplateUpdate }: UseSocke
   }, [roomId, userId]);
 
   useEffect(() => {
-    const handleSync = (payload: { members: MemberPlates[]; templateId?: string }) => {
-      onSync(payload.members);
-      if (payload.templateId && onTemplateUpdate) {
-        onTemplateUpdate(payload.templateId);
-      }
+    const handleSync = (payload: { members: MemberPlates[]; templateData?: Record<string, number> }) => {
+      onSync(payload.members, payload.templateData);
     };
+
 
     socket.on("sync", handleSync);
     return () => {
