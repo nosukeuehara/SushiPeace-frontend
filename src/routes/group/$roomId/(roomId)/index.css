@@ -1,21 +1,21 @@
-.group-room {
+.groupRoom {
   max-width: 720px;
   margin: 32px auto;
   padding: var(--space-lg);
   border-radius: 16px;
 }
 
-.group-room__header {
+.header {
   margin-bottom: var(--space-md);
   text-align: center;
 }
 
-.group-room__room-id {
+.roomId {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
 
-.group-room__ranking {
+.ranking {
   margin-top: var(--space-md);
   margin-bottom: var(--space-lg);
   padding: var(--space-sm);
@@ -25,24 +25,25 @@
   color: var(--color-text-subtle);
 }
 
-.group-room__ranking h3 {
+.ranking h3 {
   margin-bottom: var(--space-xs);
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
 
-.group-room__ranking ol {
+.ranking ol {
   padding-left: var(--space-md);
   margin-bottom: var(--space-sm);
 }
 
-.group-room__controls {
+.controls {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding-bottom: 20px;
+  gap: 0.5rem;
 }
 
-.group-room__switch-user {
+.switchUser {
   display: block;
   color: var(--color-text);
   border: none;
@@ -50,21 +51,21 @@
   cursor: pointer;
 }
 
-.group-room__summary {
+.summary {
   font-size: var(--font-size-md);
   text-align: center;
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--space-lg);
 }
 
-.group-room__member-list {
+.memberList {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: var(--space-lg);
 }
 
-.group-room__share-button {
+.shareButton {
   width: 100%;
   padding: var(--space-sm) var(--space-md);
   background-color: var(--color-primary);
@@ -76,26 +77,26 @@
   box-shadow: 0 2px 4px var(--color-shadow);
 }
 
-.group-room__share-button:hover {
+.shareButton:hover {
   background-color: var(--color-primary-dark);
 }
 
-.group-room--select {
+.select {
   padding: var(--space-lg);
   text-align: center;
 }
 
-.group-room__subheading {
+.subheading {
   margin-bottom: 20px;
   color: var(--color-text);
 }
 
-.group-room__member-list ul {
+.selectList {
   list-style: none;
   padding: 0;
 }
 
-.group-room__select-button {
+.selectButton {
   margin: var(--space-xs);
   padding: var(--space-sm) var(--space-md);
   border: none;
@@ -104,48 +105,44 @@
   font-weight: var(--font-weight-bold);
 }
 
-.group-room__select-button:hover {
+.selectButton:hover {
   background-color: var(--color-secondary-dark);
 }
 
-.member-wrapper {
+.memberWrapper {
   transition: all 0.2s ease;
 }
 
-.member-wrapper {
-  transition: all 0.2s ease;
-}
-
-.member-wrapper--self {
+.memberWrapperSelf {
   transform: scale(1.03);
   padding: var(--space-sm);
 }
 
-.member-wrapper--readonly {
+.memberWrapperReadonly {
   opacity: 0.6;
   transform: scale(0.95);
   filter: grayscale(0.3);
 }
 
-.rank-banners {
+.rankBanners {
   position: fixed;
   top: 40px;
   right: 10px;
 }
 
-.rank-banner__typeTitle {
+.rankBannerTypeTitle {
   font-size: var(--font-size-lg);
   font-weight: bold;
   margin-bottom: 0.5rem;
   padding-right: 10px;
 }
 
-.rank-banner {
+.rankBanner {
   position: relative;
   top: 40px;
   right: 10px;
   min-width: 250px;
-  padding: 10px 5px 10px 5px;
+  padding: 10px 5px;
   border-radius: 2px;
   text-align: left;
   font-weight: bold;
@@ -156,17 +153,18 @@
   margin-bottom: 10px;
 }
 
-.rank-banner--group {
+.rankBannerGroup {
   background-color: var(--ranking-bg-yellow);
   color: var(--ranking-color-text-2);
   border-left: solid 3px var(--ranking-color-text-2);
 }
 
-.rank-banner--personal {
+.rankBannerPersonal {
   background-color: var(--ranking-bg-blue);
   color: var(--ranking-color-text-1);
   border-left: solid 3px var(--ranking-color-text-1);
 }
+
 @keyframes fadeSlide {
   from {
     opacity: 0;
@@ -178,14 +176,14 @@
   }
 }
 
-.group-accountant {
+.accountant {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 20px;
 }
 
-.group-accountant__price {
+.accountantPrice {
   font-size: var(--font-size-xl);
   font-weight: bold;
   color: var(--color-primary);
@@ -204,7 +202,7 @@
   z-index: 999;
 }
 
-.modal-content {
+.modalContent {
   background: white;
   padding: 2rem;
   border-radius: 8px;

@@ -1,9 +1,21 @@
-export const Route = createFileRoute({
-  component: RouteComponent,
-})
+type Notification = {
+  id: number;
+  type: "group" | "personal";
+  message: string;
+};
 
-function RouteComponent() {
+export function RankNotifications({
+  notifications,
+}: {
+  notifications: Notification[];
+}) {
   return (
-    <div>Hello "/group/$roomId/(roomId)/components/RankNotifications"!</div>
-  )
+    <div className="rank-banners">
+      {notifications.map((n) => (
+        <div key={n.id} className={`rank-banner rank-banner--${n.type}`}>
+          {n.message}
+        </div>
+      ))}
+    </div>
+  );
 }
