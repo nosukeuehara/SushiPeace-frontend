@@ -1,8 +1,9 @@
 .groupRoom {
   max-width: 720px;
-  margin: 32px auto;
-  padding: var(--space-lg);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
   border-radius: 16px;
+  width: 100%;
 }
 
 .header {
@@ -38,9 +39,15 @@
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   padding-bottom: 20px;
   gap: 0.5rem;
+}
+
+@media (min-width: 480px) {
+  .controls {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .switchUser {
@@ -63,6 +70,39 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: var(--space-lg);
+}
+
+.group-room__member-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.group-room__template-editor {
+  background-color: var(--color-surface-alt);
+  padding: var(--space-md);
+  border-radius: 8px;
+  margin-bottom: var(--space-lg);
+}
+
+.group-room__template-editor ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-md);
+}
+
+.group-room__template-editor li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xs) 0;
+}
+
+.group-room__template-editor input {
+  width: 100%;
+  padding: var(--space-xs);
+  margin-bottom: var(--space-xs);
 }
 
 .shareButton {
@@ -202,7 +242,7 @@
   z-index: 999;
 }
 
-.modalContent {
+.modal-content {
   background: white;
   padding: 2rem;
   border-radius: 8px;
