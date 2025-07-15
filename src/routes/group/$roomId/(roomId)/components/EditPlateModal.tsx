@@ -36,8 +36,10 @@ export const EditPlateModal = ({
           />
         </label>
 
-        <button onClick={onSave}>保存</button>
-        <button onClick={onCancel}>キャンセル</button>
+        <div className="modal-buttons">
+          <button onClick={onSave}>保存</button>
+          <button onClick={onCancel}>キャンセル</button>
+        </div>
       </div>
     </div>
   );

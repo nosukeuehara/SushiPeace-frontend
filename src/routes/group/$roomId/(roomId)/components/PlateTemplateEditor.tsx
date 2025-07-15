@@ -28,34 +28,38 @@ export const PlateTemplateEditor = ({
           <li key={`plate-${color}`}>
             <span>{color}</span>
             <span>{price} 円</span>
-            <button onClick={() => onEdit(color, price)}>編集</button>
-            <button onClick={() => onRemove(color)}>削除</button>
+            <div className="plate-editor__actions">
+              <button onClick={() => onEdit(color, price)}>編集</button>
+              <button onClick={() => onRemove(color)}>削除</button>
+            </div>
           </li>
         ))}
       </ul>
 
-      <input
-        placeholder="新しい皿"
-        value={newPlate}
-        onChange={(e) => setNewPlate(e.target.value)}
-      />
-      <input
-        placeholder="金額"
-        type="number"
-        value={newPrice}
-        onChange={(e) => setNewPrice(Number(e.target.value))}
-      />
-      <button
-        onClick={() => {
-          if (newPlate.trim() && newPrice > 0) {
-            onAdd(newPlate.trim(), newPrice);
-            setNewPlate("");
-            setNewPrice(0);
-          }
-        }}
-      >
-        追加
-      </button>
+      <div className="plate-editor__add">
+        <input
+          placeholder="新しい皿"
+          value={newPlate}
+          onChange={(e) => setNewPlate(e.target.value)}
+        />
+        <input
+          placeholder="金額"
+          type="number"
+          value={newPrice}
+          onChange={(e) => setNewPrice(Number(e.target.value))}
+        />
+        <button
+          onClick={() => {
+            if (newPlate.trim() && newPrice > 0) {
+              onAdd(newPlate.trim(), newPrice);
+              setNewPlate("");
+              setNewPrice(0);
+            }
+          }}
+        >
+          追加
+        </button>
+      </div>
     </div>
   );
 };
