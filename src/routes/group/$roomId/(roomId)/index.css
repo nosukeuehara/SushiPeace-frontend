@@ -66,14 +66,16 @@
 }
 
 .memberList {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   flex-direction: column;
   gap: 10px;
   margin-bottom: var(--space-lg);
 }
 
 .group-room__member-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   flex-direction: column;
   gap: var(--space-md);
   margin-bottom: var(--space-lg);
@@ -93,8 +95,8 @@
 }
 
 .group-room__template-editor li {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
   padding: var(--space-xs) 0;
 }
@@ -104,6 +106,24 @@
   padding: var(--space-xs);
   margin-bottom: var(--space-xs);
 }
+.plate-editor__actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.plate-editor__add {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+@media (min-width: 480px) {
+  .plate-editor__add {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
 
 .shareButton {
   width: 100%;
@@ -164,24 +184,25 @@
   filter: grayscale(0.3);
 }
 
-.rankBanners {
+.rank-banners {
   position: fixed;
-  top: 40px;
-  right: 10px;
+  top: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 320px;
 }
-
-.rankBannerTypeTitle {
+.rank-banner-type-title {
   font-size: var(--font-size-lg);
   font-weight: bold;
   margin-bottom: 0.5rem;
   padding-right: 10px;
 }
 
-.rankBanner {
+.rank-banner {
   position: relative;
-  top: 40px;
-  right: 10px;
-  min-width: 250px;
+  min-width: 200px;
+  width: 100%;
   padding: 10px 5px;
   border-radius: 2px;
   text-align: left;
@@ -193,13 +214,13 @@
   margin-bottom: 10px;
 }
 
-.rankBannerGroup {
+.rank-banner--group {
   background-color: var(--ranking-bg-yellow);
   color: var(--ranking-color-text-2);
   border-left: solid 3px var(--ranking-color-text-2);
 }
 
-.rankBannerPersonal {
+.rank-banner--personal {
   background-color: var(--ranking-bg-blue);
   color: var(--ranking-color-text-1);
   border-left: solid 3px var(--ranking-color-text-1);
@@ -217,7 +238,8 @@
 }
 
 .accountant {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   flex-direction: column;
   align-items: center;
   padding-bottom: 20px;
@@ -234,12 +256,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
   background: rgba(0, 0, 0, 0.4);
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
 }
 
 .modal-content {
@@ -249,4 +270,56 @@
   width: 90%;
   max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 480px) {
+  .rank-banners {
+    top: 40px;
+    right: 10px;
+    left: auto;
+    transform: none;
+    width: auto;
+  }
+}
+
+.modal-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+@media (min-width: 480px) {
+  .modal-row {
+    flex-direction: row;
+  }
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .modal-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.modal-content label {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: var(--space-xs);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  margin-bottom: var(--space-xs);
 }

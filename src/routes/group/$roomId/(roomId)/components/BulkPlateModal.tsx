@@ -22,10 +22,7 @@ export const BulkPlateModal = ({
         <p>皿の名前と金額を入力してください。</p>
 
         {entries.map((entry, index) => (
-          <div
-            key={index}
-            style={{display: "flex", gap: "8px", marginBottom: "8px"}}
-          >
+          <div key={index} className="modal-row">
             <input
               type="text"
               placeholder="皿の名前"
@@ -49,9 +46,11 @@ export const BulkPlateModal = ({
           </div>
         ))}
 
-        <button onClick={onAddRow}>＋行を追加</button>
-        <button onClick={onSave}>保存</button>
-        <button onClick={onCancel}>キャンセル</button>
+        <div className="modal-buttons">
+          <button onClick={onAddRow}>＋行を追加</button>
+          <button onClick={onSave}>保存</button>
+          <button onClick={onCancel}>キャンセル</button>
+        </div>
       </div>
     </div>
   );
