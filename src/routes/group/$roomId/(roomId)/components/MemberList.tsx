@@ -17,15 +17,15 @@ export const MemberList = ({
   onRemove,
 }: Props) => {
   return (
-    <div className="group-room__member-list">
+    <div className="flex flex-col gap-4">
       {members.map((m) => (
         <div
           key={m.userId}
-          className={`member-wrapper ${
+          className={
             m.userId === currentUserId
-              ? "member-wrapper--self"
-              : "member-wrapper--readonly"
-          }`}
+              ? "scale-105 p-2"
+              : "opacity-60 scale-95"
+          }
         >
           <MemberPlateCounter
             member={m}
