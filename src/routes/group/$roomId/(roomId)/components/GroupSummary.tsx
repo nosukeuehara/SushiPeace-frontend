@@ -27,19 +27,22 @@ export const GroupSummary = ({
     .slice(0, 3);
 
   return (
-    <div className="group-summary">
-      <p className="group-accountant__price">
+    <div className="mb-6 text-center">
+      <p className="mb-2 text-xl font-bold text-orange-700">
         合計：{total.toLocaleString()} 円
       </p>
 
-      <button onClick={onToggleRanking}>
+      <button
+        className="px-3 py-1 mb-2 text-sm text-teal-700 underline"
+        onClick={onToggleRanking}
+      >
         {showRanking ? "ランキングを隠す" : "ランキング"}
       </button>
 
       {showRanking && (
         <ul>
           {ranking.map((m, i) => (
-            <li key={m.userId}>
+            <li key={m.userId} className="text-sm text-gray-700">
               {i + 1}位: {m.name}（{m.subtotal.toLocaleString()}円）
             </li>
           ))}
