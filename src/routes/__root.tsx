@@ -2,13 +2,12 @@
 // トップレベルのルートになる
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import "./__root.css";
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <header className="header_container">
-        <a className="header_container__home header_homelink" href="/">
+      <header className="flex justify-center py-4 bg-orange-700">
+        <a className="text-2xl font-bold text-white font-[Outfit]" href="/">
           sushi-pals!!
         </a>
       </header>

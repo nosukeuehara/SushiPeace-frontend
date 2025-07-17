@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useCreateRoom } from "../hooks/useCreateRoom";
 import { type Member } from "../api/room";
-import "./new.css";
 
 export const Route = createFileRoute({
   component: NewRoom,
@@ -42,24 +41,24 @@ export default function NewRoom() {
   };
 
   return (
-    <main className="new-room">
-      <h1 className="new-room__heading">グループ作成</h1>
+    <main className="max-w-xl p-6 mx-auto my-8 rounded-xl">
+      <h1 className="mb-4 text-2xl text-center">グループ作成</h1>
 
-      <div className="new-room__form">
-        <h3 className="new-room__subheading">グループ名</h3>
+      <div className="flex flex-col gap-2 pt-10">
+        <h3 className="mb-2 text-lg text-gray-600">グループ名</h3>
         <input
-          className="new-room__input"
+          className="w-full p-2 mb-4 bg-gray-100 border rounded"
           value={groupName}
           name="groupName"
           onChange={(e) => setGroupName(e.target.value)}
           placeholder="グループ名"
         />
 
-        <h3 className="new-room__subheading">メンバーを追加してください</h3>
+        <h3 className="mb-2 text-lg text-gray-600">メンバーを追加してください</h3>
         {members.map((m, i) => (
           <input
             key={i}
-            className="new-room__input"
+            className="w-full p-2 mb-4 bg-gray-100 border rounded"
             name="memberName"
             value={m.name}
             onChange={(e) => {
@@ -72,17 +71,17 @@ export default function NewRoom() {
         ))}
       </div>
 
-      <div className="new-room__actions">
+      <div className="flex flex-col gap-2 mt-6 sm:flex-row sm:justify-between">
         <button
           type="button"
-          className="new-room__button new-room__button--add"
+          className="px-4 py-2 font-bold text-white bg-teal-600 rounded shadow"
           onClick={() => setMembers([...members, { userId: "", name: "" }])}
         >
           ＋ メンバー追加
         </button>
         <button
           type="button"
-          className="new-room__button new-room__button--create"
+          className="px-4 py-2 font-bold text-white bg-orange-600 rounded shadow"
           onClick={handleSubmit}
           disabled={isPending}
         >

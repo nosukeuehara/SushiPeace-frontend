@@ -9,7 +9,6 @@ import {GroupSummary} from "./components/GroupSummary";
 import {MemberList} from "./components/MemberList";
 import {ShareButton} from "./components/ShareButton";
 import {useState} from "react";
-import "./index.css";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -47,9 +46,9 @@ export function RouteComponent() {
 
   if (!userId) {
     return (
-      <div className="groupRoom select">
-        <h2 className="subheading">あなたは誰ですか？</h2>
-        <ul className="memberList">
+      <div className="p-6 mx-auto my-8 text-center max-w-xl rounded-xl">
+        <h2 className="mb-4 text-xl">あなたは誰ですか？</h2>
+        <ul className="flex flex-col gap-2">
           {members.map((m) => (
             <li key={m.userId}>
               <button onClick={() => handleSelectUser(m.userId)}>
@@ -63,17 +62,17 @@ export function RouteComponent() {
   }
 
   return (
-    <div className="groupRoom">
+    <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
       {rankNotifications.length > 0 && (
         <RankNotifications notifications={rankNotifications} />
       )}
 
-      <div className="header">
+      <div className="mb-4 text-center">
         <h2>{data.groupName}</h2>
         <span>ルームID: {roomId}</span>
       </div>
 
-      <div className="controls">
+      <div className="grid grid-cols-1 gap-2 pb-5 md:grid-cols-2">
         <button onClick={() => setShowRanking((prev) => !prev)}>
           ランキング
         </button>
@@ -96,7 +95,7 @@ export function RouteComponent() {
       />
 
       {template && (
-        <div className="templateEditor">
+        <div className="p-4 mb-6 bg-gray-100 rounded">
           <PlateTemplateEditor
             template={template}
             onEdit={(color, price) => setEditingPlate({color, price})}
@@ -114,7 +113,7 @@ export function RouteComponent() {
         </div>
       )}
 
-      <div className="memberList">
+      <div className="grid grid-cols-1 gap-4 mb-6">
         <MemberList
           members={members}
           currentUserId={userId}
@@ -124,7 +123,7 @@ export function RouteComponent() {
         />
       </div>
 
-      <div className="shareButton">
+      <div className="mt-4">
         <ShareButton
           groupName={data.groupName}
           members={members}

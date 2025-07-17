@@ -1,5 +1,4 @@
 import type { MemberPlates } from "../types/plate";
-import "./MemberPlateCounter.css";
 
 type Props = {
   member: MemberPlates;
@@ -23,39 +22,39 @@ export const MemberPlateCounter = ({
 
   return (
     <div>
-      <div className="member-header">
+      <div className="flex items-baseline justify-start gap-2 pb-2">
         <h4>{member.name}</h4>
         <p>合計: {total.toLocaleString()} 円</p>
       </div>
 
-      <div className="sushi-plates">
+      <div className="flex flex-col gap-2 mb-6">
         {Object.entries(prices).map(([color, price]) => (
-          <div key={`${color}-${price}`} className="sushi-plate">
-            <div className="sushi-plate__label">
+          <div key={`${color}-${price}`} className="flex items-center justify-between gap-2">
+            <div className="font-bold text-base text-gray-900">
               {color}皿（{price}円）
             </div>
 
             {!readonly ? (
-              <div className="sushi-plate__counter">
+              <div className="flex flex-1 justify-end gap-2">
                 <button
-                  className="sushi-plate__counter--minus"
+                  className="text-base"
                   onClick={() => onRemove(member.userId, color)}
                 >
                   −
                 </button>
-                <div className="sushi-plate__num">
+                <div className="font-bold text-base">
                   {member.counts[color] ?? 0}
                 </div>
                 <button
-                  className="sushi-plate__counter--plus"
+                  className="text-base"
                   onClick={() => onAdd(member.userId, color)}
                 >
                   ＋
                 </button>
               </div>
             ) : (
-              <div className="sushi-plate__counter--readonly">
-                <div className="sushi-plate__num--readonly">
+              <div className="text-center">
+                <div className="font-bold text-base">
                   {member.counts[color] ?? 0} 枚
                 </div>
               </div>
