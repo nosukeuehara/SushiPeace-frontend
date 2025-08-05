@@ -1,8 +1,6 @@
-type BulkEntry = {color: string; price: number};
-
 type Props = {
-  entries: BulkEntry[];
-  onChange: (entries: BulkEntry[]) => void;
+  entries: number[];
+  onChange: (entries: number[]) => void;
   onAddRow: () => void;
   onSave: () => void;
   onCancel: () => void;
@@ -19,32 +17,23 @@ export const BulkPlateModal = ({
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
       <div className="w-11/12 max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h3 className="mb-2 text-lg font-bold">皿の一括登録</h3>
-        <p className="mb-4 text-sm text-gray-600">皿の名前と金額を入力してください。</p>
+        <p className="mb-4 text-sm text-gray-600">
+          皿の金額を入力してください。名前は自動で設定されます。
+        </p>
 
-        {entries.map((entry, index) => (
+        {entries.map((price, index) => (
           <div
             key={index}
             className="flex flex-col gap-2 mb-3 sm:flex-row"
           >
             <input
-              type="text"
-              placeholder="皿の名前"
-              className="flex-1 p-2 border rounded"
-              value={entry.color}
-              onChange={(e) => {
-                const updated = [...entries];
-                updated[index].color = e.target.value;
-                onChange(updated);
-              }}
-            />
-            <input
               type="number"
               placeholder="金額"
               className="flex-1 p-2 border rounded"
-              value={entry.price}
+              value={price}
               onChange={(e) => {
                 const updated = [...entries];
-                updated[index].price = Number(e.target.value);
+                updated[index] = Number(e.target.value);
                 onChange(updated);
               }}
             />

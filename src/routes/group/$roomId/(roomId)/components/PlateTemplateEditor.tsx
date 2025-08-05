@@ -4,7 +4,7 @@ type Props = {
   template: {prices: Record<string, number>};
   onEdit: (color: string, price: number) => void;
   onRemove: (color: string) => void;
-  onAdd: (color: string, price: number) => void;
+  onAdd: (price: number) => void;
   onBulkClick: () => void;
 };
 
@@ -15,7 +15,6 @@ export const PlateTemplateEditor = ({
   onAdd,
   onBulkClick,
 }: Props) => {
-  const [newPlate, setNewPlate] = useState("");
   const [newPrice, setNewPrice] = useState(0);
 
   return (
@@ -43,12 +42,6 @@ export const PlateTemplateEditor = ({
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <input
-          placeholder="新しい皿"
-          className="flex-1 p-2 border rounded"
-          value={newPlate}
-          onChange={(e) => setNewPlate(e.target.value)}
-        />
-        <input
           placeholder="金額"
           type="number"
           className="flex-1 p-2 border rounded"
@@ -58,9 +51,8 @@ export const PlateTemplateEditor = ({
         <button
           className="px-3 py-1 text-white bg-teal-600 rounded"
           onClick={() => {
-            if (newPlate.trim() && newPrice > 0) {
-              onAdd(newPlate.trim(), newPrice);
-              setNewPlate("");
+            if (newPrice > 0) {
+              onAdd(newPrice);
               setNewPrice(0);
             }
           }}
