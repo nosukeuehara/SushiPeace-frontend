@@ -107,7 +107,7 @@ export function RouteComponent() {
               handleUpdateTemplate(updated);
             }}
             onAdd={(price) => {
-              const color = `${price}円皿`;
+              const color = `${price}円 皿`;
               const updated = {...template.prices, [color]: price};
               handleUpdateTemplate(updated);
             }}
@@ -158,9 +158,7 @@ export function RouteComponent() {
         <BulkPlateModal
           entries={bulkEntries}
           onChange={setBulkEntries}
-          onAddRow={() =>
-            setBulkEntries([...bulkEntries, 0])
-          }
+          onAddRow={() => setBulkEntries([...bulkEntries, 0])}
           onSave={() => {
             const updated = {...template?.prices};
             bulkEntries.forEach((price) => {

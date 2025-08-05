@@ -15,12 +15,15 @@ export const PlateTemplateEditor = ({
   onAdd,
   onBulkClick,
 }: Props) => {
-  const [newPrice, setNewPrice] = useState(0);
+  const [newPrice, setNewPrice] = useState("");
 
   return (
     <div className="p-4 mb-6 bg-gray-100 rounded">
       <h3 className="mb-2 font-bold">皿の設定</h3>
-      <button className="mb-4 text-sm text-teal-700 underline" onClick={onBulkClick}>
+      <button
+        className="mb-4 text-sm text-teal-700 underline"
+        onClick={onBulkClick}
+      >
         📝 一括登録
       </button>
 
@@ -43,17 +46,17 @@ export const PlateTemplateEditor = ({
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <input
           placeholder="金額"
-          type="number"
+          type="text"
           className="flex-1 p-2 border rounded"
           value={newPrice}
-          onChange={(e) => setNewPrice(Number(e.target.value))}
+          onChange={(e) => setNewPrice(e.target.value)}
         />
         <button
           className="px-3 py-1 text-white bg-teal-600 rounded"
           onClick={() => {
-            if (newPrice > 0) {
-              onAdd(newPrice);
-              setNewPrice(0);
+            if (Number(newPrice) > 0) {
+              onAdd(Number(newPrice));
+              setNewPrice("");
             }
           }}
         >
