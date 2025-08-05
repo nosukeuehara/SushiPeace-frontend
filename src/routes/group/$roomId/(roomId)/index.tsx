@@ -34,11 +34,11 @@ export function RouteComponent() {
 
   const [showRanking, setShowRanking] = useState(false);
   const [editingPlate, setEditingPlate] = useState<{
-    color: string;
+    originalColor: string;
     price: number;
   } | null>(null);
   const [showBulkModal, setShowBulkModal] = useState(false);
-  const [bulkEntries, setBulkEntries] = useState([{color: "", price: 0}]);
+  const [bulkEntries, setBulkEntries] = useState([0]);
 
   if (isLoading) return <p>読み込み中...</p>;
   if (error) return <p>エラーが発生しました: {(error as Error).message}</p>;
@@ -98,13 +98,16 @@ export function RouteComponent() {
         <div className="p-4 mb-6 bg-gray-100 rounded">
           <PlateTemplateEditor
             template={template}
-            onEdit={(color, price) => setEditingPlate({color, price})}
+            onEdit={(color, price) =>
+              setEditingPlate({originalColor: color, price})
+            }
             onRemove={(color) => {
               const updated = {...template.prices};
               delete updated[color];
               handleUpdateTemplate(updated);
             }}
-            onAdd={(color, price) => {
+            onAdd={(price) => {
+              const color = `${price}円皿`;
               const updated = {...template.prices, [color]: price};
               handleUpdateTemplate(updated);
             }}
@@ -134,16 +137,16 @@ export function RouteComponent() {
 
       {editingPlate && (
         <EditPlateModal
-          color={editingPlate.color}
           price={editingPlate.price}
-          onChange={(newColor, newPrice) =>
-            setEditingPlate({color: newColor, price: newPrice})
+          onChange={(newPrice) =>
+            setEditingPlate({...editingPlate, price: newPrice})
           }
           onSave={() => {
             const updated = {...template!.prices};
-            const oldColor = editingPlate.color;
+            const oldColor = editingPlate.originalColor;
+            const newColor = `${editingPlate.price}円皿`;
             delete updated[oldColor];
-            updated[editingPlate.color] = editingPlate.price;
+            updated[newColor] = editingPlate.price;
             handleUpdateTemplate(updated);
             setEditingPlate(null);
           }}
@@ -156,18 +159,19 @@ export function RouteComponent() {
           entries={bulkEntries}
           onChange={setBulkEntries}
           onAddRow={() =>
-            setBulkEntries([...bulkEntries, {color: "", price: 0}])
+            setBulkEntries([...bulkEntries, 0])
           }
           onSave={() => {
             const updated = {...template?.prices};
-            bulkEntries.forEach(({color, price}) => {
-              if (color.trim() && price > 0) {
-                updated[color.trim()] = price;
+            bulkEntries.forEach((price) => {
+              if (price > 0) {
+                const color = `${price}円皿`;
+                updated[color] = price;
               }
             });
             handleUpdateTemplate(updated);
             setShowBulkModal(false);
-            setBulkEntries([{color: "", price: 0}]);
+            setBulkEntries([0]);
           }}
           onCancel={() => setShowBulkModal(false)}
         />
