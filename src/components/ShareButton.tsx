@@ -1,5 +1,5 @@
-import type {MemberPlates, PlateTemplate} from "../../../../../types/plate";
-import {generateShareText} from "../../../../../util/shareText";
+import type {MemberPlates, PlateTemplate} from "../types/plate";
+import {generateShareText} from "../util/shareText";
 
 type Props = {
   groupName: string;
@@ -26,5 +26,11 @@ export const ShareButton = ({groupName, members, prices, roomUrl}: Props) => {
     }
   };
 
-  return <button onClick={handleShare}>📤 会計を共有する</button>;
+  return (
+    <button className="block mx-auto" onClick={handleShare}>
+      <span className="font-semibold bg-orange-700 text-neutral-100 rounded px-4 py-2">
+        会計を共有する
+      </span>
+    </button>
+  );
 };

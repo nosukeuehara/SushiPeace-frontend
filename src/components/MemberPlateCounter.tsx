@@ -1,4 +1,4 @@
-import type { MemberPlates } from "../types/plate";
+import type {MemberPlates} from "../types/plate";
 
 type Props = {
   member: MemberPlates;
@@ -12,7 +12,6 @@ export const MemberPlateCounter = ({
   member,
   onAdd,
   onRemove,
-  readonly,
   prices,
 }: Props) => {
   const total = Object.entries(member.counts).reduce(
@@ -22,45 +21,51 @@ export const MemberPlateCounter = ({
 
   return (
     <div>
-      <div className="flex items-baseline justify-start gap-2 pb-2">
-        <h4>{member.name}</h4>
-        <p>合計: {total.toLocaleString()} 円</p>
+      <div className="flex items-baseline justify-start gap-2 py-5">
+        <h4 className="text-xl font-bold">{member.name}：</h4>
+        <p className="font-bold">
+          <span className="text-2xl font-semibold">
+            {total.toLocaleString()} 円
+          </span>
+        </p>
       </div>
 
-      <div className="flex flex-col gap-2 mb-6">
-        {Object.entries(prices).map(([color, price]) => (
-          <div key={`${color}-${price}`} className="flex items-center justify-between gap-2">
-            <div className="font-bold text-base text-gray-900">
-              {color}皿（{price}円）
-            </div>
+      <div className="flex flex-col gap-4 mb-6">
+        {Object.entries(prices)
+          .sort((a, b) => b[1] - a[1])
+          .map(([color, price]) => (
+            <div
+              key={`${color}-${price}`}
+              className="flex items-center justify-between gap-2"
+            >
+              <div className="font-bold text-base text-gray-900 flex items-center">
+                <div className="w-[100px] text-right">
+                  <span className="text-2xl">{price}円</span>
+                  <span className="text-lg pl-2">皿</span>
+                </div>
+              </div>
 
-            {!readonly ? (
               <div className="flex flex-1 justify-end gap-2">
-                <button
-                  className="text-base"
-                  onClick={() => onRemove(member.userId, color)}
-                >
-                  −
-                </button>
-                <div className="font-bold text-base">
-                  {member.counts[color] ?? 0}
-                </div>
-                <button
-                  className="text-base"
-                  onClick={() => onAdd(member.userId, color)}
-                >
-                  ＋
-                </button>
-              </div>
-            ) : (
-              <div className="text-center">
-                <div className="font-bold text-base">
-                  {member.counts[color] ?? 0} 枚
+                <div className="flex items-center gap-4">
+                  <button
+                    className="size-9 rounded-full bg-blue-200 shadow"
+                    onClick={() => onRemove(member.userId, color)}
+                  >
+                    <span className="text-gray-700 text-xl">ー</span>
+                  </button>
+                  <div className="text-2xl font-bold w-8 text-center">
+                    {member.counts[color] ?? 0}
+                  </div>
+                  <button
+                    className="size-9 rounded-full bg-pink-200 shadow"
+                    onClick={() => onAdd(member.userId, color)}
+                  >
+                    <span className="text-gray-700 text-xl">＋</span>
+                  </button>
                 </div>
               </div>
-            )}
-          </div>
-        ))}
+            </div>
+          ))}
       </div>
     </div>
   );

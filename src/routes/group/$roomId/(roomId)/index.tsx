@@ -1,13 +1,13 @@
 import {useParams} from "@tanstack/react-router";
 import {useRoom} from "../../../../hooks/useRoom";
 import {useGroupRoomState} from "../../../../hooks/useGroupRoomState";
-import {RankNotifications} from "./components/RankNotifications";
-import {PlateTemplateEditor} from "./components/PlateTemplateEditor";
-import {EditPlateModal} from "./components/EditPlateModal";
-import {BulkPlateModal} from "./components/BulkPlateModal";
-import {GroupSummary} from "./components/GroupSummary";
-import {MemberList} from "./components/MemberList";
-import {ShareButton} from "./components/ShareButton";
+import {RankNotifications} from "../../../../components/RankNotifications";
+import {PlateTemplateEditor} from "../../../../components/PlateTemplateEditor";
+import {EditPlateModal} from "../../../../components/EditPlateModal";
+import {BulkPlateModal} from "../../../../components/BulkPlateModal";
+import {GroupSummary} from "../../../../components/GroupSummary";
+import {MemberList} from "../../../../components/MemberList";
+import {ShareButton} from "../../../../components/ShareButton";
 import {useState} from "react";
 
 export const Route = createFileRoute({
@@ -35,10 +35,11 @@ export function RouteComponent() {
   const [showRanking, setShowRanking] = useState(false);
   const [editingPlate, setEditingPlate] = useState<{
     originalColor: string;
-    price: number;
+    price: string;
   } | null>(null);
   const [showBulkModal, setShowBulkModal] = useState(false);
-  const [bulkEntries, setBulkEntries] = useState([0]);
+  const [bulkEntries, setBulkEntries] = useState([""]);
+  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
 
   if (isLoading) return <p>読み込み中...</p>;
   if (error) return <p>エラーが発生しました: {(error as Error).message}</p>;
@@ -68,15 +69,18 @@ export function RouteComponent() {
       )}
 
       <div className="mb-4 text-center">
-        <h2>{data.groupName}</h2>
-        <span>ルームID: {roomId}</span>
+        <h2 className="text-3xl font-bold text-gray-700">{data.groupName}</h2>
       </div>
 
-      <div className="grid grid-cols-1 gap-2 pb-5 md:grid-cols-2">
-        <button onClick={() => setShowRanking((prev) => !prev)}>
-          ランキング
+      <div className="grid grid-cols-1 gap-2 pb-2 grid-cols-2">
+        <button
+          className="text-gray-700"
+          onClick={() => setShowRanking((prev) => !prev)}
+        >
+          {showRanking ? "ランキングを隠す" : "ランキングを見る"}
         </button>
         <button
+          className="text-gray-700"
           onClick={() => {
             localStorage.removeItem(`sushi-user-id-${roomId}`);
             setUserId(null);
@@ -90,16 +94,26 @@ export function RouteComponent() {
         members={members}
         prices={template?.prices ?? {}}
         showRanking={showRanking}
-        onToggleRanking={() => setShowRanking((prev) => !prev)}
         total={total}
       />
 
-      {template && (
+      <div className="mb-4 text-center">
+        <button
+          className="text-gray-700 text-sm"
+          onClick={() => setIsTemplateEditorOpen((prev) => !prev)}
+        >
+          <span className="text-sm font-bold rounded text-neutral-100 bg-teal-700 px-4 py-1">
+            {isTemplateEditorOpen ? "皿の設定 とじる" : "皿の設定 ひらく"}
+          </span>
+        </button>
+      </div>
+
+      {template && isTemplateEditorOpen && (
         <div className="p-4 mb-6 bg-gray-100 rounded">
           <PlateTemplateEditor
             template={template}
             onEdit={(color, price) =>
-              setEditingPlate({originalColor: color, price})
+              setEditingPlate({originalColor: color, price: String(price)})
             }
             onRemove={(color) => {
               const updated = {...template.prices};
@@ -137,7 +151,7 @@ export function RouteComponent() {
 
       {editingPlate && (
         <EditPlateModal
-          price={editingPlate.price}
+          price={String(editingPlate.price)}
           onChange={(newPrice) =>
             setEditingPlate({...editingPlate, price: newPrice})
           }
@@ -146,7 +160,7 @@ export function RouteComponent() {
             const oldColor = editingPlate.originalColor;
             const newColor = `${editingPlate.price}円皿`;
             delete updated[oldColor];
-            updated[newColor] = editingPlate.price;
+            updated[newColor] = Number(editingPlate.price);
             handleUpdateTemplate(updated);
             setEditingPlate(null);
           }}
@@ -158,18 +172,18 @@ export function RouteComponent() {
         <BulkPlateModal
           entries={bulkEntries}
           onChange={setBulkEntries}
-          onAddRow={() => setBulkEntries([...bulkEntries, 0])}
+          onAddRow={() => setBulkEntries([...bulkEntries, "0"])}
           onSave={() => {
             const updated = {...template?.prices};
             bulkEntries.forEach((price) => {
-              if (price > 0) {
+              if (Number(price) > 0) {
                 const color = `${price}円皿`;
-                updated[color] = price;
+                updated[color] = Number(price);
               }
             });
             handleUpdateTemplate(updated);
             setShowBulkModal(false);
-            setBulkEntries([0]);
+            setBulkEntries(["0"]);
           }}
           onCancel={() => setShowBulkModal(false)}
         />

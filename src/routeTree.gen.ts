@@ -154,55 +154,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupRoomIdroomIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/group/$roomId/(roomId)/components/BulkPlateModal': {
-      id: '/group/$roomId/(roomId)/components/BulkPlateModal'
-      path: ''
-      fullPath: '/group/$roomId/components/BulkPlateModal'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-    '/group/$roomId/(roomId)/components/EditPlateModal': {
-      id: '/group/$roomId/(roomId)/components/EditPlateModal'
-      path: ''
-      fullPath: '/group/$roomId/components/EditPlateModal'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-    '/group/$roomId/(roomId)/components/GroupSummary': {
-      id: '/group/$roomId/(roomId)/components/GroupSummary'
-      path: ''
-      fullPath: '/group/$roomId/components/GroupSummary'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-    '/group/$roomId/(roomId)/components/MemberList': {
-      id: '/group/$roomId/(roomId)/components/MemberList'
-      path: ''
-      fullPath: '/group/$roomId/components/MemberList'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-    '/group/$roomId/(roomId)/components/PlateTemplateEditor': {
-      id: '/group/$roomId/(roomId)/components/PlateTemplateEditor'
-      path: ''
-      fullPath: '/group/$roomId/components/PlateTemplateEditor'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-    '/group/$roomId/(roomId)/components/RankNotifications': {
-      id: '/group/$roomId/(roomId)/components/RankNotifications'
-      path: ''
-      fullPath: '/group/$roomId/components/RankNotifications'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-    '/group/$roomId/(roomId)/components/ShareButton': {
-      id: '/group/$roomId/(roomId)/components/ShareButton'
-      path: ''
-      fullPath: '/group/$roomId/components/ShareButton'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -258,69 +209,6 @@ declare module './routes/group/$roomId/(roomId)/index' {
     FileRoutesByPath['/group/$roomId/(roomId)/']['id'],
     FileRoutesByPath['/group/$roomId/(roomId)/']['path'],
     FileRoutesByPath['/group/$roomId/(roomId)/']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/BulkPlateModal' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/BulkPlateModal',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/BulkPlateModal']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/BulkPlateModal']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/BulkPlateModal']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/BulkPlateModal']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/EditPlateModal' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/EditPlateModal',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/EditPlateModal']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/EditPlateModal']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/EditPlateModal']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/EditPlateModal']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/GroupSummary' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/GroupSummary',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/GroupSummary']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/GroupSummary']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/GroupSummary']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/GroupSummary']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/MemberList' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/MemberList',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/MemberList']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/MemberList']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/MemberList']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/MemberList']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/PlateTemplateEditor' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/PlateTemplateEditor',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/PlateTemplateEditor']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/PlateTemplateEditor']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/PlateTemplateEditor']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/PlateTemplateEditor']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/RankNotifications' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/RankNotifications',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/RankNotifications']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/RankNotifications']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/RankNotifications']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/RankNotifications']['fullPath']
-  >
-}
-declare module './routes/group/$roomId/(roomId)/components/ShareButton' {
-  const createFileRoute: CreateFileRoute<
-    '/group/$roomId/(roomId)/components/ShareButton',
-    FileRoutesByPath['/group/$roomId/(roomId)/components/ShareButton']['parentRoute'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/ShareButton']['id'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/ShareButton']['path'],
-    FileRoutesByPath['/group/$roomId/(roomId)/components/ShareButton']['fullPath']
   >
 }
 

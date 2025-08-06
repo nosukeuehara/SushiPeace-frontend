@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { useCreateRoom } from "../hooks/useCreateRoom";
-import { type Member } from "../api/room";
+import {useState} from "react";
+import {useNavigate} from "@tanstack/react-router";
+import {useCreateRoom} from "../hooks/useCreateRoom";
+import {type Member} from "../api/room";
 
 export const Route = createFileRoute({
   component: NewRoom,
@@ -10,10 +10,10 @@ export const Route = createFileRoute({
 export default function NewRoom() {
   const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
-  const [members, setMembers] = useState<Member[]>([{ userId: "", name: "" }]);
+  const [members, setMembers] = useState<Member[]>([{userId: "", name: ""}]);
 
-  const { mutate, isPending } = useCreateRoom((data) => {
-    navigate({ to: `/group/${data.roomId}/share` });
+  const {mutate, isPending} = useCreateRoom((data) => {
+    navigate({to: `/group/${data.roomId}/share`});
   });
 
   const handleSubmit = () => {
@@ -54,7 +54,9 @@ export default function NewRoom() {
           placeholder="グループ名"
         />
 
-        <h3 className="mb-2 text-lg text-gray-600">メンバーを追加してください</h3>
+        <h3 className="mb-2 text-lg text-gray-600">
+          メンバーを追加してください
+        </h3>
         {members.map((m, i) => (
           <input
             key={i}
@@ -74,14 +76,14 @@ export default function NewRoom() {
       <div className="flex flex-col gap-2 mt-6 sm:flex-row sm:justify-between">
         <button
           type="button"
-          className="px-4 py-2 font-bold text-white bg-teal-600 rounded shadow"
-          onClick={() => setMembers([...members, { userId: "", name: "" }])}
+          className="px-4 py-2 font-bold text-neutral-100 bg-teal-600 rounded shadow"
+          onClick={() => setMembers([...members, {userId: "", name: ""}])}
         >
           ＋ メンバー追加
         </button>
         <button
           type="button"
-          className="px-4 py-2 font-bold text-white bg-orange-600 rounded shadow"
+          className="px-4 py-2 font-bold text-neutral-100 bg-orange-600 rounded shadow"
           onClick={handleSubmit}
           disabled={isPending}
         >

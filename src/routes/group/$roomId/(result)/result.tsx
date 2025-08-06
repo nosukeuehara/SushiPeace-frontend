@@ -1,15 +1,15 @@
-import { useParams } from "@tanstack/react-router";
-import { useRoom } from "../../../../hooks/useRoom";
-import { plateTemplates } from "../../../../constants/templates";
-import { generateShareText } from "../../../../util/shareText";
+import {useParams} from "@tanstack/react-router";
+import {useRoom} from "../../../../hooks/useRoom";
+import {plateTemplates} from "../../../../constants/templates";
+import {generateShareText} from "../../../../util/shareText";
 
 export const Route = createFileRoute({
   component: SushiResultComponent,
 });
 
 function SushiResultComponent() {
-  const { roomId } = useParams({ strict: false });
-  const { data, isLoading, error } = useRoom(roomId);
+  const {roomId} = useParams({strict: false});
+  const {data, isLoading, error} = useRoom(roomId);
   const template = plateTemplates.find((t) => t.id === data?.templateId);
 
   if (isLoading) return <p>読み込み中...</p>;
@@ -26,7 +26,9 @@ function SushiResultComponent() {
 
   return (
     <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
-      <h2 className="mb-4 text-2xl text-center">📋 {data.groupName} の会計結果</h2>
+      <h2 className="mb-4 text-2xl text-center">
+        📋 {data.groupName} の会計結果
+      </h2>
 
       <ul className="mb-4">
         {data.members.map((m) => {
@@ -63,10 +65,14 @@ function SushiResultComponent() {
         円
       </p>
 
-      <textarea className="w-full min-h-[300px] p-2 mb-4 text-sm bg-gray-100 border rounded" readOnly value={shareText} />
+      <textarea
+        className="w-full min-h-[300px] p-2 mb-4 text-sm bg-gray-100 border rounded"
+        readOnly
+        value={shareText}
+      />
 
       <button
-        className="block w-full px-4 py-2 font-bold text-white rounded shadow bg-teal-500 hover:bg-teal-600"
+        className="block w-full px-4 py-2 font-bold text-neutral-100 rounded shadow bg-teal-500 hover:bg-teal-600"
         onClick={() => {
           navigator.clipboard.writeText(shareText);
           alert("共有テキストをコピーしました！");
