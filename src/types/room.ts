@@ -13,7 +13,7 @@ export type Room = {
 export type RoomData = {
   groupName: string;
   members: MemberPlates[];
-  templateId: string;
+  prices: Record<string, number>;
   createdAt: string;
 };
 

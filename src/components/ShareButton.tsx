@@ -1,10 +1,10 @@
-import type {MemberPlates, PlateTemplate} from "../types/plate";
+import type {MemberPlates} from "../types/plate";
 import {generateShareText} from "../util/shareText";
 
 type Props = {
   groupName: string;
   members: MemberPlates[];
-  prices: PlateTemplate["prices"];
+  prices: Record<string, number>;
   roomUrl: string;
 };
 

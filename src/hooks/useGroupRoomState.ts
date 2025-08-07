@@ -53,6 +53,11 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   useEffect(() => {
     if (data && roomId) {
       setMembers(data.members);
+      setTemplate({
+        id: "custom",
+        name: "カスタムテンプレート",
+        prices: data.prices,
+      });
       updateRoomHistory(roomId, data.groupName, data.createdAt);
     }
   }, [data, roomId]);

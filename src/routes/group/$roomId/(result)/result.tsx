@@ -1,6 +1,5 @@
 import {useParams} from "@tanstack/react-router";
 import {useRoom} from "../../../../hooks/useRoom";
-import {plateTemplates} from "../../../../constants/templates";
 import {generateShareText} from "../../../../util/shareText";
 
 export const Route = createFileRoute({
@@ -10,17 +9,16 @@ export const Route = createFileRoute({
 function SushiResultComponent() {
   const {roomId} = useParams({strict: false});
   const {data, isLoading, error} = useRoom(roomId);
-  const template = plateTemplates.find((t) => t.id === data?.templateId);
+  const prices = data?.prices ?? {};
 
   if (isLoading) return <p>読み込み中...</p>;
   if (error || !data) return <p>データの取得に失敗しました</p>;
-  if (!template) return <p>テンプレートが見つかりません</p>;
 
   const shareUrl = `${window.location.origin}/group/${roomId}/result`;
   const shareText = generateShareText(
     data.groupName,
     data.members,
-    template.prices,
+    prices,
     shareUrl
   );
 
@@ -34,7 +32,7 @@ function SushiResultComponent() {
         {data.members.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
             (sum, [color, count]) =>
-              sum + count * template.prices[color as string],
+              sum + count * (prices[color as string] ?? 0),
             0
           );
           return (
@@ -56,7 +54,7 @@ function SushiResultComponent() {
               total +
               Object.entries(m.counts).reduce(
                 (sum, [color, count]) =>
-                  sum + count * template.prices[color as string],
+                  sum + count * (prices[color as string] ?? 0),
                 0
               ),
             0

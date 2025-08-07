@@ -1,9 +1,9 @@
-import type { MemberPlates, PlateTemplate } from "../types/plate";
+import type { MemberPlates } from "../types/plate";
 
 export function generateShareText(
   groupName: string,
   members: MemberPlates[],
-  prices: PlateTemplate["prices"],
+  prices: Record<string, number>,
   shareUrl: string
 ): string {
   let total = 0;

@@ -6,10 +6,9 @@ interface UseSocketParams {
   roomId: string | undefined;
   userId: string | null;
   onSync: (members: MemberPlates[], templateData?: Record<string, number>) => void;
-  onTemplateUpdate?: (templateId: string) => void;
 }
 
-export const useSocket = ({ roomId, userId, onSync, onTemplateUpdate }: UseSocketParams) => {
+export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
   useEffect(() => {
     if (!roomId || !userId) return;
     socket.connect();
@@ -30,7 +29,7 @@ export const useSocket = ({ roomId, userId, onSync, onTemplateUpdate }: UseSocke
     return () => {
       socket.off("sync", handleSync);
     };
-  }, [onSync, onTemplateUpdate]);
+  }, [onSync]);
 };
 
 export const emitCount = (roomId: string | undefined, userId: string, color: string, remove?: boolean) => {
