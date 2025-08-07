@@ -42,7 +42,7 @@ export default function NewRoom() {
 
   return (
     <main className="max-w-xl p-6 mx-auto my-8 rounded-xl">
-      <h1 className="mb-4 text-2xl text-center">グループ作成</h1>
+      <h1 className="mb-4 text-2xl font-bold text-center">グループ作成</h1>
 
       <div className="flex flex-col gap-2 pt-10">
         <h3 className="mb-2 text-lg text-gray-600">グループ名</h3>

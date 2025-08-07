@@ -1,4 +1,4 @@
-import type { MemberPlates } from "./plate";
+import type {MemberPlates, PlateTemplate} from "./plate";
 
 export type Member = {
   userId: string;
@@ -13,7 +13,7 @@ export type Room = {
 export type RoomData = {
   groupName: string;
   members: MemberPlates[];
-  templateId: string;
+  template: PlateTemplate;
   createdAt: string;
 };
 

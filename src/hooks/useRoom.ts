@@ -10,7 +10,16 @@ export const useRoom = (roomId: string | undefined) => {
         const errorBody = await res.json();
         throw new Error(errorBody?.error || "ルーム情報の取得に失敗しました");
       }
-      return res.json();
+      const raw = await res.json();
+      const template = raw.template ?? {
+        id: raw.templateId ?? "custom",
+        name: "カスタムテンプレート",
+        prices: raw.templateData ?? {},
+      };
+      return {
+        ...raw,
+        template,
+      };
     },
     enabled: !!roomId,
   });

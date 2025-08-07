@@ -53,6 +53,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   useEffect(() => {
     if (data && roomId) {
       setMembers(data.members);
+      setTemplate(data.template);
       updateRoomHistory(roomId, data.groupName, data.createdAt);
     }
   }, [data, roomId]);

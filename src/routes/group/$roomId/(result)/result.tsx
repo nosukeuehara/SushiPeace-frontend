@@ -1,6 +1,5 @@
 import {useParams} from "@tanstack/react-router";
 import {useRoom} from "../../../../hooks/useRoom";
-import {plateTemplates} from "../../../../constants/templates";
 import {generateShareText} from "../../../../util/shareText";
 
 export const Route = createFileRoute({
@@ -10,7 +9,7 @@ export const Route = createFileRoute({
 function SushiResultComponent() {
   const {roomId} = useParams({strict: false});
   const {data, isLoading, error} = useRoom(roomId);
-  const template = plateTemplates.find((t) => t.id === data?.templateId);
+  const template = data?.template;
 
   if (isLoading) return <p>読み込み中...</p>;
   if (error || !data) return <p>データの取得に失敗しました</p>;
@@ -26,7 +25,7 @@ function SushiResultComponent() {
 
   return (
     <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
-      <h2 className="mb-4 text-2xl text-center">
+      <h2 className="mb-4 text-2xl font-bold text-center">
         📋 {data.groupName} の会計結果
       </h2>
 
@@ -78,7 +77,7 @@ function SushiResultComponent() {
           alert("共有テキストをコピーしました！");
         }}
       >
-        📋 コピーしてLINEで共有
+        📋 コピーして共有
       </button>
     </div>
   );
