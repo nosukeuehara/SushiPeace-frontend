@@ -13,11 +13,15 @@ export type CreateRoomResponse = {
   shareUrl: string;
 };
 
-export const createRoom = async (payload: CreateRoomPayload): Promise<CreateRoomResponse> => {
-  const res = await fetch('http://localhost:3000/api/room', {
-    method: 'POST',
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+export const createRoom = async (
+  payload: CreateRoomPayload
+): Promise<CreateRoomResponse> => {
+  const res = await fetch(`${baseUrl}/api/room`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
   });
@@ -30,8 +34,10 @@ export const createRoom = async (payload: CreateRoomPayload): Promise<CreateRoom
   return res.json();
 };
 
-export const fetchRoom = async (roomId: string): Promise<CreateRoomResponse> => {
-  const res = await fetch(`http://localhost:3000/api/room/${roomId}`);
+export const fetchRoom = async (
+  roomId: string
+): Promise<CreateRoomResponse> => {
+  const res = await fetch(`${baseUrl}/api/room/${roomId}`);
 
   if (!res.ok) {
     const errorText = await res.text();
@@ -39,4 +45,4 @@ export const fetchRoom = async (roomId: string): Promise<CreateRoomResponse> => 
   }
 
   return res.json();
-}
+};
