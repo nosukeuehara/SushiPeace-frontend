@@ -102,8 +102,8 @@ export function RouteComponent() {
           className="text-gray-700 text-sm"
           onClick={() => setIsTemplateEditorOpen((prev) => !prev)}
         >
-          <span className="text-sm font-bold rounded text-neutral-100 bg-teal-700 px-4 py-1">
-            {isTemplateEditorOpen ? "皿の設定 とじる" : "皿の設定 ひらく"}
+          <span className="text-sm font-bold rounded text-teal-600 px-4 py-1">
+            {isTemplateEditorOpen ? "皿設定 とじる" : "皿設定 ひらく"}
           </span>
         </button>
       </div>
@@ -172,7 +172,7 @@ export function RouteComponent() {
         <BulkPlateModal
           entries={bulkEntries}
           onChange={setBulkEntries}
-          onAddRow={() => setBulkEntries([...bulkEntries, "0"])}
+          onAddRow={() => setBulkEntries([...bulkEntries, ""])}
           onSave={() => {
             const updated = {...template?.prices};
             bulkEntries.forEach((price) => {
@@ -183,7 +183,7 @@ export function RouteComponent() {
             });
             handleUpdateTemplate(updated);
             setShowBulkModal(false);
-            setBulkEntries(["0"]);
+            setBulkEntries([""]);
           }}
           onCancel={() => setShowBulkModal(false)}
         />

@@ -45,7 +45,7 @@ export const GroupSummary = ({members, prices, showRanking, total}: Props) => {
         </ul>
       )}
 
-      <p className="mb-2 pt-3 text-3xl font-bold text-orange-700">
+      <p className="mb-2 pt-3 text-3xl font-bold text-orange-600">
         合計：{total.toLocaleString()} 円
       </p>
     </div>

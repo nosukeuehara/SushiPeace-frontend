@@ -48,7 +48,7 @@ function SushiResultComponent() {
         })}
       </ul>
 
-      <p className="mb-4 text-lg font-bold text-center text-orange-700">
+      <p className="mb-4 text-lg font-bold text-center text-orange-600">
         合計金額：{" "}
         {data.members
           .reduce(

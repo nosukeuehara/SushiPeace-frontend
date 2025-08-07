@@ -27,7 +27,7 @@ export const EditPlateModal = ({price, onChange, onSave, onCancel}: Props) => {
         <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
           <button
             onClick={onSave}
-            className="px-3 py-1 text-neutral-100 bg-teal-700 rounded"
+            className="px-3 py-1 text-neutral-100 bg-teal-600 rounded"
           >
             保存
           </button>

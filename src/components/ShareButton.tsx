@@ -28,7 +28,7 @@ export const ShareButton = ({groupName, members, prices, roomUrl}: Props) => {
 
   return (
     <button className="block mx-auto" onClick={handleShare}>
-      <span className="font-semibold bg-orange-700 text-neutral-100 rounded px-4 py-2">
+      <span className="font-semibold bg-orange-600 text-neutral-100 rounded px-4 py-2">
         会計を共有する
       </span>
     </button>

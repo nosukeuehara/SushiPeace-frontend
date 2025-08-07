@@ -21,14 +21,14 @@ export const PlateTemplateEditor = ({
     <div className="p-4">
       <div className="flex items-center justify-between mb-2">
         <span className="font-bold text-xl text-gray-700">皿データ</span>
-        <button className="text-teal-700 text-lg" onClick={onBulkClick}>
+        <button className="text-teal-600 text-lg" onClick={onBulkClick}>
           一括登録
         </button>
       </div>
 
       <ul className="mb-4 list-none p-0">
         {Object.keys(template.prices).length === 0 ? (
-          <p className="text-gray-500 mb-4">皿データを追加しましょう。</p>
+          <p className="text-gray-500 mb-4">お皿の金額を設定しましょう。</p>
         ) : (
           <ul className="mb-4 list-none p-0">
             {Object.entries(template.prices)
@@ -68,7 +68,7 @@ export const PlateTemplateEditor = ({
           onChange={(e) => setNewPrice(e.target.value)}
         />
         <button
-          className="px-3 py-1 text-neutral-100 bg-teal-700 rounded"
+          className="px-3 py-1 text-neutral-100 bg-teal-600 rounded"
           onClick={() => {
             if (Number(newPrice) > 0) {
               onAdd(Number(newPrice));

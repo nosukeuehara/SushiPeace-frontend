@@ -24,7 +24,7 @@ function Index() {
       </p>
       <Link
         to="/new"
-        className="inline-block px-4 py-2 font-bold text-neutral-100 bg-orange-600 rounded shadow hover:bg-orange-700"
+        className="inline-block px-4 py-2 font-bold text-neutral-100 bg-orange-600 rounded shadow"
       >
         🍣 お寿司ルームを作成
       </Link>
