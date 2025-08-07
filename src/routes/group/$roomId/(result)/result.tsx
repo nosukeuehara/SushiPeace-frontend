@@ -1,6 +1,5 @@
 import {useParams} from "@tanstack/react-router";
 import {useRoom} from "../../../../hooks/useRoom";
-import {plateTemplates} from "../../../../constants/templates";
 import {generateShareText} from "../../../../util/shareText";
 
 export const Route = createFileRoute({
@@ -10,7 +9,7 @@ export const Route = createFileRoute({
 function SushiResultComponent() {
   const {roomId} = useParams({strict: false});
   const {data, isLoading, error} = useRoom(roomId);
-  const template = plateTemplates.find((t) => t.id === data?.templateId);
+  const template = data?.template;
 
   if (isLoading) return <p>読み込み中...</p>;
   if (error || !data) return <p>データの取得に失敗しました</p>;
