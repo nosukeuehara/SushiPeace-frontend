@@ -1,4 +1,4 @@
-import type { MemberPlates, PlateTemplate } from "../types/plate";
+import type {MemberPlates, PlateTemplate} from "../types/plate";
 
 export function generateShareText(
   groupName: string,
@@ -14,7 +14,7 @@ export function generateShareText(
       0
     );
     total += subtotal;
-    return `- ${m.name}：${subtotal.toLocaleString()}円`;
+    return `・ ${m.name}：${subtotal.toLocaleString()}円`;
   });
 
   return `🍣 ${groupName}の会計\n\n合計金額：${total.toLocaleString()}円\n${memberTexts.join(
