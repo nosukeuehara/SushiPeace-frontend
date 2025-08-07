@@ -77,7 +77,7 @@ function SushiResultComponent() {
           alert("共有テキストをコピーしました！");
         }}
       >
-        📋 コピーしてLINEで共有
+        📋 コピーして共有
       </button>
     </div>
   );
