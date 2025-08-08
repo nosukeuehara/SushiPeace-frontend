@@ -25,7 +25,7 @@ function SushiResultComponent() {
 
   return (
     <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
-      <h2 className="mb-4 text-2xl font-bold text-center text-gray-700">
+      <h2 className="mb-10 text-2xl font-bold text-center text-gray-700">
         📋 {data.groupName} の会計結果
       </h2>
 
@@ -47,7 +47,7 @@ function SushiResultComponent() {
         })}
       </ul>
 
-      <p className="mb-4 text-lg font-bold text-center text-orange-600">
+      <p className="mb-4 text-2xl font-bold text-center text-orange-600">
         合計金額：{" "}
         {data.members
           .reduce(
@@ -65,7 +65,7 @@ function SushiResultComponent() {
       </p>
 
       <textarea
-        className="w-full min-h-[300px] p-2 mb-4 text-sm bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
+        className="w-full min-h-[300px] py-3 px-2 mb-4 text-sm text-gray-700 bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
         readOnly
         value={shareText}
       />
