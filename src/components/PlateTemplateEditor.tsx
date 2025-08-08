@@ -21,7 +21,7 @@ export const PlateTemplateEditor = ({
     <div className="p-4">
       <div className="flex items-center justify-between mb-2">
         <span className="font-bold text-xl text-gray-700">皿データ</span>
-        <button className="text-teal-600 text-lg" onClick={onBulkClick}>
+        <button className="text-teal-600" onClick={onBulkClick}>
           一括登録
         </button>
       </div>

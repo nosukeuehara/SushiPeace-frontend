@@ -104,7 +104,7 @@ export function RouteComponent() {
           className="text-gray-700 text-sm"
           onClick={() => setIsTemplateEditorOpen((prev) => !prev)}
         >
-          <span className="text-sm font-bold rounded text-teal-600 px-4 py-1">
+          <span className="text-gray-700 px-4 py-1">
             {isTemplateEditorOpen ? "皿設定 とじる" : "皿設定 ひらく"}
           </span>
         </button>
