@@ -41,7 +41,7 @@ export default function NewRoom() {
   };
 
   return (
-    <main className="max-w-xl p-6 mx-auto my-8 rounded-xl">
+    <main className="max-w-xl mx-auto rounded-xl">
       <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
         寿司ルーム作成
       </h1>

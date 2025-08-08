@@ -24,7 +24,7 @@ function SushiResultComponent() {
   );
 
   return (
-    <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
+    <div className="max-w-xl mx-auto rounded-xl">
       <h2 className="mb-10 text-2xl font-bold text-center text-gray-700">
         📋 {data.groupName} の会計結果
       </h2>
