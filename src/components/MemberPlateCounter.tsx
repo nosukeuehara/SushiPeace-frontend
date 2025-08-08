@@ -51,9 +51,7 @@ export const MemberPlateCounter = ({
                     className="size-8 rounded-full"
                     onClick={() => onRemove(member.userId, color)}
                   >
-                    <span className="text-red-500 text-2xl font-extrabold">
-                      ー
-                    </span>
+                    <span className="text-red-500 text-2xl">ー</span>
                   </button>
                   <div className="text-xl text-gray-700 font-bold w-8 text-center">
                     {member.counts[color] ?? 0}
@@ -62,9 +60,7 @@ export const MemberPlateCounter = ({
                     className="size-8 rounded-full"
                     onClick={() => onAdd(member.userId, color)}
                   >
-                    <span className="text-blue-500 text-2xl font-extrabold">
-                      ✚
-                    </span>
+                    <span className="text-blue-500 text-2xl font-bold">＋</span>
                   </button>
                 </div>
               </div>

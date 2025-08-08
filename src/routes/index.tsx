@@ -41,8 +41,10 @@ function Index() {
                 className="p-2 border rounded border-gray-300"
               >
                 <Link to="/group/$roomId" params={{roomId: h.roomId}}>
-                  <div className="mb-1 font-bold text-left">{h.groupName}</div>
-                  <div className="flex flex-col items-start text-sm text-gray-700">
+                  <div className="mb-1 font-bold text-left text-gray-700">
+                    {h.groupName}
+                  </div>
+                  <div className="flex flex-col items-start text-sm text-gray-700 pb-2">
                     <span>
                       作成: {new Date(h.createdAt).toLocaleDateString()}
                     </span>

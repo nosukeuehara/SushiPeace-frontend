@@ -74,7 +74,7 @@ export function RouteComponent() {
         <h2 className="text-3xl font-bold text-gray-700">{data.groupName}</h2>
       </div>
 
-      <div className="grid grid-cols-1 gap-2 pb-2 grid-cols-2">
+      <div className="grid gap-2 pb-2 grid-cols-2">
         <button
           className="text-gray-700"
           onClick={() => setShowRanking((prev) => !prev)}

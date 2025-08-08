@@ -14,7 +14,12 @@ export const Route = createRootRoute({
           SushiPals
         </a>
       </header>
-      <Outlet />
+      <div className="container h-screen px-4">
+        <Outlet />
+      </div>
+      <footer className="flex justify-center py-4 ">
+        <span className="text-sm text-gray-600">© 2025 SushiPals</span>
+      </footer>
       <TanStackRouterDevtools />
     </>
   ),
