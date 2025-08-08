@@ -31,7 +31,7 @@ function Index() {
 
       {roomHistories.length > 0 && (
         <div className="mt-8">
-          <h2 className="pb-2 mb-3 text-lg border-b border-gray-300">
+          <h2 className="pb-2 mb-3 text-lg border-b border-gray-300 text-gray-700 font-bold">
             過去のルーム
           </h2>
           <div className="flex flex-col gap-3">
