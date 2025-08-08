@@ -21,7 +21,7 @@ function RouteComponent() {
 
   return (
     <main className="max-w-lg mx-auto text-center rounded-xl">
-      <h1 className="mb-6 text-2xl text-gray-700">
+      <h1 className="mb-6 text-xl text-gray-700">
         リンクをコピーして<br></br>友達にルーム共有しよう
       </h1>
 
