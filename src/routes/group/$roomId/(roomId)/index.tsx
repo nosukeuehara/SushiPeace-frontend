@@ -143,12 +143,7 @@ export function RouteComponent() {
       </div>
 
       <div className="">
-        <ShareButton
-          groupName={data.groupName}
-          members={members}
-          prices={template?.prices ?? {}}
-          roomUrl={window.location.href}
-        />
+        <ShareButton roomId={safeRoomId} />
       </div>
 
       {editingPlate && (

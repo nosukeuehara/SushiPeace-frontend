@@ -1,4 +1,4 @@
-import {useParams} from "@tanstack/react-router";
+import {Link, useParams} from "@tanstack/react-router";
 import {useRoom} from "../../../../hooks/useRoom";
 import {generateShareText} from "../../../../util/shareText";
 
@@ -8,7 +8,8 @@ export const Route = createFileRoute({
 
 function SushiResultComponent() {
   const {roomId} = useParams({strict: false});
-  const {data, isLoading, error} = useRoom(roomId);
+  const safeRoomId: string = roomId ?? "";
+  const {data, isLoading, error} = useRoom(safeRoomId);
   const template = data?.template;
 
   if (isLoading) return <p>読み込み中...</p>;
@@ -29,7 +30,13 @@ function SushiResultComponent() {
         📋 {data.groupName} の会計結果
       </h2>
 
-      <ul className="mb-8 gap-4 flex flex-col">
+      <div className="text-center text-lg mb-10 text-gray-700">
+        <Link to="/group/$roomId" params={{roomId: safeRoomId}}>
+          ルーム：<span className="font-bold">{data.groupName}</span> へ戻る
+        </Link>
+      </div>
+
+      <ul className="mb-8 gap-7 flex flex-col">
         {data.members.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
             (sum, [color, count]) =>
@@ -37,8 +44,8 @@ function SushiResultComponent() {
             0
           );
           return (
-            <li key={m.userId} className="flex justify-between ">
-              <span className="font-bold text-gray-700">{m.name}</span>
+            <li key={m.userId} className="flex justify-between">
+              <span className="font-bold text-gray-700 text-lg">{m.name}</span>
               <span className="text-gray-700 text-xl">
                 {subtotal.toLocaleString()}円
               </span>
