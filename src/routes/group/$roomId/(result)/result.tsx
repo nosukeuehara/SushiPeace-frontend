@@ -29,7 +29,7 @@ function SushiResultComponent() {
         📋 {data.groupName} の会計結果
       </h2>
 
-      <ul className="mb-4 gap-4 flex flex-col">
+      <ul className="mb-8 gap-4 flex flex-col">
         {data.members.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
             (sum, [color, count]) =>
