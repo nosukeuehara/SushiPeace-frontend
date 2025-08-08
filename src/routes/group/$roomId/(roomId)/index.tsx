@@ -47,7 +47,7 @@ export function RouteComponent() {
 
   if (!userId) {
     return (
-      <div className="p-6 mx-auto my-8 text-center max-w-xl rounded-xl">
+      <div className="mx-auto text-center max-w-xl rounded-xl">
         <h2 className="mb-16 text-xl text-gray-700 font-bold">
           あなたは誰ですか？
         </h2>

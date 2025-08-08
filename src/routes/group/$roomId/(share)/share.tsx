@@ -20,7 +20,7 @@ function RouteComponent() {
   if (!roomId) return null;
 
   return (
-    <main className="max-w-lg p-6 mx-auto my-8 text-center rounded-xl">
+    <main className="max-w-lg mx-auto text-center rounded-xl">
       <h1 className="mb-6 text-2xl text-gray-700">ルーム共有</h1>
 
       <input
