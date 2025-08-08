@@ -132,7 +132,7 @@ export function RouteComponent() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 mb-6">
+      <div className="grid grid-cols-1 gap-4 mb-16">
         <MemberList
           members={members}
           currentUserId={userId}
