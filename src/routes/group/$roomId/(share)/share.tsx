@@ -21,13 +21,13 @@ function RouteComponent() {
 
   return (
     <main className="max-w-lg p-6 mx-auto my-8 text-center rounded-xl">
-      <h1 className="mb-6 text-2xl">ルーム共有</h1>
+      <h1 className="mb-6 text-2xl text-gray-700">ルーム共有</h1>
 
       <input
         type="text"
         value={roomUrl}
         readOnly
-        className="w-full p-2 mb-4 bg-gray-100 border rounded"
+        className="w-full p-2 mb-4 bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
       />
 
       <button

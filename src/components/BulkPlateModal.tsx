@@ -16,7 +16,7 @@ export const BulkPlateModal = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
       <div className="w-11/12 max-w-md p-6 bg-neutral-100 rounded-lg shadow-lg">
-        <h3 className="mb-2 text-lg font-bold">皿の一括登録</h3>
+        <h3 className="mb-2 text-lg font-bold text-gray-700">皿の一括登録</h3>
         <p className="mb-4 text-sm text-gray-600">
           皿の金額を入力してください。
         </p>
@@ -24,9 +24,11 @@ export const BulkPlateModal = ({
         {entries.map((price, index) => (
           <div key={index} className="flex flex-col gap-2 mb-3 sm:flex-row">
             <input
+              key={index}
+              id={`plate-price-${index}`}
               type="text"
               placeholder="金額"
-              className="flex-1 p-2 border rounded"
+              className="flex-1 p-2 border rounded border-gray-300 focus:outline-none focus:ring-0"
               value={String(price)}
               onChange={(e) => {
                 const updated = [...entries];
@@ -39,13 +41,13 @@ export const BulkPlateModal = ({
 
         <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
           <button onClick={onAddRow} className="px-3 py-1 bg-gray-200 rounded">
-            ＋行を追加
+            <span className="text-gray-700">＋行を追加</span>
           </button>
           <button
             onClick={onSave}
             className="px-3 py-1 text-neutral-100 bg-teal-600 rounded"
           >
-            保存
+            <span className="text-stone-100">保存</span>
           </button>
           <button
             onClick={() => {
@@ -65,9 +67,9 @@ export const BulkPlateModal = ({
                 }
               }
             }}
-            className="px-3 py-1 bg-gray-200 rounded"
+            className="px-3 py-1 bg-red-400 rounded"
           >
-            キャンセル
+            <span className="text-stone-100">キャンセル</span>
           </button>
         </div>
       </div>

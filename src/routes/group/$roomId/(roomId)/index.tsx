@@ -48,12 +48,14 @@ export function RouteComponent() {
   if (!userId) {
     return (
       <div className="p-6 mx-auto my-8 text-center max-w-xl rounded-xl">
-        <h2 className="mb-4 text-xl">あなたは誰ですか？</h2>
-        <ul className="flex flex-col gap-2">
+        <h2 className="mb-16 text-xl text-gray-700 font-bold">
+          あなたは誰ですか？
+        </h2>
+        <ul className="flex flex-col gap-7">
           {members.map((m) => (
             <li key={m.userId}>
               <button onClick={() => handleSelectUser(m.userId)}>
-                {m.name}
+                <span className="text-gray-700">{m.name}</span>
               </button>
             </li>
           ))}

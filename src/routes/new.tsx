@@ -42,12 +42,14 @@ export default function NewRoom() {
 
   return (
     <main className="max-w-xl p-6 mx-auto my-8 rounded-xl">
-      <h1 className="mb-4 text-2xl font-bold text-center">寿司ルーム作成</h1>
+      <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
+        寿司ルーム作成
+      </h1>
 
       <div className="flex flex-col gap-2 pt-10">
         <h3 className="mb-2 text-lg text-gray-600">ルーム名</h3>
         <input
-          className="w-full p-2 mb-4 bg-gray-100 border rounded"
+          className="w-full p-2 mb-4 bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
           value={groupName}
           name="groupName"
           onChange={(e) => setGroupName(e.target.value)}
@@ -60,7 +62,7 @@ export default function NewRoom() {
         {members.map((m, i) => (
           <input
             key={i}
-            className="w-full p-2 mb-4 bg-gray-100 border rounded"
+            className="w-full p-2 mb-4 bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
             name="memberName"
             value={m.name}
             onChange={(e) => {

@@ -63,7 +63,7 @@ export const PlateTemplateEditor = ({
         <input
           placeholder="金額"
           type="text"
-          className="flex-1 p-2 border rounded"
+          className="flex-1 p-2 border rounded border-gray-300 focus:outline-none focus:ring-0"
           value={newPrice}
           onChange={(e) => setNewPrice(e.target.value)}
         />

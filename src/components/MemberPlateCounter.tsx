@@ -22,9 +22,9 @@ export const MemberPlateCounter = ({
   return (
     <div>
       <div className="flex items-baseline justify-start gap-2 py-5">
-        <h4 className="text-xl font-bold">{member.name}：</h4>
+        <h4 className="text-xl font-bold text-gray-700">{member.name}：</h4>
         <p className="font-bold">
-          <span className="text-2xl font-semibold">
+          <span className="text-2xl font-semibold text-gray-700">
             {total.toLocaleString()} 円
           </span>
         </p>
@@ -38,29 +38,33 @@ export const MemberPlateCounter = ({
               key={`${color}-${price}`}
               className="flex items-center justify-between gap-2"
             >
-              <div className="font-bold text-base text-gray-900 flex items-center">
+              <div className="font-bold text-base text-gray-700 flex items-center">
                 <div className="w-[100px] text-right">
-                  <span className="text-2xl">{price}円</span>
-                  <span className="text-lg pl-2">皿</span>
+                  <span className="text-xl">{price}円</span>
+                  <span className="text-base pl-2">皿</span>
                 </div>
               </div>
 
               <div className="flex flex-1 justify-end gap-2">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                   <button
-                    className="size-9 rounded-full bg-blue-200 shadow"
+                    className="size-8 rounded-full"
                     onClick={() => onRemove(member.userId, color)}
                   >
-                    <span className="text-gray-700 text-xl">ー</span>
+                    <span className="text-red-500 text-2xl font-extrabold">
+                      ー
+                    </span>
                   </button>
-                  <div className="text-2xl font-bold w-8 text-center">
+                  <div className="text-xl text-gray-700 font-bold w-8 text-center">
                     {member.counts[color] ?? 0}
                   </div>
                   <button
-                    className="size-9 rounded-full bg-pink-200 shadow"
+                    className="size-8 rounded-full"
                     onClick={() => onAdd(member.userId, color)}
                   >
-                    <span className="text-gray-700 text-xl">＋</span>
+                    <span className="text-blue-500 text-2xl font-extrabold">
+                      ✚
+                    </span>
                   </button>
                 </div>
               </div>

@@ -25,11 +25,11 @@ function SushiResultComponent() {
 
   return (
     <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
-      <h2 className="mb-4 text-2xl font-bold text-center">
+      <h2 className="mb-4 text-2xl font-bold text-center text-gray-700">
         📋 {data.groupName} の会計結果
       </h2>
 
-      <ul className="mb-4">
+      <ul className="mb-4 gap-4 flex flex-col">
         {data.members.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
             (sum, [color, count]) =>
@@ -37,9 +37,12 @@ function SushiResultComponent() {
             0
           );
           return (
-            <li key={m.userId} className="flex justify-between py-1 border-b">
-              <span className="font-bold">{m.name}</span>
-              <span className="text-gray-600">
+            <li
+              key={m.userId}
+              className="flex justify-between border-b border-gray-700"
+            >
+              <span className="font-bold text-gray-700">{m.name}</span>
+              <span className="text-gray-700 text-xl">
                 {subtotal.toLocaleString()}円
               </span>
             </li>
@@ -65,7 +68,7 @@ function SushiResultComponent() {
       </p>
 
       <textarea
-        className="w-full min-h-[300px] p-2 mb-4 text-sm bg-gray-100 border rounded"
+        className="w-full min-h-[300px] p-2 mb-4 text-sm bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
         readOnly
         value={shareText}
       />
