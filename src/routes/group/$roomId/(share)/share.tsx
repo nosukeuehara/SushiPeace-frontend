@@ -40,6 +40,7 @@ function RouteComponent() {
             navigator
               .share({
                 title: `お寿司ルームへ招待されました`,
+                text: `一緒にお寿司を楽しもう！`,
                 url: `${roomUrl}`,
               })
               .catch((err) => console.error("共有に失敗しました", err));
