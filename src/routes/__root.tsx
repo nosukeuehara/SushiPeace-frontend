@@ -33,7 +33,7 @@ export const Route = createRootRoute({
           SushiPals
         </a>
       </header>
-      <div className="container min-h-screen max-h-fit max-w-screen mx-auto px-4">
+      <div className="container min-h-screen max-w-screen mx-auto px-10 py-12">
         <Outlet />
       </div>
       <footer className="flex justify-center py-4 flex-col items-center bg-neutral-100">

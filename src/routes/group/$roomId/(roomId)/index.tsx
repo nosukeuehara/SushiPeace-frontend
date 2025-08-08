@@ -65,7 +65,7 @@ export function RouteComponent() {
   }
 
   return (
-    <div className="max-w-xl p-6 mx-auto my-8 rounded-xl">
+    <div className="max-w-xl mx-auto rounded-xl">
       {rankNotifications.length > 0 && (
         <RankNotifications notifications={rankNotifications} />
       )}
@@ -142,7 +142,7 @@ export function RouteComponent() {
         />
       </div>
 
-      <div className="mt-4">
+      <div className="">
         <ShareButton
           groupName={data.groupName}
           members={members}
