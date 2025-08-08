@@ -49,7 +49,7 @@ function RouteComponent() {
           }
         }}
       >
-        リンクをコピー
+        リンクを共有
       </button>
 
       <Link
