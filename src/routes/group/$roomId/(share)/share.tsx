@@ -21,7 +21,9 @@ function RouteComponent() {
 
   return (
     <main className="max-w-lg mx-auto text-center rounded-xl">
-      <h1 className="mb-6 text-2xl text-gray-700">ルーム共有</h1>
+      <h1 className="mb-6 text-2xl text-gray-700">
+        リンクをコピーして<br></br>友達にルーム共有しよう
+      </h1>
 
       <input
         type="text"
@@ -34,7 +36,16 @@ function RouteComponent() {
         className="block w-full px-4 py-2 mb-2 font-bold text-neutral-100 bg-teal-500 rounded shadow hover:bg-teal-600"
         onClick={async () => {
           await navigator.clipboard.writeText(roomUrl);
-          alert("コピーしました");
+          if (navigator.share) {
+            navigator
+              .share({
+                title: `お寿司ルームへ招待されました`,
+                url: `${roomUrl}`,
+              })
+              .catch((err) => console.error("共有に失敗しました", err));
+          } else {
+            alert("テキストをコピーしました！");
+          }
         }}
       >
         リンクをコピー
