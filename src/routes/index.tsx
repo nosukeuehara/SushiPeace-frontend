@@ -20,7 +20,7 @@ function Index() {
     <main className="p-8 m-6 text-center rounded-xl sm:max-w-[480px] sm:mx-auto sm:my-10">
       <h1 className="mb-6 text-2xl font-bold text-gray-900">ようこそ</h1>
       <p className="mb-4 text-base text-gray-600">
-        回転ずしを平和に割り勘しよう
+        回転ずしのお皿管理は SushiPals に任せよう
       </p>
       <Link
         to="/new"

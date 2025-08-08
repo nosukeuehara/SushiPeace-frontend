@@ -11,7 +11,7 @@ export const Route = createRootRoute({
           className="text-2xl font-bold text-neutral-100 font-[Outfit]"
           href="/"
         >
-          sushi-pals!!
+          SushiPals
         </a>
       </header>
       <Outlet />
