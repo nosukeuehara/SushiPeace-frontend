@@ -37,12 +37,12 @@ export const Route = createRootRoute({
         <Outlet />
       </div>
       <footer className="flex justify-center py-4 flex-col items-center bg-neutral-100">
-        <div className="mb-5">
+        <div className="mb-5 mt-2">
           <a
             href="https://forms.gle/pm4nnWRqcaiEgMCb6"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-700 ml-2 external-link"
+            className="text-gray-700 ml-2 external-link text-sm "
           >
             改善フォーム
           </a>
