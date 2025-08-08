@@ -37,10 +37,7 @@ function SushiResultComponent() {
             0
           );
           return (
-            <li
-              key={m.userId}
-              className="flex justify-between border-b border-gray-700"
-            >
+            <li key={m.userId} className="flex justify-between ">
               <span className="font-bold text-gray-700">{m.name}</span>
               <span className="text-gray-700 text-xl">
                 {subtotal.toLocaleString()}円
