@@ -1,6 +1,6 @@
 import {Link, useParams} from "@tanstack/react-router";
-import {useRoom} from "../../../../hooks/useRoom";
-import {generateShareText} from "../../../../util/shareText";
+import {useRoom} from "../../../../../hooks/useRoom";
+import {generateShareText} from "../../../../../util/shareText";
 
 export const Route = createFileRoute({
   component: SushiResultComponent,
@@ -16,7 +16,7 @@ function SushiResultComponent() {
   if (error || !data) return <p>データの取得に失敗しました</p>;
   if (!template) return <p>テンプレートが見つかりません</p>;
 
-  const shareUrl = `${window.location.origin}/group/${roomId}/result`;
+  const shareUrl = `${window.location.origin}/sushi/group/${roomId}/result`;
   const shareText = generateShareText(
     data.groupName,
     data.members,
@@ -31,7 +31,7 @@ function SushiResultComponent() {
       </h2>
 
       <div className="text-center text-lg mb-10 text-gray-700">
-        <Link to="/group/$roomId" params={{roomId: safeRoomId}}>
+        <Link to="/sushi/group/$roomId" params={{roomId: safeRoomId}}>
           ルーム：<span className="font-bold">{data.groupName}</span> へ戻る
         </Link>
       </div>
