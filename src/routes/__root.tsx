@@ -26,9 +26,9 @@ export const Route = createRootRoute({
     <>
       <style dangerouslySetInnerHTML={{__html: externalLinkStyle}} />
       <div className="sm:w-full md:w-full lg:w-1/3 mx-auto bg-rose-300">
-        <header className="flex justify-center py-4 bg-rose-300">
+        <header className="flex justify-center py-3 bg-rose-300">
           <a
-            className="text-3xl font-bold text-neutral-50 font-[Outfit]"
+            className="text-2xl font-bold text-neutral-50 font-[Outfit]"
             href="/"
           >
             SushiPals
