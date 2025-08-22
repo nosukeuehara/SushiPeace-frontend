@@ -13,7 +13,8 @@ export default function NewRoom() {
   const navigate = useNavigate();
   const [roomHistories, setRoomHistories] = useState(getRoomHistory());
   const [groupName, setGroupName] = useState("");
-  const [members, setMembers] = useState<Member[]>([{userId: "", name: ""}]);
+  const [members, setMembers] = useState<Member[] | []>([]);
+  const [memberName, setMemberName] = useState("");
 
   const {mutate, isPending} = useCreateRoom((data) => {
     navigate({to: `/new-sushi/group/${data.roomId}/share`});
@@ -56,46 +57,70 @@ export default function NewRoom() {
         寿司ルーム作成
       </h1>
 
-      <div className="flex flex-col gap-2 pt-10">
+      <div className="pt-6">
         <h3 className="mb-2 text-lg text-gray-600">ルーム名</h3>
         <input
-          className="w-full p-2 mb-4 bg-white border border-gray-300 focus:outline-none focus:ring-0"
+          className="w-full p-2 mb-8 bg-white border border-gray-300 focus:outline-none focus:ring-0"
           value={groupName}
           name="groupName"
           onChange={(e) => setGroupName(e.target.value)}
           placeholder="ルーム名"
         />
+      </div>
+      <h3 className="mb-2 text-lg text-gray-600">メンバーを追加してください</h3>
 
-        <h3 className="mb-2 text-lg text-gray-600">
-          メンバーを追加してください
-        </h3>
+      <div className="flex gap-1 w-full mb-3">
+        <input
+          name="memberName"
+          className="p-2 w-full bg-white border border-gray-300 focus:outline-none"
+          value={memberName}
+          onChange={(e) => setMemberName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              const name = memberName.trim();
+              if (!name) return;
+              setMembers([...members, {userId: "", name}]);
+              setMemberName("");
+            }
+          }}
+          placeholder="メンバー名"
+        />
+        <button
+          type="button"
+          className="w-20 font-bold text-neutral-50 bg-teal-500 shadow"
+          onClick={() => {
+            const name = memberName.trim();
+            if (!name) return;
+            setMembers([...members, {userId: "", name}]);
+            setMemberName("");
+          }}
+        >
+          追加
+        </button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
         {members.map((m, i) => (
-          <input
+          <div
             key={i}
-            className="w-full p-2 mb-4 bg-white border border-gray-300 focus:outline-none focus:ring-0"
-            name="memberName"
-            value={m.name}
-            onChange={(e) => {
-              const newMembers = [...members];
-              newMembers[i].name = e.target.value;
-              setMembers(newMembers);
-            }}
-            placeholder={`メンバー ${i + 1}`}
-          />
+            className="font-extrabold w-fit text-xs px-4 py-2 bg-rose-300 rounded-2xl text-neutral-50 shadow"
+          >
+            <span>{m.name}</span>
+            <button
+              onClick={() => {
+                setMembers(members.filter((_, index) => index !== i));
+              }}
+            >
+              <span className="ml-1">✕</span>
+            </button>
+          </div>
         ))}
       </div>
 
-      <div className="flex flex-col gap-2 mt-6 sm:flex-row sm:justify-between">
+      <div className="mt-10">
         <button
           type="button"
-          className="px-4 py-2 font-bold text-neutral-50 bg-teal-500 shadow"
-          onClick={() => setMembers([...members, {userId: "", name: ""}])}
-        >
-          メンバー追加
-        </button>
-        <button
-          type="button"
-          className="px-4 py-2 font-bold text-neutral-50 bg-rose-400  shadow"
+          className="w-full px-4 py-2 font-bold text-neutral-50 bg-rose-400 shadow"
           onClick={handleSubmit}
           disabled={isPending}
         >
