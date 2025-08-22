@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
-import {useCreateRoom} from "../hooks/useCreateRoom";
-import {type Member} from "../api/room";
+import {useCreateRoom} from "../../hooks/useCreateRoom";
+import {type Member} from "../../api/room";
 
 export const Route = createFileRoute({
   component: NewRoom,
@@ -13,7 +13,7 @@ export default function NewRoom() {
   const [members, setMembers] = useState<Member[]>([{userId: "", name: ""}]);
 
   const {mutate, isPending} = useCreateRoom((data) => {
-    navigate({to: `/group/${data.roomId}/share`});
+    navigate({to: `/sushi-welcome/group/${data.roomId}/share`});
   });
 
   const handleSubmit = () => {
