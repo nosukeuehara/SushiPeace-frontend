@@ -20,20 +20,20 @@ function RouteComponent() {
   if (!roomId) return null;
 
   return (
-    <main className="max-w-lg mx-auto text-center rounded-xl">
-      <h1 className="mb-6 text-xl text-gray-700">
-        リンクをコピーして<br></br>友達にルーム共有しよう
+    <div className="max-w-lg mx-auto text-center min-h-screen px-5 py-16 bg-white">
+      <h1 className="mb-6 text-xl text-gray-600">
+        リンクをコピーして<br></br>すし友に共有しよう
       </h1>
 
       <input
         type="text"
         value={roomUrl}
         readOnly
-        className="w-full p-2 mb-4 bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
+        className="w-full p-2 mb-4 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-0"
       />
 
       <button
-        className="block w-full px-4 py-2 mb-2 font-bold text-neutral-100 bg-teal-500 rounded shadow hover:bg-teal-600"
+        className="block w-full px-4 py-2 mb-2 font-bold text-neutral-50 bg-teal-500 shadow"
         onClick={async () => {
           await navigator.clipboard.writeText(roomUrl);
           if (navigator.share) {
@@ -53,12 +53,12 @@ function RouteComponent() {
       </button>
 
       <Link
-        to="/group/$roomId"
+        to="/new-sushi/group/$roomId"
         params={{roomId}}
-        className="block px-4 py-2 text-teal-700 font-bold mt-2 hover:underline"
+        className="block px-4 py-2 text-teal-700 font-bold mt-2"
       >
         お寿司ルームへ移動
       </Link>
-    </main>
+    </div>
   );
 }

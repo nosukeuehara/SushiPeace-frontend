@@ -9,17 +9,17 @@ export const ShareButton = ({roomId}: Props) => {
 
   const handleShare = () => {
     navigate({
-      to: "/group/$roomId/result",
+      to: "/new-sushi/group/$roomId/result",
       params: {roomId},
     });
   };
 
   return (
     <button
-      className="block mx-auto bg-orange-600 rounded px-3 py-1"
+      className="block mx-auto bg-rose-400 shadow px-3 py-1"
       onClick={handleShare}
     >
-      <span className="font-semibold text-neutral-100">結果を確認</span>
+      <span className="font-semibold text-neutral-50">結果を確認</span>
     </button>
   );
 };

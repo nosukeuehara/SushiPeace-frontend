@@ -50,7 +50,7 @@ export const MemberList = ({
               />
             ) : (
               <div className="flex justify-between items-baseline">
-                <span className="text-base font-semibold text-gray-700">
+                <span className="text-base font-semibold text-gray-600">
                   {m.name}
                 </span>
                 <span className="text-sm text-gray-600">

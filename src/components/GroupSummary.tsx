@@ -25,15 +25,15 @@ export const GroupSummary = ({members, prices, showRanking, total}: Props) => {
         <ul className="px-10 pt-3 pb-2 text-left space-y-2">
           {ranking.map((m, i) => {
             const rankColors = [
-              "text-gray-700 text-xl font-bold",
-              "text-gray-700 text-lg font-semibold",
-              "text-gray-700 text-lg font-semibold",
+              "text-gray-600 text-xl font-bold",
+              "text-gray-600 text-lg font-semibold",
+              "text-gray-600 text-lg font-semibold",
             ];
             const rankEmojis = ["🥇", "🥈", "🥉"];
 
             return (
               <li key={m.userId}>
-                <span className={rankColors[i] || "text-gray-700"}>
+                <span className={rankColors[i] || "text-gray-600"}>
                   <span className="text-xl">
                     {rankEmojis[i] || `${i + 1}位`}
                   </span>
@@ -45,7 +45,7 @@ export const GroupSummary = ({members, prices, showRanking, total}: Props) => {
         </ul>
       )}
 
-      <p className="mb-2 pt-3 text-3xl font-bold text-orange-600">
+      <p className="mb-2 pt-3 text-3xl font-extrabold text-rose-400">
         合計：{total.toLocaleString()} 円
       </p>
     </div>

@@ -25,31 +25,33 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <style dangerouslySetInnerHTML={{__html: externalLinkStyle}} />
-      <header className="flex justify-center py-4 bg-orange-600">
-        <a
-          className="text-2xl font-bold text-neutral-100 font-[Outfit]"
-          href="/"
-        >
-          SushiPals
-        </a>
-      </header>
-      <div className="container min-h-screen max-w-screen mx-auto px-5 py-16">
-        <Outlet />
-      </div>
-      <footer className="flex justify-center py-4 flex-col items-center bg-neutral-100">
-        <div className="mb-5 mt-2">
+      <div className="sm:w-full md:w-full lg:w-1/3 mx-auto bg-rose-300">
+        <header className="flex justify-center py-3 bg-rose-300">
           <a
-            href="https://forms.gle/pm4nnWRqcaiEgMCb6"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-700 ml-2 external-link text-sm "
+            className="text-2xl font-bold text-neutral-50 font-[Outfit]"
+            href="/"
           >
-            改善フォーム
+            SushiPals
           </a>
-        </div>
-        <span className="text-sm text-gray-600">© 2025 SushiPals</span>
-      </footer>
-      <TanStackRouterDevtools />
+        </header>
+        <main className="max-w-screen mx-auto ">
+          <Outlet />
+        </main>
+        <footer className="flex justify-center py-4 flex-col items-center bg-rose-300">
+          <div className="mb-5 mt-2">
+            <a
+              href="https://forms.gle/pm4nnWRqcaiEgMCb6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-50 ml-2 external-link text-sm "
+            >
+              改善フォーム
+            </a>
+          </div>
+          <span className="text-sm text-neutral-50">© 2025 SushiPals</span>
+        </footer>
+        <TanStackRouterDevtools />
+      </div>
     </>
   ),
 });

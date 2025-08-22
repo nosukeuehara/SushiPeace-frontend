@@ -1,13 +1,13 @@
 import {useParams} from "@tanstack/react-router";
-import {useRoom} from "../../../../hooks/useRoom";
-import {useGroupRoomState} from "../../../../hooks/useGroupRoomState";
-import {RankNotifications} from "../../../../components/RankNotifications";
-import {PlateTemplateEditor} from "../../../../components/PlateTemplateEditor";
-import {EditPlateModal} from "../../../../components/EditPlateModal";
-import {BulkPlateModal} from "../../../../components/BulkPlateModal";
-import {GroupSummary} from "../../../../components/GroupSummary";
-import {MemberList} from "../../../../components/MemberList";
-import {ShareButton} from "../../../../components/ShareButton";
+import {useRoom} from "../../../../../hooks/useRoom";
+import {useGroupRoomState} from "../../../../../hooks/useGroupRoomState";
+import {RankNotifications} from "../../../../../components/RankNotifications";
+import {PlateTemplateEditor} from "../../../../../components/PlateTemplateEditor";
+import {EditPlateModal} from "../../../../../components/EditPlateModal";
+import {BulkPlateModal} from "../../../../../components/BulkPlateModal";
+import {GroupSummary} from "../../../../../components/GroupSummary";
+import {MemberList} from "../../../../../components/MemberList";
+import {ShareButton} from "../../../../../components/ShareButton";
 import {useState} from "react";
 
 export const Route = createFileRoute({
@@ -47,15 +47,15 @@ export function RouteComponent() {
 
   if (!userId) {
     return (
-      <div className="mx-auto text-center max-w-xl rounded-xl">
-        <h2 className="mb-16 text-xl text-gray-700 font-bold">
+      <div className="mx-auto text-center max-w-xl min-h-screen px-5 py-16 bg-white">
+        <h2 className="mb-16 text-xl text-gray-600 font-bold">
           あなたは誰ですか？
         </h2>
         <ul className="flex flex-col gap-7">
           {members.map((m) => (
             <li key={m.userId}>
               <button onClick={() => handleSelectUser(m.userId)}>
-                <span className="text-gray-700">{m.name}</span>
+                <span className="text-gray-600">{m.name}</span>
               </button>
             </li>
           ))}
@@ -65,24 +65,24 @@ export function RouteComponent() {
   }
 
   return (
-    <div className="max-w-xl mx-auto rounded-xl">
+    <div className="max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
       {rankNotifications.length > 0 && (
         <RankNotifications notifications={rankNotifications} />
       )}
 
       <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-700">{data.groupName}</h2>
+        <h2 className="text-3xl font-bold text-gray-600">{data.groupName}</h2>
       </div>
 
       <div className="grid gap-2 pb-2 grid-cols-2">
         <button
-          className="text-gray-700"
+          className="text-gray-600"
           onClick={() => setShowRanking((prev) => !prev)}
         >
           {showRanking ? "ランキングを隠す" : "ランキングを見る"}
         </button>
         <button
-          className="text-gray-700"
+          className="text-gray-600"
           onClick={() => {
             localStorage.removeItem(`sushi-user-id-${roomId}`);
             setUserId(null);
@@ -101,17 +101,17 @@ export function RouteComponent() {
 
       <div className="mb-4 text-center">
         <button
-          className="text-gray-700 text-sm"
+          className="text-gray-600 text-sm"
           onClick={() => setIsTemplateEditorOpen((prev) => !prev)}
         >
-          <span className="text-gray-700 px-4 py-1">
+          <span className="text-gray-600 px-4 py-1">
             {isTemplateEditorOpen ? "皿設定 とじる" : "皿設定 ひらく"}
           </span>
         </button>
       </div>
 
       {template && isTemplateEditorOpen && (
-        <div className="p-4 mb-6 bg-gray-100 rounded">
+        <div className="p-4 mb-6 bg-neutral-50">
           <PlateTemplateEditor
             template={template}
             onEdit={(color, price) =>
