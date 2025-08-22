@@ -23,7 +23,7 @@ function Index() {
         回転寿司のお皿管理は<br></br> SushiPals に任せよう！
       </p>
       <Link
-        to="/sushi/new"
+        to="/sushi-welcome/new"
         className="inline-block px-4 py-2 font-bold text-neutral-100 bg-orange-600 rounded shadow"
       >
         🍣 お寿司ルームを作成
@@ -40,7 +40,10 @@ function Index() {
                 key={h.roomId}
                 className="p-2 border rounded border-gray-300"
               >
-                <Link to="/sushi/group/$roomId" params={{roomId: h.roomId}}>
+                <Link
+                  to="/sushi-welcome/group/$roomId"
+                  params={{roomId: h.roomId}}
+                >
                   <div className="mb-1 font-bold text-left text-gray-700">
                     {h.groupName}
                   </div>

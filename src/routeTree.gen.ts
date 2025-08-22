@@ -12,118 +12,118 @@ import type { CreateFileRoute, FileRoutesByPath } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SushiIndexRouteImport } from './routes/sushi/index'
-import { Route as SushiNewRouteImport } from './routes/sushi/new'
-import { Route as SushiGroupIndexRouteImport } from './routes/sushi/group/index'
-import { Route as SushiGroupRoomIdroomIdIndexRouteImport } from './routes/sushi/group/$roomId/(roomId)/index'
-import { Route as SushiGroupRoomIdshareShareRouteImport } from './routes/sushi/group/$roomId/(share)/share'
-import { Route as SushiGroupRoomIdresultResultRouteImport } from './routes/sushi/group/$roomId/(result)/result'
+import { Route as SushiWelcomeIndexRouteImport } from './routes/sushi-welcome/index'
+import { Route as SushiWelcomeNewRouteImport } from './routes/sushi-welcome/new'
+import { Route as SushiWelcomeGroupIndexRouteImport } from './routes/sushi-welcome/group/index'
+import { Route as SushiWelcomeGroupRoomIdroomIdIndexRouteImport } from './routes/sushi-welcome/group/$roomId/(roomId)/index'
+import { Route as SushiWelcomeGroupRoomIdshareShareRouteImport } from './routes/sushi-welcome/group/$roomId/(share)/share'
+import { Route as SushiWelcomeGroupRoomIdresultResultRouteImport } from './routes/sushi-welcome/group/$roomId/(result)/result'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SushiIndexRoute = SushiIndexRouteImport.update({
-  id: '/sushi/',
-  path: '/sushi/',
+const SushiWelcomeIndexRoute = SushiWelcomeIndexRouteImport.update({
+  id: '/sushi-welcome/',
+  path: '/sushi-welcome/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SushiNewRoute = SushiNewRouteImport.update({
-  id: '/sushi/new',
-  path: '/sushi/new',
+const SushiWelcomeNewRoute = SushiWelcomeNewRouteImport.update({
+  id: '/sushi-welcome/new',
+  path: '/sushi-welcome/new',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SushiGroupIndexRoute = SushiGroupIndexRouteImport.update({
-  id: '/sushi/group/',
-  path: '/sushi/group/',
+const SushiWelcomeGroupIndexRoute = SushiWelcomeGroupIndexRouteImport.update({
+  id: '/sushi-welcome/group/',
+  path: '/sushi-welcome/group/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SushiGroupRoomIdroomIdIndexRoute =
-  SushiGroupRoomIdroomIdIndexRouteImport.update({
-    id: '/sushi/group/$roomId/(roomId)/',
-    path: '/sushi/group/$roomId/',
+const SushiWelcomeGroupRoomIdroomIdIndexRoute =
+  SushiWelcomeGroupRoomIdroomIdIndexRouteImport.update({
+    id: '/sushi-welcome/group/$roomId/(roomId)/',
+    path: '/sushi-welcome/group/$roomId/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const SushiGroupRoomIdshareShareRoute =
-  SushiGroupRoomIdshareShareRouteImport.update({
-    id: '/sushi/group/$roomId/(share)/share',
-    path: '/sushi/group/$roomId/share',
+const SushiWelcomeGroupRoomIdshareShareRoute =
+  SushiWelcomeGroupRoomIdshareShareRouteImport.update({
+    id: '/sushi-welcome/group/$roomId/(share)/share',
+    path: '/sushi-welcome/group/$roomId/share',
     getParentRoute: () => rootRouteImport,
   } as any)
-const SushiGroupRoomIdresultResultRoute =
-  SushiGroupRoomIdresultResultRouteImport.update({
-    id: '/sushi/group/$roomId/(result)/result',
-    path: '/sushi/group/$roomId/result',
+const SushiWelcomeGroupRoomIdresultResultRoute =
+  SushiWelcomeGroupRoomIdresultResultRouteImport.update({
+    id: '/sushi-welcome/group/$roomId/(result)/result',
+    path: '/sushi-welcome/group/$roomId/result',
     getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/sushi/new': typeof SushiNewRoute
-  '/sushi': typeof SushiIndexRoute
-  '/sushi/group': typeof SushiGroupIndexRoute
-  '/sushi/group/$roomId/result': typeof SushiGroupRoomIdresultResultRoute
-  '/sushi/group/$roomId/share': typeof SushiGroupRoomIdshareShareRoute
-  '/sushi/group/$roomId': typeof SushiGroupRoomIdroomIdIndexRoute
+  '/sushi-welcome/new': typeof SushiWelcomeNewRoute
+  '/sushi-welcome': typeof SushiWelcomeIndexRoute
+  '/sushi-welcome/group': typeof SushiWelcomeGroupIndexRoute
+  '/sushi-welcome/group/$roomId/result': typeof SushiWelcomeGroupRoomIdresultResultRoute
+  '/sushi-welcome/group/$roomId/share': typeof SushiWelcomeGroupRoomIdshareShareRoute
+  '/sushi-welcome/group/$roomId': typeof SushiWelcomeGroupRoomIdroomIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/sushi/new': typeof SushiNewRoute
-  '/sushi': typeof SushiIndexRoute
-  '/sushi/group': typeof SushiGroupIndexRoute
-  '/sushi/group/$roomId/result': typeof SushiGroupRoomIdresultResultRoute
-  '/sushi/group/$roomId/share': typeof SushiGroupRoomIdshareShareRoute
-  '/sushi/group/$roomId': typeof SushiGroupRoomIdroomIdIndexRoute
+  '/sushi-welcome/new': typeof SushiWelcomeNewRoute
+  '/sushi-welcome': typeof SushiWelcomeIndexRoute
+  '/sushi-welcome/group': typeof SushiWelcomeGroupIndexRoute
+  '/sushi-welcome/group/$roomId/result': typeof SushiWelcomeGroupRoomIdresultResultRoute
+  '/sushi-welcome/group/$roomId/share': typeof SushiWelcomeGroupRoomIdshareShareRoute
+  '/sushi-welcome/group/$roomId': typeof SushiWelcomeGroupRoomIdroomIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/sushi/new': typeof SushiNewRoute
-  '/sushi/': typeof SushiIndexRoute
-  '/sushi/group/': typeof SushiGroupIndexRoute
-  '/sushi/group/$roomId/(result)/result': typeof SushiGroupRoomIdresultResultRoute
-  '/sushi/group/$roomId/(share)/share': typeof SushiGroupRoomIdshareShareRoute
-  '/sushi/group/$roomId/(roomId)/': typeof SushiGroupRoomIdroomIdIndexRoute
+  '/sushi-welcome/new': typeof SushiWelcomeNewRoute
+  '/sushi-welcome/': typeof SushiWelcomeIndexRoute
+  '/sushi-welcome/group/': typeof SushiWelcomeGroupIndexRoute
+  '/sushi-welcome/group/$roomId/(result)/result': typeof SushiWelcomeGroupRoomIdresultResultRoute
+  '/sushi-welcome/group/$roomId/(share)/share': typeof SushiWelcomeGroupRoomIdshareShareRoute
+  '/sushi-welcome/group/$roomId/(roomId)/': typeof SushiWelcomeGroupRoomIdroomIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/sushi/new'
-    | '/sushi'
-    | '/sushi/group'
-    | '/sushi/group/$roomId/result'
-    | '/sushi/group/$roomId/share'
-    | '/sushi/group/$roomId'
+    | '/sushi-welcome/new'
+    | '/sushi-welcome'
+    | '/sushi-welcome/group'
+    | '/sushi-welcome/group/$roomId/result'
+    | '/sushi-welcome/group/$roomId/share'
+    | '/sushi-welcome/group/$roomId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/sushi/new'
-    | '/sushi'
-    | '/sushi/group'
-    | '/sushi/group/$roomId/result'
-    | '/sushi/group/$roomId/share'
-    | '/sushi/group/$roomId'
+    | '/sushi-welcome/new'
+    | '/sushi-welcome'
+    | '/sushi-welcome/group'
+    | '/sushi-welcome/group/$roomId/result'
+    | '/sushi-welcome/group/$roomId/share'
+    | '/sushi-welcome/group/$roomId'
   id:
     | '__root__'
     | '/'
-    | '/sushi/new'
-    | '/sushi/'
-    | '/sushi/group/'
-    | '/sushi/group/$roomId/(result)/result'
-    | '/sushi/group/$roomId/(share)/share'
-    | '/sushi/group/$roomId/(roomId)/'
+    | '/sushi-welcome/new'
+    | '/sushi-welcome/'
+    | '/sushi-welcome/group/'
+    | '/sushi-welcome/group/$roomId/(result)/result'
+    | '/sushi-welcome/group/$roomId/(share)/share'
+    | '/sushi-welcome/group/$roomId/(roomId)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SushiNewRoute: typeof SushiNewRoute
-  SushiIndexRoute: typeof SushiIndexRoute
-  SushiGroupIndexRoute: typeof SushiGroupIndexRoute
-  SushiGroupRoomIdresultResultRoute: typeof SushiGroupRoomIdresultResultRoute
-  SushiGroupRoomIdshareShareRoute: typeof SushiGroupRoomIdshareShareRoute
-  SushiGroupRoomIdroomIdIndexRoute: typeof SushiGroupRoomIdroomIdIndexRoute
+  SushiWelcomeNewRoute: typeof SushiWelcomeNewRoute
+  SushiWelcomeIndexRoute: typeof SushiWelcomeIndexRoute
+  SushiWelcomeGroupIndexRoute: typeof SushiWelcomeGroupIndexRoute
+  SushiWelcomeGroupRoomIdresultResultRoute: typeof SushiWelcomeGroupRoomIdresultResultRoute
+  SushiWelcomeGroupRoomIdshareShareRoute: typeof SushiWelcomeGroupRoomIdshareShareRoute
+  SushiWelcomeGroupRoomIdroomIdIndexRoute: typeof SushiWelcomeGroupRoomIdroomIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -135,46 +135,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sushi/new': {
-      id: '/sushi/new'
-      path: '/sushi/new'
-      fullPath: '/sushi/new'
-      preLoaderRoute: typeof SushiNewRouteImport
+    '/sushi-welcome/new': {
+      id: '/sushi-welcome/new'
+      path: '/sushi-welcome/new'
+      fullPath: '/sushi-welcome/new'
+      preLoaderRoute: typeof SushiWelcomeNewRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sushi/': {
-      id: '/sushi/'
-      path: '/sushi'
-      fullPath: '/sushi'
-      preLoaderRoute: typeof SushiIndexRouteImport
+    '/sushi-welcome/': {
+      id: '/sushi-welcome/'
+      path: '/sushi-welcome'
+      fullPath: '/sushi-welcome'
+      preLoaderRoute: typeof SushiWelcomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sushi/group/': {
-      id: '/sushi/group/'
-      path: '/sushi/group'
-      fullPath: '/sushi/group'
-      preLoaderRoute: typeof SushiGroupIndexRouteImport
+    '/sushi-welcome/group/': {
+      id: '/sushi-welcome/group/'
+      path: '/sushi-welcome/group'
+      fullPath: '/sushi-welcome/group'
+      preLoaderRoute: typeof SushiWelcomeGroupIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sushi/group/$roomId/(result)/result': {
-      id: '/sushi/group/$roomId/(result)/result'
-      path: '/sushi/group/$roomId/result'
-      fullPath: '/sushi/group/$roomId/result'
-      preLoaderRoute: typeof SushiGroupRoomIdresultResultRouteImport
+    '/sushi-welcome/group/$roomId/(result)/result': {
+      id: '/sushi-welcome/group/$roomId/(result)/result'
+      path: '/sushi-welcome/group/$roomId/result'
+      fullPath: '/sushi-welcome/group/$roomId/result'
+      preLoaderRoute: typeof SushiWelcomeGroupRoomIdresultResultRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sushi/group/$roomId/(share)/share': {
-      id: '/sushi/group/$roomId/(share)/share'
-      path: '/sushi/group/$roomId/share'
-      fullPath: '/sushi/group/$roomId/share'
-      preLoaderRoute: typeof SushiGroupRoomIdshareShareRouteImport
+    '/sushi-welcome/group/$roomId/(share)/share': {
+      id: '/sushi-welcome/group/$roomId/(share)/share'
+      path: '/sushi-welcome/group/$roomId/share'
+      fullPath: '/sushi-welcome/group/$roomId/share'
+      preLoaderRoute: typeof SushiWelcomeGroupRoomIdshareShareRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sushi/group/$roomId/(roomId)/': {
-      id: '/sushi/group/$roomId/(roomId)/'
-      path: '/sushi/group/$roomId'
-      fullPath: '/sushi/group/$roomId'
-      preLoaderRoute: typeof SushiGroupRoomIdroomIdIndexRouteImport
+    '/sushi-welcome/group/$roomId/(roomId)/': {
+      id: '/sushi-welcome/group/$roomId/(roomId)/'
+      path: '/sushi-welcome/group/$roomId'
+      fullPath: '/sushi-welcome/group/$roomId'
+      preLoaderRoute: typeof SushiWelcomeGroupRoomIdroomIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -189,69 +189,72 @@ declare module './routes/index' {
     FileRoutesByPath['/']['fullPath']
   >
 }
-declare module './routes/sushi/new' {
+declare module './routes/sushi-welcome/new' {
   const createFileRoute: CreateFileRoute<
-    '/sushi/new',
-    FileRoutesByPath['/sushi/new']['parentRoute'],
-    FileRoutesByPath['/sushi/new']['id'],
-    FileRoutesByPath['/sushi/new']['path'],
-    FileRoutesByPath['/sushi/new']['fullPath']
+    '/sushi-welcome/new',
+    FileRoutesByPath['/sushi-welcome/new']['parentRoute'],
+    FileRoutesByPath['/sushi-welcome/new']['id'],
+    FileRoutesByPath['/sushi-welcome/new']['path'],
+    FileRoutesByPath['/sushi-welcome/new']['fullPath']
   >
 }
-declare module './routes/sushi/index' {
+declare module './routes/sushi-welcome/index' {
   const createFileRoute: CreateFileRoute<
-    '/sushi/',
-    FileRoutesByPath['/sushi/']['parentRoute'],
-    FileRoutesByPath['/sushi/']['id'],
-    FileRoutesByPath['/sushi/']['path'],
-    FileRoutesByPath['/sushi/']['fullPath']
+    '/sushi-welcome/',
+    FileRoutesByPath['/sushi-welcome/']['parentRoute'],
+    FileRoutesByPath['/sushi-welcome/']['id'],
+    FileRoutesByPath['/sushi-welcome/']['path'],
+    FileRoutesByPath['/sushi-welcome/']['fullPath']
   >
 }
-declare module './routes/sushi/group/index' {
+declare module './routes/sushi-welcome/group/index' {
   const createFileRoute: CreateFileRoute<
-    '/sushi/group/',
-    FileRoutesByPath['/sushi/group/']['parentRoute'],
-    FileRoutesByPath['/sushi/group/']['id'],
-    FileRoutesByPath['/sushi/group/']['path'],
-    FileRoutesByPath['/sushi/group/']['fullPath']
+    '/sushi-welcome/group/',
+    FileRoutesByPath['/sushi-welcome/group/']['parentRoute'],
+    FileRoutesByPath['/sushi-welcome/group/']['id'],
+    FileRoutesByPath['/sushi-welcome/group/']['path'],
+    FileRoutesByPath['/sushi-welcome/group/']['fullPath']
   >
 }
-declare module './routes/sushi/group/$roomId/(result)/result' {
+declare module './routes/sushi-welcome/group/$roomId/(result)/result' {
   const createFileRoute: CreateFileRoute<
-    '/sushi/group/$roomId/(result)/result',
-    FileRoutesByPath['/sushi/group/$roomId/(result)/result']['parentRoute'],
-    FileRoutesByPath['/sushi/group/$roomId/(result)/result']['id'],
-    FileRoutesByPath['/sushi/group/$roomId/(result)/result']['path'],
-    FileRoutesByPath['/sushi/group/$roomId/(result)/result']['fullPath']
+    '/sushi-welcome/group/$roomId/(result)/result',
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(result)/result']['parentRoute'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(result)/result']['id'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(result)/result']['path'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(result)/result']['fullPath']
   >
 }
-declare module './routes/sushi/group/$roomId/(share)/share' {
+declare module './routes/sushi-welcome/group/$roomId/(share)/share' {
   const createFileRoute: CreateFileRoute<
-    '/sushi/group/$roomId/(share)/share',
-    FileRoutesByPath['/sushi/group/$roomId/(share)/share']['parentRoute'],
-    FileRoutesByPath['/sushi/group/$roomId/(share)/share']['id'],
-    FileRoutesByPath['/sushi/group/$roomId/(share)/share']['path'],
-    FileRoutesByPath['/sushi/group/$roomId/(share)/share']['fullPath']
+    '/sushi-welcome/group/$roomId/(share)/share',
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(share)/share']['parentRoute'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(share)/share']['id'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(share)/share']['path'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(share)/share']['fullPath']
   >
 }
-declare module './routes/sushi/group/$roomId/(roomId)/index' {
+declare module './routes/sushi-welcome/group/$roomId/(roomId)/index' {
   const createFileRoute: CreateFileRoute<
-    '/sushi/group/$roomId/(roomId)/',
-    FileRoutesByPath['/sushi/group/$roomId/(roomId)/']['parentRoute'],
-    FileRoutesByPath['/sushi/group/$roomId/(roomId)/']['id'],
-    FileRoutesByPath['/sushi/group/$roomId/(roomId)/']['path'],
-    FileRoutesByPath['/sushi/group/$roomId/(roomId)/']['fullPath']
+    '/sushi-welcome/group/$roomId/(roomId)/',
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(roomId)/']['parentRoute'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(roomId)/']['id'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(roomId)/']['path'],
+    FileRoutesByPath['/sushi-welcome/group/$roomId/(roomId)/']['fullPath']
   >
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SushiNewRoute: SushiNewRoute,
-  SushiIndexRoute: SushiIndexRoute,
-  SushiGroupIndexRoute: SushiGroupIndexRoute,
-  SushiGroupRoomIdresultResultRoute: SushiGroupRoomIdresultResultRoute,
-  SushiGroupRoomIdshareShareRoute: SushiGroupRoomIdshareShareRoute,
-  SushiGroupRoomIdroomIdIndexRoute: SushiGroupRoomIdroomIdIndexRoute,
+  SushiWelcomeNewRoute: SushiWelcomeNewRoute,
+  SushiWelcomeIndexRoute: SushiWelcomeIndexRoute,
+  SushiWelcomeGroupIndexRoute: SushiWelcomeGroupIndexRoute,
+  SushiWelcomeGroupRoomIdresultResultRoute:
+    SushiWelcomeGroupRoomIdresultResultRoute,
+  SushiWelcomeGroupRoomIdshareShareRoute:
+    SushiWelcomeGroupRoomIdshareShareRoute,
+  SushiWelcomeGroupRoomIdroomIdIndexRoute:
+    SushiWelcomeGroupRoomIdroomIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -9,7 +9,7 @@ export const ShareButton = ({roomId}: Props) => {
 
   const handleShare = () => {
     navigate({
-      to: "/sushi/group/$roomId/result",
+      to: "/sushi-welcome/group/$roomId/result",
       params: {roomId},
     });
   };

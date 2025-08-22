@@ -53,7 +53,7 @@ function RouteComponent() {
       </button>
 
       <Link
-        to="/sushi/group/$roomId"
+        to="/sushi-welcome/group/$roomId"
         params={{roomId}}
         className="block px-4 py-2 text-teal-700 font-bold mt-2 hover:underline"
       >
