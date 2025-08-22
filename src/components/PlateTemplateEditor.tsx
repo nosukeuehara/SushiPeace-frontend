@@ -20,7 +20,7 @@ export const PlateTemplateEditor = ({
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-bold text-xl text-gray-700">皿データ</span>
+        <span className="font-bold text-xl text-gray-600">皿データ</span>
         <button className="text-teal-600" onClick={onBulkClick}>
           一括登録
         </button>
@@ -28,7 +28,7 @@ export const PlateTemplateEditor = ({
 
       <ul className="mb-4 list-none p-0">
         {Object.keys(template.prices).length === 0 ? (
-          <p className="text-gray-500 mb-4">お皿の金額を設定しましょう。</p>
+          <p className="text-gray-600 mb-4">お皿の金額を設定しましょう。</p>
         ) : (
           <ul className="mb-4 list-none p-0">
             {Object.entries(template.prices)
@@ -39,15 +39,15 @@ export const PlateTemplateEditor = ({
                   className="grid items-baseline grid-cols-[1fr_auto] py-1"
                 >
                   <div className="flex items-baseline">
-                    <span className="text-xl font-bold text-gray-700 w-[68px] text-right">
+                    <span className="text-xl font-bold text-gray-600 w-[68px] text-right">
                       {price}円
                     </span>
-                    <span className="text-xl pl-2 text-gray-700">皿</span>
+                    <span className="text-xl pl-2 text-gray-600">皿</span>
                   </div>
 
                   <div className="flex gap-5">
                     <button onClick={() => onEdit(color, price)}>
-                      <span className="text-gray-700">編集</span>
+                      <span className="text-gray-600">編集</span>
                     </button>
                     <button onClick={() => onRemove(color)}>
                       <span className="text-red-700">削除</span>
@@ -63,12 +63,12 @@ export const PlateTemplateEditor = ({
         <input
           placeholder="金額"
           type="text"
-          className="flex-1 p-2 border rounded border-gray-300 focus:outline-none focus:ring-0"
+          className="flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-0"
           value={newPrice}
           onChange={(e) => setNewPrice(e.target.value)}
         />
         <button
-          className="px-3 py-1 text-neutral-100 bg-teal-600 rounded"
+          className="px-3 py-1 text-neutral-50 bg-teal-600 shadow"
           onClick={() => {
             if (Number(newPrice) > 0) {
               onAdd(Number(newPrice));

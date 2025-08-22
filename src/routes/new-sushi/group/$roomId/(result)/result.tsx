@@ -16,7 +16,7 @@ function SushiResultComponent() {
   if (error || !data) return <p>データの取得に失敗しました</p>;
   if (!template) return <p>テンプレートが見つかりません</p>;
 
-  const shareUrl = `${window.location.origin}/sushi-welcome/group/${roomId}/result`;
+  const shareUrl = `${window.location.origin}/new-sushi/group/${roomId}/result`;
   const shareText = generateShareText(
     data.groupName,
     data.members,
@@ -25,14 +25,17 @@ function SushiResultComponent() {
   );
 
   return (
-    <div className="max-w-xl mx-auto rounded-xl">
-      <h2 className="mb-10 text-2xl font-bold text-center text-gray-700">
-        📋 {data.groupName} の会計結果
-      </h2>
+    <div className="max-w-xl mx-auto bg-white min-h-screen px-5 py-16">
+      <div className="flex flex-col items-center mb-10">
+        <h2 className="mb-3 text-3xl font-bold text-center text-gray-600">
+          📋 {data.groupName}
+        </h2>
+        <span className="text-gray-600">の会計結果</span>
+      </div>
 
-      <div className="text-center text-lg mb-10 text-gray-700">
-        <Link to="/sushi-welcome/group/$roomId" params={{roomId: safeRoomId}}>
-          ルーム：<span className="font-bold">{data.groupName}</span> へ戻る
+      <div className="text-center text-lg mb-10 text-gray-600">
+        <Link to="/new-sushi/group/$roomId" params={{roomId: safeRoomId}}>
+          <span className="font-bold">寿司ルームへ戻る</span>
         </Link>
       </div>
 
@@ -45,8 +48,8 @@ function SushiResultComponent() {
           );
           return (
             <li key={m.userId} className="flex justify-between">
-              <span className="font-bold text-gray-700 text-lg">{m.name}</span>
-              <span className="text-gray-700 text-xl">
+              <span className="font-bold text-gray-600 text-lg">{m.name}</span>
+              <span className="text-gray-600 text-xl">
                 {subtotal.toLocaleString()}円
               </span>
             </li>
@@ -54,7 +57,7 @@ function SushiResultComponent() {
         })}
       </ul>
 
-      <p className="mb-4 text-2xl font-bold text-center text-orange-600">
+      <p className="mb-4 text-2xl font-bold text-center text-rose-400">
         合計金額：{" "}
         {data.members
           .reduce(
@@ -72,13 +75,13 @@ function SushiResultComponent() {
       </p>
 
       <textarea
-        className="w-full min-h-[300px] py-3 px-2 mb-4 text-sm text-gray-700 bg-gray-100 border rounded border-gray-300 focus:outline-none focus:ring-0"
+        className="w-full min-h-[300px] py-3 px-2 mb-4 text-sm text-gray-600 bg-neutral-50 border  border-gray-300 focus:outline-none focus:ring-0"
         readOnly
         value={shareText}
       />
 
       <button
-        className="block w-full px-4 py-2 font-bold text-neutral-100 rounded shadow bg-teal-500 hover:bg-teal-600"
+        className="block w-full px-4 py-2 font-bold text-neutral-50  shadow bg-teal-500"
         onClick={() => {
           navigator.clipboard.writeText(shareText);
           alert("共有テキストをコピーしました！");
