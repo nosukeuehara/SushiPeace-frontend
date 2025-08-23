@@ -25,8 +25,8 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <style dangerouslySetInnerHTML={{__html: externalLinkStyle}} />
-      <div className="sm:w-full md:w-full lg:w-1/3 mx-auto bg-rose-300">
-        <header className="flex justify-center py-3 bg-rose-300">
+      <div className="sm:w-full md:w-full lg:w-1/3 mx-auto">
+        <header className="flex justify-center max-w-xl mx-auto py-3 bg-rose-300">
           <a
             className="text-2xl font-bold text-neutral-50 font-[Outfit]"
             href="/"
@@ -34,7 +34,7 @@ export const Route = createRootRoute({
             SushiPals
           </a>
         </header>
-        <main className="max-w-screen mx-auto ">
+        <main className="max-w-screen mx-auto bg-neutral-50">
           <Outlet />
         </main>
         <footer className="flex justify-center py-4 flex-col items-center bg-rose-300">

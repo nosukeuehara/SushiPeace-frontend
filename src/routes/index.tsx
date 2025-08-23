@@ -6,7 +6,7 @@ export const Route = createFileRoute({
 
 function Home() {
   return (
-    <div className="text-center sm:max-w-[480px] sm:mx-auto min-h-screen px-5 py-16">
+    <div className="text-center min-h-screen px-5 py-16 bg-rose-300 max-w-xl mx-auto">
       <h1 className="mb-6 text-4xl text-left font-extrabold text-neutral-50">
         自分の皿は<br></br>
         自分で管理運営

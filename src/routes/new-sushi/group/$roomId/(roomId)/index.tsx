@@ -65,7 +65,7 @@ export function RouteComponent() {
   }
 
   return (
-    <div className="max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
+    <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
       {rankNotifications.length > 0 && (
         <RankNotifications notifications={rankNotifications} />
       )}
