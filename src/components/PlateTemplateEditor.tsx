@@ -65,7 +65,10 @@ export const PlateTemplateEditor = ({
           type="text"
           className="flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-0"
           value={newPrice}
-          onChange={(e) => setNewPrice(e.target.value)}
+          onChange={(e) => {
+            const onlyNums = e.target.value.replace(/[^0-9]/g, "");
+            setNewPrice(onlyNums);
+          }}
         />
         <button
           className="px-3 py-1 text-neutral-50 bg-teal-600 shadow"

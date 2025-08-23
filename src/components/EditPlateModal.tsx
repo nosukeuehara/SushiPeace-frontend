@@ -20,7 +20,9 @@ export const EditPlateModal = ({price, onChange, onSave, onCancel}: Props) => {
             type="text"
             className="w-full p-2 mt-1 border rounded"
             value={String(price)}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => {
+              onChange(e.target.value.replace(/[^0-9]/g, ""));
+            }}
           />
         </label>
 

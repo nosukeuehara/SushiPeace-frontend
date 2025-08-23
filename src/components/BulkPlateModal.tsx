@@ -32,7 +32,7 @@ export const BulkPlateModal = ({
               value={String(price)}
               onChange={(e) => {
                 const updated = [...entries];
-                updated[index] = e.target.value;
+                updated[index] = e.target.value.replace(/[^0-9]/g, "");
                 onChange(updated);
               }}
             />
