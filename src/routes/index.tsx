@@ -15,7 +15,7 @@ type Step = {
 const steps: Step[] = [
   {
     n: 1,
-    title: "ルームを作成します",
+    title: "ルームを作成",
     caption:
       "人数やグループ名を入れて開始。\nグループ名は必須です。メンバーは二人以上で登録してください。",
     img: "/how-to/01-room.png",
@@ -23,7 +23,7 @@ const steps: Step[] = [
   },
   {
     n: 2,
-    title: "招待リンクを共有します",
+    title: "招待リンクを共有",
     caption:
       "LINEやAirDropでサッと共有。\n友達に送ってみんなで寿司ルームに集まろう！",
     img: "/how-to/02-share-link.png",
