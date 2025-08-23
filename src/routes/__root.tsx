@@ -37,7 +37,7 @@ export const Route = createRootRoute({
         <main className="max-w-screen mx-auto bg-neutral-50">
           <Outlet />
         </main>
-        <footer className="flex justify-center py-4 flex-col items-center bg-rose-300">
+        <footer className="flex justify-center max-w-xl mx-auto py-4 flex-col items-center bg-rose-300">
           <div className="mb-5 mt-2">
             <a
               href="https://forms.gle/pm4nnWRqcaiEgMCb6"
