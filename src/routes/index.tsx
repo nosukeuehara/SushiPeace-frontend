@@ -120,7 +120,7 @@ function Home() {
       </div>
 
       {/* How to */}
-      <section className="px-5 py-16 bg-neutral-50 text-left">
+      <section className="px-5 py-16 bg-white text-left">
         <header className="mb-8">
           <h2 className="text-2xl font-bold text-gray-700 text-center">
             <span className="font-[Outfit]">SushiPals</span> 機能紹介
@@ -131,7 +131,7 @@ function Home() {
         </header>
 
         {/* レスポンシブグリッド */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {steps.map((s) => (
             <StepCard key={s.n} {...s} />
           ))}
