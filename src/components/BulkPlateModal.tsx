@@ -40,7 +40,7 @@ export const BulkPlateModal = ({
         ))}
 
         <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
-          <button onClick={onAddRow} className="px-3 py-1 bg-gray-200 rounded">
+          <button onClick={onAddRow} className="px-3 py-1 bg-gray-200">
             <span className="text-gray-600">＋行を追加</span>
           </button>
           <button

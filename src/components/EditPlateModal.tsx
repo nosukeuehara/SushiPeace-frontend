@@ -31,7 +31,7 @@ export const EditPlateModal = ({price, onChange, onSave, onCancel}: Props) => {
           >
             保存
           </button>
-          <button onClick={onCancel} className="px-3 py-1 bg-gray-200 rounded">
+          <button onClick={onCancel} className="px-3 py-1 bg-gray-200">
             キャンセル
           </button>
         </div>
