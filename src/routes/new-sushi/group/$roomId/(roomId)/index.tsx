@@ -8,6 +8,7 @@ import {BulkPlateModal} from "../../../../../components/BulkPlateModal";
 import {GroupSummary} from "../../../../../components/GroupSummary";
 import {MemberList} from "../../../../../components/MemberList";
 import {ShareButton} from "../../../../../components/ShareButton";
+import {DataState} from "../../../../../components/DataState";
 import {useState} from "react";
 
 export const Route = createFileRoute({
@@ -41,38 +42,29 @@ export function RouteComponent() {
   const [bulkEntries, setBulkEntries] = useState([""]);
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
 
-  if (isLoading)
-    return <p className="mx-auto mt-5 max-w-xl min-h-screen">読み込み中...</p>;
-  if (error) return <p>エラーが発生しました: {(error as Error).message}</p>;
-  if (!data) return <p>データが存在しません</p>;
-
-  if (!userId) {
-    return (
-      <div className="mx-auto text-center max-w-xl min-h-screen px-5 py-16 bg-white">
-        <h2 className="mb-16 text-xl text-gray-600 font-bold">
-          あなたは誰ですか？
-        </h2>
-        <ul className="flex flex-col gap-7">
-          {members.map((m) => (
-            <li key={m.userId}>
-              <button onClick={() => handleSelectUser(m.userId)}>
-                <span className="text-gray-600">{m.name}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-
-  return (
+  const content = !userId ? (
+    <div className="mx-auto text-center max-w-xl min-h-screen px-5 py-16 bg-white">
+      <h2 className="mb-16 text-xl text-gray-600 font-bold">
+        あなたは誰ですか？
+      </h2>
+      <ul className="flex flex-col gap-7">
+        {members.map((m) => (
+          <li key={m.userId}>
+            <button onClick={() => handleSelectUser(m.userId)}>
+              <span className="text-gray-600">{m.name}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : (
     <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
       {rankNotifications.length > 0 && (
         <RankNotifications notifications={rankNotifications} />
       )}
 
       <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-600">{data.groupName}</h2>
+        <h2 className="text-3xl font-bold text-gray-600">{data?.groupName}</h2>
       </div>
 
       <div className="grid gap-2 pb-2 grid-cols-2">
@@ -187,5 +179,11 @@ export function RouteComponent() {
         />
       )}
     </div>
+  );
+
+  return (
+    <DataState isLoading={isLoading} error={error} data={data}>
+      {content}
+    </DataState>
   );
 }
