@@ -130,7 +130,6 @@ function Home() {
           </p>
         </header>
 
-        {/* レスポンシブグリッド */}
         <div className="grid grid-cols-1 gap-6">
           {steps.map((s) => (
             <StepCard key={s.n} {...s} />
