@@ -41,7 +41,8 @@ export function RouteComponent() {
   const [bulkEntries, setBulkEntries] = useState([""]);
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
 
-  if (isLoading) return <p>読み込み中...</p>;
+  if (isLoading)
+    return <p className="mx-auto mt-5 max-w-xl min-h-screen">読み込み中...</p>;
   if (error) return <p>エラーが発生しました: {(error as Error).message}</p>;
   if (!data) return <p>データが存在しません</p>;
 
