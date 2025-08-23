@@ -15,10 +15,11 @@ function SushiResultComponent() {
 
   const shareUrl = `${window.location.origin}/new-sushi/group/${roomId}/result`;
   const shareText =
+    data &&
     template &&
     generateShareText(
-      data!.groupName,
-      data!.members,
+      data.groupName,
+      data.members,
       template.prices,
       shareUrl
     );
@@ -29,7 +30,7 @@ function SushiResultComponent() {
     <div className="max-w-xl mx-auto bg-white min-h-screen px-5 py-16">
       <div className="flex flex-col items-center mb-10">
         <h2 className="mb-3 text-3xl font-bold text-center text-gray-600">
-          📋 {data!.groupName}
+          📋 {data?.groupName}
         </h2>
         <span className="text-gray-600">の会計結果</span>
       </div>
@@ -41,7 +42,7 @@ function SushiResultComponent() {
       </div>
 
       <ul className="mb-8 gap-7 flex flex-col">
-        {data!.members.map((m) => {
+        {data?.members?.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
             (sum, [color, count]) =>
               sum + count * template.prices[color as string],
@@ -60,18 +61,18 @@ function SushiResultComponent() {
 
       <p className="mb-4 text-2xl font-bold text-center text-rose-400">
         合計金額：{" "}
-        {data!.members
-          .reduce(
+        {data?.members
+          ?.reduce(
             (total, m) =>
-              total +
-              Object.entries(m.counts).reduce(
-                (sum, [color, count]) =>
-                  sum + count * template.prices[color as string],
-                0
-              ),
-            0
-          )
-          .toLocaleString()}{" "}
+            total +
+            Object.entries(m.counts).reduce(
+              (sum, [color, count]) =>
+                sum + count * template.prices[color as string],
+              0
+            ),
+          0
+        )
+          ?.toLocaleString()}{" "}
         円
       </p>
 
@@ -81,13 +82,13 @@ function SushiResultComponent() {
           "focus:outline-none focus:ring-0"
         }
         readOnly
-        value={shareText!}
+        value={shareText ?? ""}
       />
 
       <button
         className="block w-full px-4 py-2 font-bold text-neutral-50  shadow bg-teal-500"
         onClick={() => {
-          navigator.clipboard.writeText(shareText!);
+          navigator.clipboard.writeText(shareText ?? "");
           alert("共有テキストをコピーしました！");
         }}
       >
