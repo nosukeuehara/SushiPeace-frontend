@@ -4,7 +4,7 @@ import {updateRoomHistory} from "../util/roomHistory";
 import type {MemberPlates, PlateTemplate} from "../types/plate";
 import type {useRoom} from "./useRoom";
 
-const BANNER_TIMEOUT_MS = 3000;
+const BANNER_TIMEOUT_MS = 2000;
 
 type RoomData = NonNullable<ReturnType<typeof useRoom>>["data"];
 

@@ -10,7 +10,7 @@ export function RankNotifications({
   notifications: Notification[];
 }) {
   return (
-    <div className="absolute right-2 top-4 z-50 space-y-2">
+    <div className="fixed right-2 top-4 z-50 space-y-2">
       {notifications.map((n) => (
         <div
           key={n.id}
