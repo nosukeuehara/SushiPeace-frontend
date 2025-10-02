@@ -5,7 +5,7 @@ import type { MemberPlates } from "../types/plate";
 interface UseSocketParams {
   roomId: string | undefined;
   userId: string | null;
-  onSync: (members: MemberPlates[], templateData?: Record<string, number>) => void;
+  onSync: (members: MemberPlates[], templateData: Record<string, number>) => void;
 }
 
 export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
@@ -20,7 +20,7 @@ export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
   }, [roomId, userId]);
 
   useEffect(() => {
-    const handleSync = (payload: { members: MemberPlates[]; templateData?: Record<string, number> }) => {
+    const handleSync = (payload: { members: MemberPlates[]; templateData: Record<string, number> }) => {
       onSync(payload.members, payload.templateData);
     };
 
