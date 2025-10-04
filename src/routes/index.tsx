@@ -136,7 +136,7 @@ function Home() {
           ))}
         </div>
 
-        {/* 補助CTA（任意） */}
+        {/* 補助CTA */}
         <div className="mt-10 text-center">
           <Link
             to="/new-sushi"
