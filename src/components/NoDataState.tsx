@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 import LoadingScreen from "./LoadingScreen";
 import ErrorScreen from "./ErrorScreen";
-import NoDataScreen from "./NodataScreen";
+import NoDataScreen from "./NoDataScreen";
 
 type Props<T> = {
   isLoading: boolean;
