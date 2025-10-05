@@ -15,3 +15,7 @@
   font-style: normal;
   font-display: swap;
 }
+
+button {
+  cursor: pointer;
+}

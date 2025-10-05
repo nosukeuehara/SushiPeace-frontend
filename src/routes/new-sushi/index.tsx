@@ -53,7 +53,7 @@ export default function NewRoom() {
 
   return (
     <div className="max-w-xl mx-auto bg-white min-h-screen px-5 py-16">
-      <h1 className="mb-4 text-2xl font-bold text-center text-gray-600">
+      <h1 className="mb-4 text-3xl font-bold text-center text-gray-600">
         寿司ルーム作成
       </h1>
 
