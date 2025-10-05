@@ -1,6 +1,6 @@
 export type PlateTemplate = {
   id: string;
-  name: string;
+  // name: string;
   prices: Record<string, number>;
 };
 
