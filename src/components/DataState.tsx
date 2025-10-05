@@ -1,4 +1,7 @@
 import type {ReactNode} from "react";
+import LoadingScreen from "./LoadingScreen";
+import ErrorScreen from "./ErrorScreen";
+import NoDataScreen from "./NodataScreen";
 
 type Props<T> = {
   isLoading: boolean;
@@ -15,12 +18,14 @@ export const DataState = <T,>({
   error,
   data,
   children,
-  className = "mx-auto mt-5 max-w-xl min-h-screen",
+  className = "mx-auto max-w-xl min-h-screen pt-[20%]",
   loadingText = "読み込み中...",
-  noDataText = "データが存在しません",
+  noDataText = "ルームに関するデータが存在しません",
 }: Props<T>) => {
-  if (isLoading) return <p className={className}>{loadingText}</p>;
-  if (error) return <p>エラーが発生しました: {(error as Error).message}</p>;
-  if (!data) return <p>{noDataText}</p>;
+  if (isLoading)
+    return <LoadingScreen className={className} loadingText={loadingText} />;
+  if (error) return <ErrorScreen className={className} />;
+  if (!data || (Array.isArray(data) && data.length === 0))
+    return <NoDataScreen className={className} message={noDataText} />;
   return <>{children}</>;
 };
