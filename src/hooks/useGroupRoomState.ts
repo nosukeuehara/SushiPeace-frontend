@@ -42,7 +42,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
       if (updatedTemplateData) {
         const newTemplate: PlateTemplate = {
           id: "custom",
-          name: "カスタムテンプレート",
+          // name: "カスタムテンプレート",
           prices: updatedTemplateData,
         };
         setTemplate(newTemplate);
@@ -134,7 +134,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
     emitTemplateUpdate(roomId, newPrices);
     setTemplate({
       id: "custom",
-      name: "カスタムテンプレート",
+      // name: "カスタムテンプレート",
       prices: newPrices,
     });
   };
