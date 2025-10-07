@@ -1,12 +1,10 @@
-import {useState, useEffect, useRef} from "react";
-import {useSocket, emitCount, emitTemplateUpdate} from "./useSocket";
-import {updateRoomHistory} from "../util/roomHistory";
-import type {MemberPlates, PlateTemplate} from "../types/plate";
-import type {useRoom} from "./useRoom";
+import { useState, useEffect, useRef } from "react";
+import { useSocket, emitCount, emitTemplateUpdate } from "./useSocket";
+import { updateRoomHistory } from "../util/roomHistory";
+import type { MemberPlates, PlateTemplate } from "../types/plate";
+import type { RoomData } from "../types/room";
 
 const BANNER_TIMEOUT_MS = 2000;
-
-type RoomData = NonNullable<ReturnType<typeof useRoom>>["data"];
 
 export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   const userKey = `sushi-user-id-${roomId}`;
@@ -17,7 +15,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   const [members, setMembers] = useState<MemberPlates[]>([]);
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [rankNotifications, setRankNotifications] = useState<
-    {id: number; type: "group" | "personal"; message: string}[]
+    { id: number; type: "group" | "personal"; message: string }[]
   >([]);
 
   const lastGroupTotal = useRef<number>(0);
@@ -28,7 +26,9 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
 
   const pushNotification = (type: "group" | "personal", message: string) => {
     const id = notificationIdRef.current++;
-    setRankNotifications((prev) => [{id, type, message}, ...prev].slice(0, 3));
+    setRankNotifications((prev) =>
+      [{ id, type, message }, ...prev].slice(0, 3)
+    );
     setTimeout(() => {
       setRankNotifications((prev) => prev.filter((n) => n.id !== id));
     }, BANNER_TIMEOUT_MS);
@@ -42,7 +42,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
       if (updatedTemplateData) {
         const newTemplate: PlateTemplate = {
           id: "custom",
-          // name: "カスタムテンプレート",
+          name: "カスタムテンプレート",
           prices: updatedTemplateData,
         };
         setTemplate(newTemplate);
@@ -134,7 +134,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
     emitTemplateUpdate(roomId, newPrices);
     setTemplate({
       id: "custom",
-      // name: "カスタムテンプレート",
+      name: "カスタムテンプレート",
       prices: newPrices,
     });
   };
