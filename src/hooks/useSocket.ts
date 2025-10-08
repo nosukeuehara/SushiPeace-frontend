@@ -1,18 +1,21 @@
-import { useEffect } from "react";
-import { socket } from "../lib/socket";
-import type { MemberPlates } from "../types/plate";
+import {useEffect} from "react";
+import {socket} from "../lib/socket";
+import type {MemberPlates} from "@/types";
 
 interface UseSocketParams {
   roomId: string | undefined;
   userId: string | null;
-  onSync: (members: MemberPlates[], templateData: Record<string, number>) => void;
+  onSync: (
+    members: MemberPlates[],
+    templateData: Record<string, number>
+  ) => void;
 }
 
-export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
+export const useSocket = ({roomId, userId, onSync}: UseSocketParams) => {
   useEffect(() => {
     if (!roomId || !userId) return;
     socket.connect();
-    socket.emit("join", { roomId, userId });
+    socket.emit("join", {roomId, userId});
 
     return () => {
       socket.disconnect();
@@ -20,10 +23,12 @@ export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
   }, [roomId, userId]);
 
   useEffect(() => {
-    const handleSync = (payload: { members: MemberPlates[]; templateData: Record<string, number> }) => {
+    const handleSync = (payload: {
+      members: MemberPlates[];
+      templateData: Record<string, number>;
+    }) => {
       onSync(payload.members, payload.templateData);
     };
-
 
     socket.on("sync", handleSync);
     return () => {
@@ -32,9 +37,14 @@ export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
   }, [onSync]);
 };
 
-export const emitCount = (roomId: string | undefined, userId: string, color: string, remove?: boolean) => {
+export const emitCount = (
+  roomId: string | undefined,
+  userId: string,
+  color: string,
+  remove?: boolean
+) => {
   if (!roomId) return;
-  socket.emit("count", { roomId, userId, color, ...(remove ? { remove } : {}) });
+  socket.emit("count", {roomId, userId, color, ...(remove ? {remove} : {})});
 };
 
 export const emitTemplateUpdate = (
@@ -42,6 +52,5 @@ export const emitTemplateUpdate = (
   prices: Record<string, number>
 ) => {
   if (!roomId) return;
-  socket.emit("updateTemplate", { roomId, prices });
+  socket.emit("updateTemplate", {roomId, prices});
 };
-

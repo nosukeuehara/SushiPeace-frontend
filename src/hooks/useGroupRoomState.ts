@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import { useSocket, emitCount, emitTemplateUpdate } from "./useSocket";
-import { updateRoomHistory } from "../util/roomHistory";
-import type { MemberPlates, PlateTemplate } from "../types/plate";
-import type { RoomData } from "../types/room";
+import {useState, useEffect, useRef} from "react";
+import {useSocket, emitCount, emitTemplateUpdate} from "./useSocket";
+import {updateRoomHistory} from "../util/roomHistory";
+import type {MemberPlates, PlateTemplate} from "@/types";
+import type {RoomData} from "../types/room";
 
 const BANNER_TIMEOUT_MS = 2000;
 
@@ -15,7 +15,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   const [members, setMembers] = useState<MemberPlates[]>([]);
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [rankNotifications, setRankNotifications] = useState<
-    { id: number; type: "group" | "personal"; message: string }[]
+    {id: number; type: "group" | "personal"; message: string}[]
   >([]);
 
   const lastGroupTotal = useRef<number>(0);
@@ -26,9 +26,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
 
   const pushNotification = (type: "group" | "personal", message: string) => {
     const id = notificationIdRef.current++;
-    setRankNotifications((prev) =>
-      [{ id, type, message }, ...prev].slice(0, 3)
-    );
+    setRankNotifications((prev) => [{id, type, message}, ...prev].slice(0, 3));
     setTimeout(() => {
       setRankNotifications((prev) => prev.filter((n) => n.id !== id));
     }, BANNER_TIMEOUT_MS);

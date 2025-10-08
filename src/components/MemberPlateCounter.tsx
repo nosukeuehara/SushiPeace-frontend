@@ -1,4 +1,4 @@
-import type {MemberPlates} from "../types/plate";
+import type {MemberPlates} from "@/types";
 
 type Props = {
   member: MemberPlates;

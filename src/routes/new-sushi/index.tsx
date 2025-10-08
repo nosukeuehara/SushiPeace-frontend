@@ -2,7 +2,7 @@ import {useState} from "react";
 import {Link} from "@tanstack/react-router";
 import {useNavigate} from "@tanstack/react-router";
 import {useCreateRoom} from "@/hooks/useCreateRoom";
-import {type Member} from "@/api/room";
+import {type Member} from "@/api";
 import {getRoomHistory, removeRoomHistory} from "@/util/roomHistory";
 
 export const Route = createFileRoute({
