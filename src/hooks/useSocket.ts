@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {socket} from "../lib/socket";
+import {socket} from "@/lib/socket";
 import type {MemberPlates} from "@/types";
 
 interface UseSocketParams {

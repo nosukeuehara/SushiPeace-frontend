@@ -1,8 +1,8 @@
 import {useState, useEffect, useRef} from "react";
 import {useSocket, emitCount, emitTemplateUpdate} from "./useSocket";
-import {updateRoomHistory} from "../util/roomHistory";
+import {updateRoomHistory} from "@/util/roomHistory";
 import type {MemberPlates, PlateTemplate} from "@/types";
-import type {RoomData} from "../types/room";
+import type {RoomData} from "@/types";
 
 const BANNER_TIMEOUT_MS = 2000;
 
