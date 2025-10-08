@@ -1,7 +1,7 @@
 import {Link, useParams} from "@tanstack/react-router";
 import {useRoom} from "../../../../../hooks/useRoom";
 import {generateShareText} from "../../../../../util/shareText";
-import {DataState} from "../../../../../components/DataState";
+import {DataState} from "../../../../../components/NoDataState";
 
 export const Route = createFileRoute({
   component: SushiResultComponent,
@@ -17,12 +17,7 @@ function SushiResultComponent() {
   const shareText =
     data &&
     template &&
-    generateShareText(
-      data.groupName,
-      data.members,
-      template.prices,
-      shareUrl
-    );
+    generateShareText(data.groupName, data.members, template.prices, shareUrl);
 
   const content = !template ? (
     <p>テンプレートが見つかりません</p>
@@ -64,14 +59,14 @@ function SushiResultComponent() {
         {data?.members
           ?.reduce(
             (total, m) =>
-            total +
-            Object.entries(m.counts).reduce(
-              (sum, [color, count]) =>
-                sum + count * template.prices[color as string],
-              0
-            ),
-          0
-        )
+              total +
+              Object.entries(m.counts).reduce(
+                (sum, [color, count]) =>
+                  sum + count * template.prices[color as string],
+                0
+              ),
+            0
+          )
           ?.toLocaleString()}{" "}
         円
       </p>

@@ -1,5 +1,5 @@
-import {useQuery} from "@tanstack/react-query";
-import type {RoomData} from "../types/room";
+import { useQuery } from "@tanstack/react-query";
+import type { RoomData } from "../types/room";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 

@@ -8,7 +8,7 @@ import {BulkPlateModal} from "../../../../../components/BulkPlateModal";
 import {GroupSummary} from "../../../../../components/GroupSummary";
 import {MemberList} from "../../../../../components/MemberList";
 import {ShareButton} from "../../../../../components/ShareButton";
-import {DataState} from "../../../../../components/DataState";
+import {DataState} from "../../../../../components/NoDataState";
 import {useState} from "react";
 
 export const Route = createFileRoute({
