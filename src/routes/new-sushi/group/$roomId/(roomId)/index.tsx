@@ -1,14 +1,14 @@
 import {useParams} from "@tanstack/react-router";
-import {useRoom} from "../../../../../hooks/useRoom";
-import {useGroupRoomState} from "../../../../../hooks/useGroupRoomState";
-import {RankNotifications} from "../../../../../components/RankNotifications";
-import {PlateTemplateEditor} from "../../../../../components/PlateTemplateEditor";
-import {EditPlateModal} from "../../../../../components/EditPlateModal";
-import {BulkPlateModal} from "../../../../../components/BulkPlateModal";
-import {GroupSummary} from "../../../../../components/GroupSummary";
-import {MemberList} from "../../../../../components/MemberList";
-import {ShareButton} from "../../../../../components/ShareButton";
-import {DataState} from "../../../../../components/NoDataState";
+import {useRoom} from "@/hooks/useRoom";
+import {useGroupRoomState} from "@/hooks/useGroupRoomState";
+import {RankNotifications} from "@/components/RankNotifications";
+import {PlateTemplateEditor} from "@/components/PlateTemplateEditor";
+import {EditPlateModal} from "@/components/EditPlateModal";
+import {BulkPlateModal} from "@/components/BulkPlateModal";
+import {GroupSummary} from "@/components/GroupSummary";
+import {MemberList} from "@/components/MemberList";
+import {ShareButton} from "@/components/ShareButton";
+import {DataState} from "@/components/NoDataState";
 import {useState} from "react";
 
 export const Route = createFileRoute({
