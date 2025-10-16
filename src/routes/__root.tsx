@@ -1,7 +1,10 @@
 // このファイルは全てのページのラッパーコンポーネントを定義。
 // トップレベルのルートになる
+import {Maintenance} from "@/components/page/Maintenace";
 import {createRootRoute, Outlet} from "@tanstack/react-router";
 import {TanStackRouterDevtools} from "@tanstack/react-router-devtools";
+
+const isMaintenance = import.meta.env.VITE_MAINTENANCE_MODE === "true";
 
 // 外部リンクアイコンのスタイル
 const externalLinkStyle = `
@@ -35,7 +38,7 @@ export const Route = createRootRoute({
           </a>
         </header>
         <main className="max-w-screen mx-auto bg-neutral-50">
-          <Outlet />
+          {isMaintenance ? <Maintenance /> : <Outlet />}
         </main>
         <footer className="flex justify-center max-w-xl mx-auto py-4 flex-col items-center bg-rose-300">
           <div className="mb-2 mt-2">
