@@ -98,79 +98,54 @@ function StepCard({n, title, caption, img, alt}: Step) {
 
 function Home() {
   return (
-    <div className="min-h-screen mt-[20%] px-10">
-      <div className="mx-auto mb-6 h-14 w-14 bg-rose-300 grid place-items-center">
-        <span className="text-white text-2xl">🍣</span>
-      </div>
-
-      <h1 className="text-2xl font-bold text-gray-800 mb-2">メンテナンス中</h1>
-      <p className="text-gray-600">
-        {
-          "ただいまシステムメンテナンスを実施しております。しばらくしてから再度アクセスしてください。"
-        }
-      </p>
-
-      <div className="mt-6 text-sm text-gray-500">
-        <p>ご不便をおかけして申し訳ありません。</p>
-      </div>
-
-      <div className="mt-8 mx-auto flex flex-col gap-2">
-        <a
-          href="/"
-          className=" mx-auto px-4 py-2 rounded bg-rose-300 text-white font-semibold"
+    <div className="text-center max-w-xl mx-auto">
+      <div className="flex flex-col justify-between px-5 pt-16 pb-8 bg-rose-300 min-h-[52vh]">
+        <div className="flex flex-col gap-10">
+          <h1 className="text-4xl text-left font-extrabold text-neutral-50">
+            自分の皿は<br></br>
+            自分で管理運営
+          </h1>
+          <p className=" text-left text-neutral-50">
+            友達との回転寿司、何皿食べたか数えられなくて会計が面倒じゃないですか？
+            <br></br>
+            このアプリは、食べた皿をその場で記録して自動で金額を計算、スムーズに明細を共有できる無料のサービスです。
+          </p>
+        </div>
+        <Link
+          to="/new-sushi"
+          className="block px-4 py-2 font-bold text-rose-300 bg-neutral-100 shadow"
         >
-          リロード
-        </a>
+          Let's Sushi
+        </Link>
       </div>
+
+      {/* How to */}
+      <section className="px-5 py-16 bg-white text-left">
+        <header className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-700 text-center">
+            <span className="font-[Outfit]">SushiPals</span> 機能紹介
+          </h2>
+          <p className="mt-2 text-center text-gray-500">
+            すぐ始められます！（アカウント登録不要）
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 gap-6">
+          {steps.map((s) => (
+            <StepCard key={s.n} {...s} />
+          ))}
+        </div>
+
+        {/* 補助CTA */}
+        <div className="mt-10 text-center">
+          <Link
+            to="/new-sushi"
+            className="block justify-center bg-rose-300 px-4 py-2 font-bold text-white shadow"
+          >
+            Let's Sushi
+          </Link>
+        </div>
+      </section>
     </div>
-    // <div className="text-center max-w-xl mx-auto">
-    //   <div className="flex flex-col justify-between px-5 pt-16 pb-8 bg-rose-300 min-h-[52vh]">
-    //     <div className="flex flex-col gap-10">
-    //       <h1 className="text-4xl text-left font-extrabold text-neutral-50">
-    //         自分の皿は<br></br>
-    //         自分で管理運営
-    //       </h1>
-    //       <p className=" text-left text-neutral-50">
-    //         友達との回転寿司、何皿食べたか数えられなくて会計が面倒じゃないですか？
-    //         <br></br>
-    //         このアプリは、食べた皿をその場で記録して自動で金額を計算、スムーズに明細を共有できる無料のサービスです。
-    //       </p>
-    //     </div>
-    //     <Link
-    //       to="/new-sushi"
-    //       className="block px-4 py-2 font-bold text-rose-300 bg-neutral-100 shadow"
-    //     >
-    //       Let's Sushi
-    //     </Link>
-    //   </div>
-
-    //   {/* How to */}
-    //   <section className="px-5 py-16 bg-white text-left">
-    //     <header className="mb-8">
-    //       <h2 className="text-2xl font-bold text-gray-700 text-center">
-    //         <span className="font-[Outfit]">SushiPals</span> 機能紹介
-    //       </h2>
-    //       <p className="mt-2 text-center text-gray-500">
-    //         すぐ始められます！（アカウント登録不要）
-    //       </p>
-    //     </header>
-
-    //     <div className="grid grid-cols-1 gap-6">
-    //       {steps.map((s) => (
-    //         <StepCard key={s.n} {...s} />
-    //       ))}
-    //     </div>
-
-    //     {/* 補助CTA */}
-    //     <div className="mt-10 text-center">
-    //       <Link
-    //         to="/new-sushi"
-    //         className="block justify-center bg-rose-300 px-4 py-2 font-bold text-white shadow"
-    //       >
-    //         Let's Sushi
-    //       </Link>
-    //     </div>
-    //   </section>
-    // </div>
   );
 }
