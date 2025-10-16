@@ -1,5 +1,5 @@
 import {MemberPlateCounter} from "./MemberPlateCounter";
-import type {MemberPlates} from "../types/plate";
+import type {MemberPlates} from "@/types";
 
 type Props = {
   members: MemberPlates[];

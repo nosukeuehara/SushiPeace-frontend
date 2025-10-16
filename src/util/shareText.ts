@@ -1,4 +1,4 @@
-import type {MemberPlates, PlateTemplate} from "../types/plate";
+import type {MemberPlates, PlateTemplate} from "@/types";
 
 export function generateShareText(
   groupName: string,

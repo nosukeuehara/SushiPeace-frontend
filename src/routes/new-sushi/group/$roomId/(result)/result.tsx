@@ -1,7 +1,7 @@
 import {Link, useParams} from "@tanstack/react-router";
-import {useRoom} from "../../../../../hooks/useRoom";
-import {generateShareText} from "../../../../../util/shareText";
-import {DataState} from "../../../../../components/NoDataState";
+import {useRoom} from "@/hooks/useRoom";
+import {generateShareText} from "@/util/shareText";
+import {DataState} from "@/components/NoDataState";
 
 export const Route = createFileRoute({
   component: SushiResultComponent,

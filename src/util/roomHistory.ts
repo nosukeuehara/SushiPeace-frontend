@@ -1,4 +1,4 @@
-import type { RoomHistory } from "../types/room";
+import type {RoomHistory} from "@/types";
 
 export function removeRoomHistory(roomId: string) {
   const key = "sushi-room-history";
@@ -14,7 +14,11 @@ export function getRoomHistory(): RoomHistory[] {
   return raw ? JSON.parse(raw) : [];
 }
 
-export function updateRoomHistory(roomId: string, groupName: string, createdAt: string) {
+export function updateRoomHistory(
+  roomId: string,
+  groupName: string,
+  createdAt: string
+) {
   const key = "sushi-room-history";
   const raw = localStorage.getItem(key);
   const history: RoomHistory[] = raw ? JSON.parse(raw) : [];
@@ -31,7 +35,11 @@ export function updateRoomHistory(roomId: string, groupName: string, createdAt: 
     },
   ];
 
-  updated.sort((a, b) => new Date(b.lastAccessedAt).getTime() - new Date(a.lastAccessedAt).getTime());
+  updated.sort(
+    (a, b) =>
+      new Date(b.lastAccessedAt).getTime() -
+      new Date(a.lastAccessedAt).getTime()
+  );
 
   localStorage.setItem(key, JSON.stringify(updated));
 }
