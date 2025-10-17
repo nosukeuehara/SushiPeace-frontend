@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {Link} from "@tanstack/react-router";
 import {useNavigate} from "@tanstack/react-router";
 import {useCreateRoom} from "@/hooks/useCreateRoom";
@@ -15,6 +15,7 @@ export default function NewRoom() {
   const [groupName, setGroupName] = useState("");
   const [members, setMembers] = useState<Member[] | []>([]);
   const [memberName, setMemberName] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {mutate, isPending} = useCreateRoom((data) => {
     navigate({to: `/new-sushi/group/${data.roomId}/share`});
@@ -51,6 +52,24 @@ export default function NewRoom() {
     });
   };
 
+  const addMember = () => {
+    const name = memberName.trim();
+    if (!name) return;
+    setMembers((prev) => [...prev, {userId: "", name}]);
+    setMemberName("");
+
+    requestAnimationFrame(() => {
+      const el = inputRef.current;
+      if (el) {
+        el.focus();
+        const pos = el.value.length;
+        try {
+          el.setSelectionRange(pos, pos);
+        } catch {}
+      }
+    });
+  };
+
   return (
     <div className="max-w-xl mx-auto bg-white min-h-screen px-5 py-16">
       <h1 className="mb-4 text-3xl font-bold text-center text-gray-600">
@@ -71,16 +90,15 @@ export default function NewRoom() {
 
       <div className="flex gap-1 w-full mb-3">
         <input
+          ref={inputRef}
           name="memberName"
           className="p-2 w-full bg-white border border-gray-300 focus:outline-none"
           value={memberName}
           onChange={(e) => setMemberName(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              const name = memberName.trim();
-              if (!name) return;
-              setMembers([...members, {userId: "", name}]);
-              setMemberName("");
+              e.preventDefault(); // モバイルでの予期せぬ submit/blur 回避
+              addMember();
             }
           }}
           placeholder="メンバー名"
@@ -88,12 +106,11 @@ export default function NewRoom() {
         <button
           type="button"
           className="w-20 font-bold text-neutral-50 bg-teal-500 shadow"
-          onClick={() => {
-            const name = memberName.trim();
-            if (!name) return;
-            setMembers([...members, {userId: "", name}]);
-            setMemberName("");
-          }}
+          // ここがキモ：フォーカス移動を防ぎ、キーボードを閉じさせない
+          onMouseDown={(e) => e.preventDefault()}
+          onTouchStart={(e) => e.preventDefault()}
+          onClick={addMember}
+          tabIndex={-1} // 余計なフォーカス遷移をさらに抑止（任意）
         >
           追加
         </button>
