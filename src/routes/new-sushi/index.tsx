@@ -4,6 +4,7 @@ import {useNavigate} from "@tanstack/react-router";
 import {useCreateRoom} from "@/hooks/useCreateRoom";
 import {type Member} from "@/api";
 import {getRoomHistory, removeRoomHistory} from "@/util/roomHistory";
+import MenuDots from "@/components/MenuDots";
 
 export const Route = createFileRoute({
   component: NewRoom,
@@ -136,13 +137,13 @@ export default function NewRoom() {
             {roomHistories.map((h) => (
               <div
                 key={h.roomId}
-                className="p-2 border rounded border-gray-300"
+                className="p-2 border rounded border-gray-300 relative"
               >
                 <Link to="/new-sushi/group/$roomId" params={{roomId: h.roomId}}>
                   <div className="mb-1 font-bold text-left text-gray-600">
                     {h.groupName}
                   </div>
-                  <div className="flex flex-col items-start text-sm text-gray-600 pb-2">
+                  <div className="flex flex-col items-start text-sm text-gray-600">
                     <span>
                       作成: {new Date(h.createdAt).toLocaleDateString()}
                     </span>
@@ -152,12 +153,11 @@ export default function NewRoom() {
                     </span>
                   </div>
                 </Link>
-                <button
-                  className="pt-2 text-sm text-red-600 w-full"
-                  onClick={() => handleRemoveRoomHistory(h.roomId)}
-                >
-                  削除する
-                </button>
+                <MenuDots
+                  handleRemoveRoomHistory={() =>
+                    handleRemoveRoomHistory(h.roomId)
+                  }
+                />
               </div>
             ))}
           </div>
