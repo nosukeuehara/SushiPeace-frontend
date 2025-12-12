@@ -51,7 +51,9 @@ export const Route = createRootRoute({
               改善フォーム
             </a>
           </div>
-          <span className="text-sm text-neutral-50">© 2025 SushiPals</span>
+          <span className="text-sm text-neutral-50">
+            © {new Date().getFullYear()} SushiPals
+          </span>
         </footer>
         <TanStackRouterDevtools />
       </div>
