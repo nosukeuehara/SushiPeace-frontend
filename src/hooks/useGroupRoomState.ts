@@ -24,6 +24,11 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   const lastNotifiedPersonal = useRef<Record<string, number>>({});
   const notificationIdRef = useRef(0);
 
+  const lastSentSeqRef = useRef(0);
+  const lastAppliedSeqRef = useRef(0);
+
+  const pendingDeltaRef = useRef<Record<string, number>>({});
+
   const pushNotification = (type: "group" | "personal", message: string) => {
     const id = notificationIdRef.current++;
     setRankNotifications((prev) => [{ id, type, message }, ...prev].slice(0, 3));
@@ -35,16 +40,24 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   useSocket({
     roomId,
     userId,
-    onSync: (updatedMembers, updatedTemplateData) => {
-      setMembers(updatedMembers);
-      if (updatedTemplateData) {
-        const newTemplate: PlateTemplate = {
-          id: "custom",
-          name: "カスタムテンプレート",
-          prices: updatedTemplateData,
-        };
-        setTemplate(newTemplate);
+    onSync: (updatedMembers, updatedTemplateData, meta) => {
+      // 自分の操作のsyncで、古いものは捨てる
+      if (
+        meta?.sourceUserId &&
+        meta.sourceUserId === userId &&
+        typeof meta.sourceSeq === "number" &&
+        meta.sourceSeq < lastSentSeqRef.current
+      ) {
+        return;
       }
+
+      // 追いつき管理（任意：ここで追いついたと判断できる）
+      if (meta?.sourceUserId === userId && typeof meta.sourceSeq === "number") {
+        lastAppliedSeqRef.current = Math.max(lastAppliedSeqRef.current, meta.sourceSeq);
+      }
+
+      setMembers(updatedMembers);
+      if (updatedTemplateData) setTemplate({ prices: updatedTemplateData });
     },
   });
 
@@ -109,24 +122,54 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
     }
   }, [members, template, userId]);
 
+  const queueDelta = (userId: string, color: string, delta: number) => {
+    const key = `${userId}::${color}`;
+    pendingDeltaRef.current[key] = (pendingDeltaRef.current[key] ?? 0) + delta;
+
+    const batch = pendingDeltaRef.current;
+    pendingDeltaRef.current = {};
+
+    for (const [k, d] of Object.entries(batch)) {
+      if (d === 0) continue;
+      const [uid, c] = k.split("::");
+
+      const seq = ++lastSentSeqRef.current;
+      emitCount(roomId, uid, c, d, seq);
+    }
+  };
+
+  const applyLocalDelta = (userId: string, color: string, delta: number) => {
+    setMembers((prev) =>
+      prev.map((m) => {
+        if (m.userId !== userId) return m;
+        const current = m.counts[color] ?? 0;
+        const next = Math.max(0, current + delta);
+        return {
+          ...m,
+          counts: { ...m.counts, [color]: next },
+        };
+      }),
+    );
+  };
+
   const handleSelectUser = (selectedId: string) => {
     localStorage.setItem(userKey, selectedId);
     setUserId(selectedId);
   };
 
   const handleAdd = (userId: string, color: string) => {
-    emitCount(roomId, userId, color);
+    applyLocalDelta(userId, color, +1);
+    queueDelta(userId, color, +1);
   };
 
   const handleRemove = (userId: string, color: string) => {
-    emitCount(roomId, userId, color, true);
+    applyLocalDelta(userId, color, -1);
+    queueDelta(userId, color, -1);
   };
 
   const handleUpdateTemplate = (newPrices: Record<string, number>) => {
     emitTemplateUpdate(roomId, newPrices);
     setTemplate({
-      id: "custom",
-      name: "カスタムテンプレート",
       prices: newPrices,
     });
   };

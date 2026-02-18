@@ -2,21 +2,27 @@ import { useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
 import type { MemberPlates } from "@/types";
 
-interface UseSocketParams {
-  roomId: string | undefined;
-  userId: string | null;
-  onSync: (members: MemberPlates[], templateData: Record<string, number>) => void;
-}
+type SyncMeta = { sourceUserId?: string; sourceSeq?: number };
 
-export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
+type UseSocketParams = {
+  roomId: string;
+  userId: string | null;
+  onSync: (
+    members: MemberPlates[],
+    templateData: Record<string, number> | null,
+    meta?: SyncMeta,
+  ) => void;
+};
+
+export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
-    if (!roomId || !userId) return;
+    if (!roomId) return;
 
     socket.connect();
 
-    socket.emit("join", { roomId, userId }, (response: { ok: boolean }) => {
+    socket.emit("join", { roomId }, (response: { ok: boolean }) => {
       if (response?.ok) {
         console.log("Joined room:", roomId);
         setIsJoined(true);
@@ -29,7 +35,7 @@ export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
       socket.disconnect();
       setIsJoined(false);
     };
-  }, [roomId, userId]);
+  }, [roomId]);
 
   // join完了後のみsyncイベントを購読
   useEffect(() => {
@@ -37,9 +43,10 @@ export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
 
     const handleSync = (payload: {
       members: MemberPlates[];
-      templateData: Record<string, number>;
+      templateData: Record<string, number> | null;
+      meta?: { sourceUserId?: string; sourceSeq?: number };
     }) => {
-      onSync(payload.members, payload.templateData);
+      onSync(payload.members, payload.templateData, payload.meta);
     };
 
     socket.on("sync", handleSync);
@@ -56,10 +63,11 @@ export const emitCount = (
   roomId: string | undefined,
   userId: string,
   color: string,
-  remove?: boolean,
+  delta: number,
+  seq: number,
 ) => {
   if (!roomId) return;
-  socket.emit("count", { roomId, userId, color, ...(remove ? { remove } : {}) });
+  socket.emit("count", { roomId, userId, color, delta, seq });
 };
 
 export const emitTemplateUpdate = (roomId: string | undefined, prices: Record<string, number>) => {
