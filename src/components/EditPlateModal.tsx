@@ -5,7 +5,7 @@ type Props = {
   onCancel: () => void;
 };
 
-export const EditPlateModal = ({price, onChange, onSave, onCancel}: Props) => {
+export const EditPlateModal = ({ price, onChange, onSave, onCancel }: Props) => {
   const color = `${price}円皿`;
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
@@ -27,10 +27,7 @@ export const EditPlateModal = ({price, onChange, onSave, onCancel}: Props) => {
         </label>
 
         <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
-          <button
-            onClick={onSave}
-            className="px-3 py-1 text-neutral-50 bg-teal-600 shadow"
-          >
+          <button onClick={onSave} className="px-3 py-1 text-neutral-50 bg-teal-600 shadow">
             保存
           </button>
           <button onClick={onCancel} className="px-3 py-1 bg-gray-200">

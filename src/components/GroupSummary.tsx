@@ -1,4 +1,4 @@
-import type {MemberPlates} from "@/types";
+import type { MemberPlates } from "@/types";
 
 type Props = {
   members: MemberPlates[];
@@ -7,14 +7,14 @@ type Props = {
   total: number;
 };
 
-export const GroupSummary = ({members, prices, showRanking, total}: Props) => {
+export const GroupSummary = ({ members, prices, showRanking, total }: Props) => {
   const ranking = [...members]
     .map((m) => {
       const subtotal = Object.entries(m.counts).reduce(
         (sum, [color, count]) => sum + count * (prices[color] ?? 0),
-        0
+        0,
       );
-      return {...m, subtotal};
+      return { ...m, subtotal };
     })
     .sort((a, b) => b.subtotal - a.subtotal)
     .slice(0, 3);
@@ -34,9 +34,7 @@ export const GroupSummary = ({members, prices, showRanking, total}: Props) => {
             return (
               <li key={m.userId}>
                 <span className={rankColors[i] || "text-gray-600"}>
-                  <span className="text-xl">
-                    {rankEmojis[i] || `${i + 1}位`}
-                  </span>
+                  <span className="text-xl">{rankEmojis[i] || `${i + 1}位`}</span>
                   {m.name}（{m.subtotal.toLocaleString()}円）
                 </span>
               </li>

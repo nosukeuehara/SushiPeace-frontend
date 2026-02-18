@@ -4,11 +4,7 @@ type Notification = {
   message: string;
 };
 
-export function RankNotifications({
-  notifications,
-}: {
-  notifications: Notification[];
-}) {
+export function RankNotifications({ notifications }: { notifications: Notification[] }) {
   return (
     <div className="fixed right-2 top-4 z-50 space-y-2">
       {notifications.map((n) => (

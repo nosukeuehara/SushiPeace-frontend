@@ -1,4 +1,4 @@
-import {Link, useLocation, useParams} from "@tanstack/react-router";
+import { Link, useLocation, useParams } from "@tanstack/react-router";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -7,13 +7,11 @@ export const Route = createFileRoute({
 const SHARE_SUFFIX = "/share";
 
 function RouteComponent() {
-  const {pathname} = useLocation();
-  const {roomId} = useParams({strict: false});
+  const { pathname } = useLocation();
+  const { roomId } = useParams({ strict: false });
   const basePath = import.meta.env.VITE_BASE_PATH;
 
-  const path = pathname.endsWith(SHARE_SUFFIX)
-    ? pathname.slice(0, -SHARE_SUFFIX.length)
-    : pathname;
+  const path = pathname.endsWith(SHARE_SUFFIX) ? pathname.slice(0, -SHARE_SUFFIX.length) : pathname;
 
   const roomUrl = `${basePath}${path}`;
 
@@ -54,7 +52,7 @@ function RouteComponent() {
 
       <Link
         to="/new-sushi/group/$roomId"
-        params={{roomId}}
+        params={{ roomId }}
         className="block px-4 py-2 text-teal-700 font-bold mt-2"
       >
         お寿司ルームへ移動

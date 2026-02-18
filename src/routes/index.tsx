@@ -1,4 +1,4 @@
-import {Link} from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute({
   component: Home,
@@ -24,8 +24,7 @@ const steps: Step[] = [
   {
     n: 2,
     title: "招待リンクを共有",
-    caption:
-      "LINEやAirDropでサッと共有。\n友達に送ってみんなで寿司ルームに集まろう！",
+    caption: "LINEやAirDropでサッと共有。\n友達に送ってみんなで寿司ルームに集まろう！",
     img: "/how-to/02-share-link.png",
     alt: "リンクを共有する画面",
   },
@@ -55,8 +54,7 @@ const steps: Step[] = [
   {
     n: 6,
     title: "通知で現在の金額を把握",
-    caption:
-      "リアルタイムでグループの金額が通知されるので安心して回転寿司に集中できます！",
+    caption: "リアルタイムでグループの金額が通知されるので安心して回転寿司に集中できます！",
     img: "/how-to/06-roompage.png",
     alt: "食べた皿を確認する画面",
   },
@@ -70,18 +68,11 @@ const steps: Step[] = [
   },
 ];
 
-function StepCard({n, title, caption, img, alt}: Step) {
+function StepCard({ n, title, caption, img, alt }: Step) {
   return (
     <figure className="group relative overflow-hidden bg-neutral-50 shadow-sm transition">
-      <div className="pt-10 pb-4 font-extrabold text-rose-300 text-2xl text-center">
-        {title}
-      </div>
-      <img
-        src={img}
-        alt={alt}
-        loading="lazy"
-        className=" p-2 w-full aspect-auto object-cover"
-      />
+      <div className="pt-10 pb-4 font-extrabold text-rose-300 text-2xl text-center">{title}</div>
+      <img src={img} alt={alt} loading="lazy" className=" p-2 w-full aspect-auto object-cover" />
       <span
         aria-hidden="true"
         className="absolute left-0 top-0 grid h-9 w-9 place-items-center shadow bg-rose-300 text-white text-xl font-bold"
@@ -125,9 +116,7 @@ function Home() {
           <h2 className="text-2xl font-bold text-gray-700 text-center">
             <span className="font-[Outfit]">SushiPals</span> 機能紹介
           </h2>
-          <p className="mt-2 text-center text-gray-500">
-            すぐ始められます！（アカウント登録不要）
-          </p>
+          <p className="mt-2 text-center text-gray-500">すぐ始められます！（アカウント登録不要）</p>
         </header>
 
         <div className="grid grid-cols-1 gap-6">

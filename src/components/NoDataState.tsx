@@ -1,4 +1,4 @@
-import type {ReactNode} from "react";
+import type { ReactNode } from "react";
 import LoadingScreen from "./LoadingScreen";
 import ErrorScreen from "./ErrorScreen";
 import NoDataScreen from "./NoDataScreen";
@@ -22,8 +22,7 @@ export const DataState = <T,>({
   loadingText = "読み込み中...",
   noDataText = "ルームに関するデータが存在しません",
 }: Props<T>) => {
-  if (isLoading)
-    return <LoadingScreen className={className} loadingText={loadingText} />;
+  if (isLoading) return <LoadingScreen className={className} loadingText={loadingText} />;
   if (error) return <ErrorScreen className={className} />;
   if (!data || (Array.isArray(data) && data.length === 0))
     return <NoDataScreen className={className} message={noDataText} />;

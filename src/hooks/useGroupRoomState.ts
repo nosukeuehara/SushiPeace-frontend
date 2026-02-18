@@ -1,21 +1,21 @@
-import {useState, useEffect, useRef} from "react";
-import {useSocket, emitCount, emitTemplateUpdate} from "./useSocket";
-import {updateRoomHistory} from "@/util/roomHistory";
-import type {MemberPlates, PlateTemplate} from "@/types";
-import type {RoomData} from "@/types";
+import { useState, useEffect, useRef } from "react";
+import { useSocket, emitCount, emitTemplateUpdate } from "./useSocket";
+import { updateRoomHistory } from "@/util/roomHistory";
+import type { MemberPlates, PlateTemplate } from "@/types";
+import type { RoomData } from "@/types";
 
 const BANNER_TIMEOUT_MS = 2000;
 
 export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   const userKey = `sushi-user-id-${roomId}`;
   const [userId, setUserId] = useState<string | null>(() =>
-    roomId ? localStorage.getItem(userKey) : null
+    roomId ? localStorage.getItem(userKey) : null,
   );
 
   const [members, setMembers] = useState<MemberPlates[]>([]);
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [rankNotifications, setRankNotifications] = useState<
-    {id: number; type: "group" | "personal"; message: string}[]
+    { id: number; type: "group" | "personal"; message: string }[]
   >([]);
 
   const lastGroupTotal = useRef<number>(0);
@@ -26,7 +26,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
 
   const pushNotification = (type: "group" | "personal", message: string) => {
     const id = notificationIdRef.current++;
-    setRankNotifications((prev) => [{id, type, message}, ...prev].slice(0, 3));
+    setRankNotifications((prev) => [{ id, type, message }, ...prev].slice(0, 3));
     setTimeout(() => {
       setRankNotifications((prev) => prev.filter((n) => n.id !== id));
     }, BANNER_TIMEOUT_MS);
@@ -65,21 +65,15 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
         sum +
         Object.entries(m.counts).reduce(
           (s, [color, count]) => s + count * (template.prices[color] ?? 0),
-          0
+          0,
         ),
-      0
+      0,
     );
 
     const groupThreshold = Math.floor(total / 1000) * 1000;
     if (total > lastGroupTotal.current) {
-      if (
-        total >= groupThreshold &&
-        lastNotifiedGroup.current < groupThreshold
-      ) {
-        pushNotification(
-          "group",
-          `グループ合計が${groupThreshold.toLocaleString()}円 に到達！`
-        );
+      if (total >= groupThreshold && lastNotifiedGroup.current < groupThreshold) {
+        pushNotification("group", `グループ合計が${groupThreshold.toLocaleString()}円 に到達！`);
         lastNotifiedGroup.current = groupThreshold;
       }
     } else {
@@ -91,7 +85,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
     if (self) {
       const personalTotal = Object.entries(self.counts).reduce(
         (s, [color, count]) => s + count * (template.prices[color] ?? 0),
-        0
+        0,
       );
       const personalThreshold = Math.floor(personalTotal / 600) * 600;
 
@@ -103,7 +97,7 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
         ) {
           pushNotification(
             "personal",
-            `${self.name}が${personalThreshold.toLocaleString()}円 に到達！`
+            `${self.name}が${personalThreshold.toLocaleString()}円 に到達！`,
           );
           lastNotifiedPersonal.current[userId!] = personalThreshold;
         }
@@ -142,9 +136,9 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
       sum +
       Object.entries(m.counts).reduce(
         (s, [color, count]) => s + count * (template?.prices?.[color] ?? 0),
-        0
+        0,
       ),
-    0
+    0,
   );
 
   return {
