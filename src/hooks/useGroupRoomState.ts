@@ -39,8 +39,6 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
       setMembers(updatedMembers);
       if (updatedTemplateData) {
         const newTemplate: PlateTemplate = {
-          id: "custom",
-          name: "カスタムテンプレート",
           prices: updatedTemplateData,
         };
         setTemplate(newTemplate);
@@ -109,24 +107,43 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
     }
   }, [members, template, userId]);
 
+  const applyLocalDelta = (userId: string, color: string, delta: number) => {
+    setMembers((prev) =>
+      prev.map((m) => {
+        if (m.userId !== userId) return m;
+
+        const current = m.counts[color] ?? 0;
+        const next = Math.max(0, current + delta);
+
+        return {
+          ...m,
+          counts: {
+            ...m.counts,
+            [color]: next,
+          },
+        };
+      }),
+    );
+  };
+
   const handleSelectUser = (selectedId: string) => {
     localStorage.setItem(userKey, selectedId);
     setUserId(selectedId);
   };
 
   const handleAdd = (userId: string, color: string) => {
+    applyLocalDelta(userId, color, +1);
     emitCount(roomId, userId, color);
   };
 
   const handleRemove = (userId: string, color: string) => {
+    applyLocalDelta(userId, color, -1);
     emitCount(roomId, userId, color, true);
   };
 
   const handleUpdateTemplate = (newPrices: Record<string, number>) => {
     emitTemplateUpdate(roomId, newPrices);
     setTemplate({
-      id: "custom",
-      name: "カスタムテンプレート",
       prices: newPrices,
     });
   };

@@ -8,15 +8,15 @@ interface UseSocketParams {
   onSync: (members: MemberPlates[], templateData: Record<string, number>) => void;
 }
 
-export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
+export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
-    if (!roomId || !userId) return;
+    if (!roomId) return;
 
     socket.connect();
 
-    socket.emit("join", { roomId, userId }, (response: { ok: boolean }) => {
+    socket.emit("join", { roomId }, (response: { ok: boolean }) => {
       if (response?.ok) {
         console.log("Joined room:", roomId);
         setIsJoined(true);
@@ -29,7 +29,7 @@ export const useSocket = ({ roomId, userId, onSync }: UseSocketParams) => {
       socket.disconnect();
       setIsJoined(false);
     };
-  }, [roomId, userId]);
+  }, [roomId]);
 
   // join完了後のみsyncイベントを購読
   useEffect(() => {
