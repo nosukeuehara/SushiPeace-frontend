@@ -1,5 +1,5 @@
-import {MemberPlateCounter} from "./MemberPlateCounter";
-import type {MemberPlates} from "@/types";
+import { MemberPlateCounter } from "./MemberPlateCounter";
+import type { MemberPlates } from "@/types";
 
 type Props = {
   members: MemberPlates[];
@@ -9,13 +9,7 @@ type Props = {
   onRemove: (userId: string, color: string) => void;
 };
 
-export const MemberList = ({
-  members,
-  currentUserId,
-  prices,
-  onAdd,
-  onRemove,
-}: Props) => {
+export const MemberList = ({ members, currentUserId, prices, onAdd, onRemove }: Props) => {
   const sortedMembers = [
     ...members.filter((m) => m.userId === currentUserId),
     ...members.filter((m) => m.userId !== currentUserId),
@@ -26,7 +20,7 @@ export const MemberList = ({
       {sortedMembers.map((m) => {
         const total = Object.entries(m.counts).reduce(
           (sum, [color, count]) => sum + count * (prices[color] ?? 0),
-          0
+          0,
         );
         const totalPlates = Object.values(m.counts).reduce((a, b) => a + b, 0);
 
@@ -42,17 +36,10 @@ export const MemberList = ({
             }
           >
             {isCurrentUser ? (
-              <MemberPlateCounter
-                member={m}
-                onAdd={onAdd}
-                onRemove={onRemove}
-                prices={prices}
-              />
+              <MemberPlateCounter member={m} onAdd={onAdd} onRemove={onRemove} prices={prices} />
             ) : (
               <div className="flex justify-between items-baseline">
-                <span className="text-base font-semibold text-gray-600">
-                  {m.name}
-                </span>
+                <span className="text-base font-semibold text-gray-600">{m.name}</span>
                 <span className="text-sm text-gray-600">
                   {totalPlates}皿 / {total.toLocaleString()}円
                 </span>

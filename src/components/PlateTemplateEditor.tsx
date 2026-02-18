@@ -1,20 +1,14 @@
-import {useState} from "react";
+import { useState } from "react";
 
 type Props = {
-  template: {prices: Record<string, number>};
+  template: { prices: Record<string, number> };
   onEdit: (color: string, price: number) => void;
   onRemove: (color: string) => void;
   onAdd: (price: number) => void;
   onBulkClick: () => void;
 };
 
-export const PlateTemplateEditor = ({
-  template,
-  onEdit,
-  onRemove,
-  onAdd,
-  onBulkClick,
-}: Props) => {
+export const PlateTemplateEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick }: Props) => {
   const [newPrice, setNewPrice] = useState("");
 
   return (

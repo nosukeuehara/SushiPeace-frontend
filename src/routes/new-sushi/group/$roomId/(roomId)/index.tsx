@@ -1,24 +1,24 @@
-import {useParams} from "@tanstack/react-router";
-import {useRoom} from "@/hooks/useRoom";
-import {useGroupRoomState} from "@/hooks/useGroupRoomState";
-import {RankNotifications} from "@/components/RankNotifications";
-import {PlateTemplateEditor} from "@/components/PlateTemplateEditor";
-import {EditPlateModal} from "@/components/EditPlateModal";
-import {BulkPlateModal} from "@/components/BulkPlateModal";
-import {GroupSummary} from "@/components/GroupSummary";
-import {MemberList} from "@/components/MemberList";
-import {ShareButton} from "@/components/ShareButton";
-import {DataState} from "@/components/NoDataState";
-import {useState} from "react";
+import { useParams } from "@tanstack/react-router";
+import { useRoom } from "@/hooks/useRoom";
+import { useGroupRoomState } from "@/hooks/useGroupRoomState";
+import { RankNotifications } from "@/components/RankNotifications";
+import { PlateTemplateEditor } from "@/components/PlateTemplateEditor";
+import { EditPlateModal } from "@/components/EditPlateModal";
+import { BulkPlateModal } from "@/components/BulkPlateModal";
+import { GroupSummary } from "@/components/GroupSummary";
+import { MemberList } from "@/components/MemberList";
+import { ShareButton } from "@/components/ShareButton";
+import { DataState } from "@/components/NoDataState";
+import { useState } from "react";
 
 export const Route = createFileRoute({
   component: RouteComponent,
 });
 
 export function RouteComponent() {
-  const {roomId} = useParams({strict: false});
+  const { roomId } = useParams({ strict: false });
   const safeRoomId: string = roomId ?? "";
-  const {data, isLoading, error} = useRoom(safeRoomId);
+  const { data, isLoading, error } = useRoom(safeRoomId);
 
   const {
     userId,
@@ -44,9 +44,7 @@ export function RouteComponent() {
 
   const content = !userId ? (
     <div className="mx-auto text-center max-w-xl min-h-screen px-5 py-16 bg-white">
-      <h2 className="mb-16 text-xl text-gray-600 font-bold">
-        あなたは誰ですか？
-      </h2>
+      <h2 className="mb-16 text-xl text-gray-600 font-bold">あなたは誰ですか？</h2>
       <ul className="flex flex-col gap-7">
         {members.map((m) => (
           <li key={m.userId}>
@@ -59,19 +57,14 @@ export function RouteComponent() {
     </div>
   ) : (
     <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
-      {rankNotifications.length > 0 && (
-        <RankNotifications notifications={rankNotifications} />
-      )}
+      {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
 
       <div className="mb-4 text-center">
         <h2 className="text-3xl font-bold text-gray-600">{data?.groupName}</h2>
       </div>
 
       <div className="grid gap-2 pb-2 grid-cols-2">
-        <button
-          className="text-gray-600"
-          onClick={() => setShowRanking((prev) => !prev)}
-        >
+        <button className="text-gray-600" onClick={() => setShowRanking((prev) => !prev)}>
           {showRanking ? "ランキングを隠す" : "ランキングを見る"}
         </button>
         <button
@@ -108,16 +101,16 @@ export function RouteComponent() {
           <PlateTemplateEditor
             template={template}
             onEdit={(color, price) =>
-              setEditingPlate({originalColor: color, price: String(price)})
+              setEditingPlate({ originalColor: color, price: String(price) })
             }
             onRemove={(color) => {
-              const updated = {...template.prices};
+              const updated = { ...template.prices };
               delete updated[color];
               handleUpdateTemplate(updated);
             }}
             onAdd={(price) => {
               const color = `${price}円 皿`;
-              const updated = {...template.prices, [color]: price};
+              const updated = { ...template.prices, [color]: price };
               handleUpdateTemplate(updated);
             }}
             onBulkClick={() => setShowBulkModal(true)}
@@ -142,11 +135,9 @@ export function RouteComponent() {
       {editingPlate && (
         <EditPlateModal
           price={String(editingPlate.price)}
-          onChange={(newPrice) =>
-            setEditingPlate({...editingPlate, price: newPrice})
-          }
+          onChange={(newPrice) => setEditingPlate({ ...editingPlate, price: newPrice })}
           onSave={() => {
-            const updated = {...template!.prices};
+            const updated = { ...template!.prices };
             const oldColor = editingPlate.originalColor;
             const newColor = `${editingPlate.price}円皿`;
             delete updated[oldColor];
@@ -164,7 +155,7 @@ export function RouteComponent() {
           onChange={setBulkEntries}
           onAddRow={() => setBulkEntries([...bulkEntries, ""])}
           onSave={() => {
-            const updated = {...template?.prices};
+            const updated = { ...template?.prices };
             bulkEntries.forEach((price) => {
               if (Number(price) > 0) {
                 const color = `${price}円皿`;

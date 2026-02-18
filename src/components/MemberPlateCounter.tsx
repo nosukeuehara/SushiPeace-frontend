@@ -1,4 +1,4 @@
-import type {MemberPlates} from "@/types";
+import type { MemberPlates } from "@/types";
 
 type Props = {
   member: MemberPlates;
@@ -8,15 +8,10 @@ type Props = {
   prices: Record<string, number>;
 };
 
-export const MemberPlateCounter = ({
-  member,
-  onAdd,
-  onRemove,
-  prices,
-}: Props) => {
+export const MemberPlateCounter = ({ member, onAdd, onRemove, prices }: Props) => {
   const total = Object.entries(member.counts).reduce(
     (sum, [color, count]) => sum + count * (prices[color] ?? 0),
-    0
+    0,
   );
 
   return (
@@ -24,9 +19,7 @@ export const MemberPlateCounter = ({
       <div className="flex items-baseline justify-start gap-2 py-5">
         <h4 className="text-xl font-bold text-gray-600">{member.name}：</h4>
         <p className="font-bold">
-          <span className="text-2xl font-semibold text-gray-600">
-            {total.toLocaleString()} 円
-          </span>
+          <span className="text-2xl font-semibold text-gray-600">{total.toLocaleString()} 円</span>
         </p>
       </div>
 
@@ -34,10 +27,7 @@ export const MemberPlateCounter = ({
         {Object.entries(prices)
           .sort((a, b) => b[1] - a[1])
           .map(([color, price]) => (
-            <div
-              key={`${color}-${price}`}
-              className="flex items-center justify-between gap-2"
-            >
+            <div key={`${color}-${price}`} className="flex items-center justify-between gap-2">
               <div className="font-bold text-base text-gray-600 flex items-center">
                 <div className="w-[100px] text-right">
                   <span className="text-xl">{price}円</span>

@@ -1,4 +1,4 @@
-import type {MemberPlates, PlateTemplate} from "@/types";
+import type { MemberPlates, PlateTemplate } from "@/types";
 
 export type Member = {
   userId: string;

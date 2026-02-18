@@ -1,49 +1,93 @@
 <!doctype html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1" />
+    <title>SushiPals（スシパル） | みんなで平和にピッタリ会計</title>
+    <meta
+      name="description"
+      content="SushiPalsは、回転寿司で複雑になりがちな個別会計をスマートに解決するサービスです。誰がいくら分食べたか簡単に確認できます。アプリ登録不要・無料です！"
+    />
+    <link rel="canonical" href="https://sushi-peace.web.app/" />
+    <meta
+      name="keywords"
+      content="回転寿司, 割り勘, 個別会計, 寿司 アプリ, 割り勘 アプリ, スシパル, すしぱる, SushiPals, 無料, 登録不要, 割り勘 計算, お皿管理"
+    />
 
-  <title>SushiPals（スシパル） | みんなで平和にピッタリ会計</title>
-  <meta name="description" content="SushiPalsは、回転寿司で複雑になりがちな個別会計をスマートに解決するサービスです。誰がいくら分食べたか簡単に確認できます。アプリ登録不要・無料です！" />
-  <link rel="canonical" href="https://sushi-peace.web.app/" />
-  <meta name="keywords" content="回転寿司, 割り勘, 個別会計, 寿司 アプリ, 割り勘 アプリ, スシパル, すしぱる, SushiPals, 無料, 登録不要, 割り勘 計算, お皿管理" />
+    <link rel="icon" href="https://sushi-peace.web.app/kotobuki-48.png" type="image/png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://sushi-peace.web.app/kotobuki-48.png"
+      sizes="48x48"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://sushi-peace.web.app/kotobuki-192.png"
+      sizes="192x192"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://sushi-peace.web.app/kotobuki-512.png"
+      sizes="512x512"
+    />
+    <link rel="apple-touch-icon" href="https://sushi-peace.web.app/kotobuki.png" />
 
-  <link rel="icon" href="https://sushi-peace.web.app/kotobuki-48.png" type="image/png" />
-  <link rel="icon" type="image/png" href="https://sushi-peace.web.app/kotobuki-48.png" sizes="48x48" />
-  <link rel="icon" type="image/png" href="https://sushi-peace.web.app/kotobuki-192.png" sizes="192x192" />
-  <link rel="icon" type="image/png" href="https://sushi-peace.web.app/kotobuki-512.png" sizes="512x512" />
-  <link rel="apple-touch-icon" href="https://sushi-peace.web.app/kotobuki.png" />
+    <!-- Open Graph（SNSシェア最適化） -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="SushiPals（スシパル、すしぱる） | みんなで平和にピッタリ個別会計"
+    />
+    <meta property="og:url" content="https://sushi-peace.web.app/" />
+    <meta property="og:site_name" content="SushiPals" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta
+      property="og:description"
+      content="回転寿司の面倒なお皿の管理を楽に。友達との回転寿司をもっと楽しく！"
+    />
+    <meta property="og:image" content="https://sushi-peace.web.app/sushipals-ogp.png" />
 
-  <!-- Open Graph（SNSシェア最適化） -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="SushiPals（スシパル、すしぱる） | みんなで平和にピッタリ個別会計" />
-  <meta property="og:url" content="https://sushi-peace.web.app/" />
-  <meta property="og:site_name" content="SushiPals" />
-  <meta property="og:locale" content="ja_JP" />
-  <meta property="og:description" content="回転寿司の面倒なお皿の管理を楽に。友達との回転寿司をもっと楽しく！" />
-  <meta property="og:image" content="https://sushi-peace.web.app/sushipals-ogp.png" />
+    <!-- Twitterカード -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@SushiPals" />
+    <meta
+      name="twitter:title"
+      content="SushiPals（スシパル、すしぱる） | みんなで平和にピッタリ個別会計"
+    />
+    <meta
+      name="twitter:description"
+      content="回転寿司の面倒な個別会計を楽に、友達との回転寿司を楽しくするためのサービスです。お皿の金額を入力して食べた分だけ追加していくことで、最後はボタン一つで個別会計表示できます。面倒な登録・ダウンロードは不要です。"
+    />
+    <meta name="twitter:image" content="https://sushi-peace.web.app/sushipals-ogp.png" />
 
-  <!-- Twitterカード -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@SushiPals" />
-  <meta name="twitter:title" content="SushiPals（スシパル、すしぱる） | みんなで平和にピッタリ個別会計" />
-  <meta name="twitter:description"
-    content="回転寿司の面倒な個別会計を楽に、友達との回転寿司を楽しくするためのサービスです。お皿の金額を入力して食べた分だけ追加していくことで、最後はボタン一つで個別会計表示できます。面倒な登録・ダウンロードは不要です。" />
-  <meta name="twitter:image" content="https://sushi-peace.web.app/sushipals-ogp.png" />
+    <!-- フォント自前ホスト -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/Outfit-VariableFont_wght.ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/NotoSansJP-VariableFont_wght.ttf"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/index.css" />
+  </head>
 
-  <!-- フォント自前ホスト -->
-  <link rel="preload" as="font" type="font/woff2" href="/Outfit-VariableFont_wght.ttf" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="/NotoSansJP-VariableFont_wght.ttf" crossorigin />
-  <link rel="stylesheet" href="/index.css" />
-</head>
-
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

@@ -9,8 +9,7 @@ export const Maintenance = () => (
     </h1>
 
     <p className="text-gray-600 text-base sm:text-lg leading-relaxed px-6 max-w-md">
-      いつも <span className="font-semibold text-rose-300">SushiPals</span> を
-      ご利用いただき
+      いつも <span className="font-semibold text-rose-300">SushiPals</span> を ご利用いただき
       <br />
       ありがとうございます。
       <br />

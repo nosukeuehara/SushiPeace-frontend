@@ -1,9 +1,9 @@
-import {useRef, useState} from "react";
-import {Link} from "@tanstack/react-router";
-import {useNavigate} from "@tanstack/react-router";
-import {useCreateRoom} from "@/hooks/useCreateRoom";
-import {type Member} from "@/api";
-import {getRoomHistory, removeRoomHistory} from "@/util/roomHistory";
+import { useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
+import { useCreateRoom } from "@/hooks/useCreateRoom";
+import { type Member } from "@/api";
+import { getRoomHistory, removeRoomHistory } from "@/util/roomHistory";
 
 export const Route = createFileRoute({
   component: NewRoom,
@@ -17,8 +17,8 @@ export default function NewRoom() {
   const [memberName, setMemberName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const {mutate, isPending} = useCreateRoom((data) => {
-    navigate({to: `/new-sushi/group/${data.roomId}/share`});
+  const { mutate, isPending } = useCreateRoom((data) => {
+    navigate({ to: `/new-sushi/group/${data.roomId}/share` });
   });
 
   const handleRemoveRoomHistory = (roomId: string) => {
@@ -55,7 +55,7 @@ export default function NewRoom() {
   const addMember = () => {
     const name = memberName.trim();
     if (!name) return;
-    setMembers((prev) => [...prev, {userId: "", name}]);
+    setMembers((prev) => [...prev, { userId: "", name }]);
     setMemberName("");
 
     requestAnimationFrame(() => {
@@ -72,9 +72,7 @@ export default function NewRoom() {
 
   return (
     <div className="max-w-xl mx-auto bg-white min-h-screen px-5 py-16">
-      <h1 className="mb-4 text-3xl font-bold text-center text-gray-600">
-        寿司ルーム作成
-      </h1>
+      <h1 className="mb-4 text-3xl font-bold text-center text-gray-600">寿司ルーム作成</h1>
 
       <div className="pt-6">
         <h3 className="mb-2 text-lg text-gray-600">ルーム名</h3>
@@ -151,22 +149,12 @@ export default function NewRoom() {
           </h2>
           <div className="flex flex-col gap-3">
             {roomHistories.map((h) => (
-              <div
-                key={h.roomId}
-                className="p-2 border rounded border-gray-300"
-              >
-                <Link to="/new-sushi/group/$roomId" params={{roomId: h.roomId}}>
-                  <div className="mb-1 font-bold text-left text-gray-600">
-                    {h.groupName}
-                  </div>
+              <div key={h.roomId} className="p-2 border rounded border-gray-300">
+                <Link to="/new-sushi/group/$roomId" params={{ roomId: h.roomId }}>
+                  <div className="mb-1 font-bold text-left text-gray-600">{h.groupName}</div>
                   <div className="flex flex-col items-start text-sm text-gray-600 pb-2">
-                    <span>
-                      作成: {new Date(h.createdAt).toLocaleDateString()}
-                    </span>
-                    <span>
-                      最終アクセス:{" "}
-                      {new Date(h.lastAccessedAt).toLocaleDateString()}
-                    </span>
+                    <span>作成: {new Date(h.createdAt).toLocaleDateString()}</span>
+                    <span>最終アクセス: {new Date(h.lastAccessedAt).toLocaleDateString()}</span>
                   </div>
                 </Link>
                 <button

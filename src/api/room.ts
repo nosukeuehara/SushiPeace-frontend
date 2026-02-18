@@ -15,9 +15,7 @@ export type CreateRoomResponse = {
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-export const createRoom = async (
-  payload: CreateRoomPayload
-): Promise<CreateRoomResponse> => {
+export const createRoom = async (payload: CreateRoomPayload): Promise<CreateRoomResponse> => {
   const res = await fetch(`${baseUrl}/api/room`, {
     method: "POST",
     headers: {
@@ -34,9 +32,7 @@ export const createRoom = async (
   return res.json();
 };
 
-export const fetchRoom = async (
-  roomId: string
-): Promise<CreateRoomResponse> => {
+export const fetchRoom = async (roomId: string): Promise<CreateRoomResponse> => {
   const res = await fetch(`${baseUrl}/api/room/${roomId}`);
 
   if (!res.ok) {

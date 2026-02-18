@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 type Props = {
   entries: string[];
@@ -8,13 +8,7 @@ type Props = {
   onCancel: () => void;
 };
 
-export const BulkPlateModal = ({
-  entries,
-  onChange,
-  onAddRow,
-  onSave,
-  onCancel,
-}: Props) => {
+export const BulkPlateModal = ({ entries, onChange, onAddRow, onSave, onCancel }: Props) => {
   useEffect(() => {
     const id = "plate-price-0";
     const raf = requestAnimationFrame(() => {
@@ -30,9 +24,7 @@ export const BulkPlateModal = ({
 
   const focusRow = (index: number) => {
     requestAnimationFrame(() => {
-      const el = document.getElementById(
-        `plate-price-${index}`
-      ) as HTMLInputElement | null;
+      const el = document.getElementById(`plate-price-${index}`) as HTMLInputElement | null;
       if (el) {
         el.focus();
         const v = el.value ?? "";
@@ -50,9 +42,7 @@ export const BulkPlateModal = ({
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
       <div className="w-11/12 max-w-md p-6 bg-neutral-100 rounded-lg shadow-lg">
         <h3 className="mb-2 text-lg font-bold text-gray-600">皿の一括登録</h3>
-        <p className="mb-4 text-sm text-gray-600">
-          皿の金額を入力してください。
-        </p>
+        <p className="mb-4 text-sm text-gray-600">皿の金額を入力してください。</p>
 
         {entries.map((price, index) => (
           <div key={index} className="flex flex-col gap-2 mb-3 sm:flex-row">
@@ -111,7 +101,7 @@ export const BulkPlateModal = ({
               const hasInput = entries.some((price) => price.trim() !== "");
               if (hasInput) {
                 const ok = window.confirm(
-                  "入力された内容はすべて破棄されます。本当にキャンセルしますか？"
+                  "入力された内容はすべて破棄されます。本当にキャンセルしますか？",
                 );
                 if (!ok) return;
               }
