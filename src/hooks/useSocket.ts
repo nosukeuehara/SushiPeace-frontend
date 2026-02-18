@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
 import type { MemberPlates } from "@/types";
 
-interface UseSocketParams {
-  roomId: string | undefined;
+type SyncMeta = { sourceUserId?: string; sourceSeq?: number };
+
+type UseSocketParams = {
+  roomId: string;
   userId: string | null;
-  onSync: (members: MemberPlates[], templateData: Record<string, number>) => void;
-}
+  onSync: (
+    members: MemberPlates[],
+    templateData: Record<string, number> | null,
+    meta?: SyncMeta,
+  ) => void;
+};
 
 export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
   const [isJoined, setIsJoined] = useState(false);
@@ -37,9 +43,10 @@ export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
 
     const handleSync = (payload: {
       members: MemberPlates[];
-      templateData: Record<string, number>;
+      templateData: Record<string, number> | null;
+      meta?: { sourceUserId?: string; sourceSeq?: number };
     }) => {
-      onSync(payload.members, payload.templateData);
+      onSync(payload.members, payload.templateData, payload.meta);
     };
 
     socket.on("sync", handleSync);
@@ -56,10 +63,11 @@ export const emitCount = (
   roomId: string | undefined,
   userId: string,
   color: string,
-  remove?: boolean,
+  delta: number,
+  seq: number,
 ) => {
   if (!roomId) return;
-  socket.emit("count", { roomId, userId, color, ...(remove ? { remove } : {}) });
+  socket.emit("count", { roomId, userId, color, delta, seq });
 };
 
 export const emitTemplateUpdate = (roomId: string | undefined, prices: Record<string, number>) => {
