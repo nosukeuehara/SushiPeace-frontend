@@ -1,6 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { useRoom } from "@/hooks/useRoom";
-import { useGroupRoomState } from "@/hooks/useGroupRoomState";
+import { useGroupRoomActions } from "@/hooks/useGroupRoomActions";
 import { RankNotifications } from "@/components/RankNotifications";
 import { PlateTemplateEditor } from "@/components/PlateTemplateEditor";
 import { EditPlateModal } from "@/components/EditPlateModal";
@@ -9,10 +9,11 @@ import { GroupSummary } from "@/components/GroupSummary";
 import { MemberList } from "@/components/MemberList";
 import { ShareButton } from "@/components/ShareButton";
 import { DataState } from "@/components/NoDataState";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { usePaymentNotice } from "@/hooks/usePaymentNotice";
 import type { MemberPlates, PlateTemplate } from "@/types/plate";
 import { useRoomState } from "@/hooks/useRoomHistory";
+import { useSocketSync } from "@/hooks/useSocketSync";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -24,18 +25,28 @@ export function RouteComponent() {
   const { data, isLoading, error } = useRoom(safeRoomId);
   const [members, setMembers] = useState<MemberPlates[]>([]);
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const lastSentSeqRef = useRef(0);
 
-  const {
-    userId,
-    setUserId,
-    total,
-    handleSelectUser,
-    handleAdd,
-    handleRemove,
-    handleUpdateTemplate,
-  } = useGroupRoomState(safeRoomId, members, template, setMembers, setTemplate);
+  const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
+    useGroupRoomActions(
+      safeRoomId,
+      members,
+      template,
+      setUserId,
+      setMembers,
+      setTemplate,
+      lastSentSeqRef,
+    );
 
   useRoomState(safeRoomId, data);
+  useSocketSync({
+    roomId: safeRoomId,
+    userId,
+    setMembers,
+    setTemplate,
+    lastSentSeqRef: { current: 0 },
+  });
 
   const { rankNotifications } = usePaymentNotice({ members, template, userId });
 
