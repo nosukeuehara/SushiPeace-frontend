@@ -11,6 +11,8 @@ import { ShareButton } from "@/components/ShareButton";
 import { DataState } from "@/components/NoDataState";
 import { useState } from "react";
 import { usePaymentNotice } from "@/hooks/usePaymentNotice";
+import type { MemberPlates, PlateTemplate } from "@/types/plate";
+import { useRoomState } from "@/hooks/useRoomHistory";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -20,18 +22,20 @@ export function RouteComponent() {
   const { roomId } = useParams({ strict: false });
   const safeRoomId: string = roomId ?? "";
   const { data, isLoading, error } = useRoom(safeRoomId);
+  const [members, setMembers] = useState<MemberPlates[]>([]);
+  const [template, setTemplate] = useState<PlateTemplate | null>(null);
 
   const {
     userId,
     setUserId,
-    members,
-    template,
     total,
     handleSelectUser,
     handleAdd,
     handleRemove,
     handleUpdateTemplate,
-  } = useGroupRoomState(safeRoomId, data);
+  } = useGroupRoomState(safeRoomId, members, template, setMembers, setTemplate);
+
+  useRoomState(safeRoomId, data);
 
   const { rankNotifications } = usePaymentNotice({ members, template, userId });
 

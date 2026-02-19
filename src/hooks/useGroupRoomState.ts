@@ -1,17 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useSocket, emitCount, emitTemplateUpdate } from "./useSocket";
-import { updateRoomHistory } from "@/util/roomHistory";
 import type { MemberPlates, PlateTemplate } from "@/types";
-import type { RoomData } from "@/types";
 
-export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
+export function useGroupRoomState(
+  roomId: string,
+  members: MemberPlates[],
+  template: PlateTemplate | null,
+  setMembers: React.Dispatch<React.SetStateAction<MemberPlates[]>>,
+  setTemplate: React.Dispatch<React.SetStateAction<PlateTemplate | null>>,
+) {
   const userKey = `sushi-user-id-${roomId}`;
   const [userId, setUserId] = useState<string | null>(() =>
     roomId ? localStorage.getItem(userKey) : null,
   );
-
-  const [members, setMembers] = useState<MemberPlates[]>([]);
-  const [template, setTemplate] = useState<PlateTemplate | null>(null);
 
   const lastSentSeqRef = useRef(0);
   const lastAppliedSeqRef = useRef(0);
@@ -41,14 +42,6 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
       if (updatedTemplateData) setTemplate({ prices: updatedTemplateData });
     },
   });
-
-  useEffect(() => {
-    if (data && roomId) {
-      setMembers(data.members);
-      setTemplate(data.template);
-      updateRoomHistory(roomId, data.groupName, data.createdAt);
-    }
-  }, [data, roomId]);
 
   const queueDelta = (userId: string, color: string, delta: number) => {
     const key = `${userId}::${color}`;
@@ -115,10 +108,6 @@ export function useGroupRoomState(roomId: string, data: RoomData | undefined) {
   return {
     userId,
     setUserId,
-    members,
-    setMembers,
-    template,
-    setTemplate,
     total,
     handleSelectUser,
     handleAdd,
