@@ -3,6 +3,7 @@ import { emitCount, emitTemplateUpdate } from "./useSocket";
 import type { MemberPlates, PlateTemplate } from "@/types";
 
 export function useGroupRoomActions(
+  userKey: string,
   roomId: string,
   members: MemberPlates[],
   template: PlateTemplate | null,
@@ -11,8 +12,6 @@ export function useGroupRoomActions(
   setTemplate: React.Dispatch<React.SetStateAction<PlateTemplate | null>>,
   lastSentSeqRef: React.RefObject<number>,
 ) {
-  const userKey = `sushi-user-id-${roomId}`;
-
   // roomIdが変わったら読み直す
   useEffect(() => {
     if (!roomId) return;

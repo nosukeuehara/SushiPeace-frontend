@@ -21,15 +21,25 @@ export const Route = createFileRoute({
 
 export function RouteComponent() {
   const { roomId } = useParams({ strict: false });
+  const userKey = `sushi-user-id-${roomId}`;
   const safeRoomId: string = roomId ?? "";
   const { data, isLoading, error } = useRoom(safeRoomId);
   const [members, setMembers] = useState<MemberPlates[]>([]);
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const lastSentSeqRef = useRef(0);
-
+  const { rankNotifications } = usePaymentNotice({ members, template, userId });
+  const [showRanking, setShowRanking] = useState(false);
+  const [editingPlate, setEditingPlate] = useState<{
+    originalColor: string;
+    price: string;
+  } | null>(null);
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [bulkEntries, setBulkEntries] = useState([""]);
+  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
   const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
     useGroupRoomActions(
+      userKey,
       safeRoomId,
       members,
       template,
@@ -45,19 +55,8 @@ export function RouteComponent() {
     userId,
     setMembers,
     setTemplate,
-    lastSentSeqRef: { current: 0 },
+    lastSentSeqRef,
   });
-
-  const { rankNotifications } = usePaymentNotice({ members, template, userId });
-
-  const [showRanking, setShowRanking] = useState(false);
-  const [editingPlate, setEditingPlate] = useState<{
-    originalColor: string;
-    price: string;
-  } | null>(null);
-  const [showBulkModal, setShowBulkModal] = useState(false);
-  const [bulkEntries, setBulkEntries] = useState([""]);
-  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
 
   const content = !userId ? (
     <div className="mx-auto text-center max-w-xl min-h-screen px-5 py-16 bg-white">
