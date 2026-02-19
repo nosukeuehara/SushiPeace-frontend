@@ -8,7 +8,7 @@ export interface RankNotification {
   message: string;
 }
 
-export function useNotificationPush({
+export function usePaymentNotice({
   members,
   template,
   userId,
