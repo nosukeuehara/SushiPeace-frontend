@@ -10,6 +10,7 @@ import { MemberList } from "@/components/MemberList";
 import { ShareButton } from "@/components/ShareButton";
 import { DataState } from "@/components/NoDataState";
 import { useState } from "react";
+import { useNotificationPush } from "@/hooks/useNotificationPush";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -25,13 +26,14 @@ export function RouteComponent() {
     setUserId,
     members,
     template,
-    rankNotifications,
     total,
     handleSelectUser,
     handleAdd,
     handleRemove,
     handleUpdateTemplate,
   } = useGroupRoomState(safeRoomId, data);
+
+  const { rankNotifications } = useNotificationPush({ members, template, userId });
 
   const [showRanking, setShowRanking] = useState(false);
   const [editingPlate, setEditingPlate] = useState<{
