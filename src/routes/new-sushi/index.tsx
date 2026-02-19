@@ -63,9 +63,7 @@ export default function NewRoom() {
       if (el) {
         el.focus();
         const pos = el.value.length;
-        try {
-          el.setSelectionRange(pos, pos);
-        } catch {}
+        el.setSelectionRange(pos, pos);
       }
     });
   };
