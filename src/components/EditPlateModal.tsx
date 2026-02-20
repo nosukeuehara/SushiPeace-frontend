@@ -9,16 +9,17 @@ export const EditPlateModal = ({ price, onChange, onSave, onCancel }: Props) => 
   const color = `${price}円皿`;
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-      <div className="w-11/12 max-w-md p-6 bg-neutral-100 rounded-lg shadow-lg">
-        <h3 className="mb-4 text-lg font-bold">皿の情報を編集</h3>
-        <p className="mb-3 text-sm">皿の名前: {color}</p>
+      <div className="w-11/12 max-w-md p-6 bg-neutral-100 rounded-xs shadow-lg">
+        <h3 className="mb-4 text-lg font-bold">皿の金額を変更</h3>
+        <p className="mb-3 text-sm">現在: {color}</p>
 
         <label className="flex flex-col mb-3 text-sm">
           金額（円）:
           <input
+            id={String(price)}
             placeholder="金額を入力"
             type="text"
-            className="w-full p-2 mt-1 border rounded"
+            className="w-full p-2 mt-1 border border-gray-300 focus:outline-none focus:ring-0"
             value={String(price)}
             onChange={(e) => {
               onChange(e.target.value.replace(/[^0-9]/g, ""));

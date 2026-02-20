@@ -13,9 +13,8 @@ export const useRoom = (roomId: string | undefined) => {
         throw new Error(errorBody?.error || "ルーム情報の取得に失敗しました");
       }
       const raw = await res.json();
+      console.log("Fetched room data:", raw);
       const template = raw.template ?? {
-        id: raw.templateId ?? "custom",
-        name: "カスタムテンプレート",
         prices: raw.templateData ?? {},
       };
       return {

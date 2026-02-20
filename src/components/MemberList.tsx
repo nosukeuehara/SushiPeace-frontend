@@ -16,7 +16,7 @@ export const MemberList = ({ members, currentUserId, prices, onAdd, onRemove }: 
   ];
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-16">
       {sortedMembers.map((m) => {
         const total = Object.entries(m.counts).reduce(
           (sum, [color, count]) => sum + count * (prices[color] ?? 0),
