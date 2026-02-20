@@ -1,6 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { useRoom } from "@/hooks/useRoom";
-import { useGroupRoomState } from "@/hooks/useGroupRoomState";
+import { useGroupRoomActions } from "@/hooks/useGroupRoomActions";
 import { RankNotifications } from "@/components/RankNotifications";
 import { PlateTemplateEditor } from "@/components/PlateTemplateEditor";
 import { EditPlateModal } from "@/components/EditPlateModal";
@@ -9,7 +9,11 @@ import { GroupSummary } from "@/components/GroupSummary";
 import { MemberList } from "@/components/MemberList";
 import { ShareButton } from "@/components/ShareButton";
 import { DataState } from "@/components/NoDataState";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { usePaymentNotice } from "@/hooks/usePaymentNotice";
+import type { MemberPlates, PlateTemplate } from "@/types/plate";
+import { useRoomState } from "@/hooks/useRoomHistory";
+import { useSocketSync } from "@/hooks/useSocketSync";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -17,22 +21,14 @@ export const Route = createFileRoute({
 
 export function RouteComponent() {
   const { roomId } = useParams({ strict: false });
+  const userKey = `sushi-user-id-${roomId}`;
   const safeRoomId: string = roomId ?? "";
   const { data, isLoading, error } = useRoom(safeRoomId);
-
-  const {
-    userId,
-    setUserId,
-    members,
-    template,
-    rankNotifications,
-    total,
-    handleSelectUser,
-    handleAdd,
-    handleRemove,
-    handleUpdateTemplate,
-  } = useGroupRoomState(safeRoomId, data);
-
+  const [members, setMembers] = useState<MemberPlates[]>([]);
+  const [template, setTemplate] = useState<PlateTemplate | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const lastSentSeqRef = useRef(0);
+  const { rankNotifications } = usePaymentNotice({ members, template, userId });
   const [showRanking, setShowRanking] = useState(false);
   const [editingPlate, setEditingPlate] = useState<{
     originalColor: string;
@@ -41,6 +37,26 @@ export function RouteComponent() {
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
   const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
+  const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
+    useGroupRoomActions(
+      userKey,
+      safeRoomId,
+      members,
+      template,
+      setUserId,
+      setMembers,
+      setTemplate,
+      lastSentSeqRef,
+    );
+
+  useRoomState(safeRoomId, data);
+  useSocketSync({
+    roomId: safeRoomId,
+    userId,
+    setMembers,
+    setTemplate,
+    lastSentSeqRef,
+  });
 
   const content = !userId ? (
     <div className="mx-auto text-center max-w-xl min-h-screen px-5 py-16 bg-white">
