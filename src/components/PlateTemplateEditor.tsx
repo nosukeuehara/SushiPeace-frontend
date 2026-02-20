@@ -11,6 +11,12 @@ type Props = {
 export const PlateTemplateEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick }: Props) => {
   const [newPrice, setNewPrice] = useState("");
 
+  const confirmAndRemovePlate = (color: string) => {
+    if (window.confirm(`本当に${color}を削除しますか？`)) {
+      onRemove(color);
+    }
+  };
+
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-2">
@@ -43,7 +49,7 @@ export const PlateTemplateEditor = ({ template, onEdit, onRemove, onAdd, onBulkC
                     <button onClick={() => onEdit(color, price)}>
                       <span className="text-gray-600">編集</span>
                     </button>
-                    <button onClick={() => onRemove(color)}>
+                    <button onClick={() => confirmAndRemovePlate(color)}>
                       <span className="text-red-700">削除</span>
                     </button>
                   </div>
