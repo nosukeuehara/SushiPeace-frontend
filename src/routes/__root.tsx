@@ -28,9 +28,7 @@ export const Route = createRootRoute({
               <img className="inline w-4 h-4 ml-1" src="./externalLink.svg" alt="External Link" />
             </a>
           </div>
-          <span className="text-sm text-neutral-50">
-            © {new Date().getFullYear() - 1} SushiPals
-          </span>
+          <span className="text-sm text-neutral-50">© {new Date().getFullYear()} SushiPals</span>
         </footer>
         {import.meta.env.DEV ? <TanStackRouterDevtools /> : null}
       </div>
