@@ -1,4 +1,6 @@
-import { Maintenance } from "@/components/page/Maintenace";
+// このファイルは全てのページのラッパーコンポーネントを定義。
+// トップレベルのルートになる
+import { Maintenance } from "@/components/page/maintenance/Maintenance";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 

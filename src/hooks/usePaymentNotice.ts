@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const BANNER_TIMEOUT_MS = 2000;
 
-export interface RankNotification {
+interface RankNotification {
   id: number;
   message: string;
 }

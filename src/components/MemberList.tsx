@@ -1,5 +1,5 @@
-import { MemberPlateCounter } from "./MemberPlateCounter";
 import type { MemberPlates } from "@/types";
+import { PlateCounter } from "./PlateCounter";
 
 type Props = {
   members: MemberPlates[];
@@ -36,7 +36,7 @@ export const MemberList = ({ members, currentUserId, prices, onAdd, onRemove }: 
             }
           >
             {isCurrentUser ? (
-              <MemberPlateCounter member={m} onAdd={onAdd} onRemove={onRemove} prices={prices} />
+              <PlateCounter member={m} onAdd={onAdd} onRemove={onRemove} prices={prices} />
             ) : (
               <div className="flex justify-between items-baseline">
                 <span className="text-base font-semibold text-gray-600">{m.name}</span>

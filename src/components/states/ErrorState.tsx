@@ -1,4 +1,4 @@
-export default function ErrorScreen({
+export default function ErrorState({
   className,
   message = "ページを読み込めませんでした。",
   onRetry,

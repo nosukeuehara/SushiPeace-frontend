@@ -8,7 +8,7 @@ type Props = {
   prices: Record<string, number>;
 };
 
-export const MemberPlateCounter = ({ member, onAdd, onRemove, prices }: Props) => {
+export const PlateCounter = ({ member, onAdd, onRemove, prices }: Props) => {
   const total = Object.entries(member.counts).reduce(
     (sum, [color, count]) => sum + count * (prices[color] ?? 0),
     0,

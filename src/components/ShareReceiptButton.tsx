@@ -4,7 +4,7 @@ type Props = {
   roomId: string;
 };
 
-export const ShareButton = ({ roomId }: Props) => {
+export const ShareReceiptButton = ({ roomId }: Props) => {
   const navigate = useNavigate();
 
   const handleShare = () => {

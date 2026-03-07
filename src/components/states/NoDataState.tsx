@@ -4,7 +4,7 @@ interface NoDataScreenProps {
   onRetry?: () => void;
 }
 
-export default function NoDataScreen({
+export default function NoDataState({
   className,
   message = "データが存在しません。",
 }: NoDataScreenProps) {

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { RoomData } from "@/types";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+import { baseUrl } from "@/util/siteOrigin";
 
 export const useRoom = (roomId: string | undefined) => {
   return useQuery<RoomData>({

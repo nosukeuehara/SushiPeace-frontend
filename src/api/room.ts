@@ -1,19 +1,5 @@
-export type Member = {
-  userId: string;
-  name: string;
-};
-
-export type CreateRoomPayload = {
-  groupName: string;
-  members: Member[];
-};
-
-export type CreateRoomResponse = {
-  roomId: string;
-  shareUrl: string;
-};
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+import { baseUrl } from "@/util/siteOrigin";
+import type { CreateRoomPayload, CreateRoomResponse } from ".";
 
 export const createRoom = async (payload: CreateRoomPayload): Promise<CreateRoomResponse> => {
   const res = await fetch(`${baseUrl}/api/room`, {
