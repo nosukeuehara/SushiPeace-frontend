@@ -93,7 +93,7 @@ export default function NewRoom() {
           onChange={(e) => setMemberName(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              e.preventDefault(); // モバイルでの予期せぬ submit/blur 回避
+              e.preventDefault();
               addMember();
             }
           }}
@@ -102,11 +102,10 @@ export default function NewRoom() {
         <button
           type="button"
           className="w-20 font-bold text-neutral-50 bg-teal-500 shadow"
-          // ここがキモ：フォーカス移動を防ぎ、キーボードを閉じさせない
           onMouseDown={(e) => e.preventDefault()}
           onTouchStart={(e) => e.preventDefault()}
           onClick={addMember}
-          tabIndex={-1} // 余計なフォーカス遷移をさらに抑止（任意）
+          tabIndex={-1}
         >
           追加
         </button>
