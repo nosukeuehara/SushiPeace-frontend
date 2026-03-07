@@ -8,7 +8,7 @@ type Props = {
   onBulkClick: () => void;
 };
 
-export const PlateTemplateEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick }: Props) => {
+export const PlateDataEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick }: Props) => {
   const [newPrice, setNewPrice] = useState("");
 
   const confirmAndRemovePlate = (color: string) => {

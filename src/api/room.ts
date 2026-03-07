@@ -1,19 +1,5 @@
 import { baseUrl } from "@/util/siteOrigin";
-
-export type Member = {
-  userId: string;
-  name: string;
-};
-
-export type CreateRoomPayload = {
-  groupName: string;
-  members: Member[];
-};
-
-export type CreateRoomResponse = {
-  roomId: string;
-  shareUrl: string;
-};
+import type { CreateRoomPayload, CreateRoomResponse } from ".";
 
 export const createRoom = async (payload: CreateRoomPayload): Promise<CreateRoomResponse> => {
   const res = await fetch(`${baseUrl}/api/room`, {

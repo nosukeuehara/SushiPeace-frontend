@@ -1,4 +1,4 @@
-export function SelectUser({
+export function MemberSelector({
   members,
   onSelectUser,
 }: {

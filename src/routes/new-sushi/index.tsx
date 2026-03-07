@@ -16,7 +16,6 @@ export default function NewRoom() {
   const [members, setMembers] = useState<Member[] | []>([]);
   const [memberName, setMemberName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-
   const { mutate, isPending } = useCreateRoom((data) => {
     navigate({ to: `/new-sushi/group/${data.roomId}/share` });
   });

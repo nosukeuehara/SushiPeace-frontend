@@ -1,8 +1,8 @@
 import type { PlateTemplate } from "@/types";
 import React from "react";
-import { PlateTemplateEditor } from "./PlateTemplateEditor";
+import { PlateDataEditor } from "./PlateDataEditor";
 
-const PlateDataComponent = ({
+const PlateDataViewer = ({
   setIsTemplateEditorOpen,
   isTemplateEditorOpen,
   template,
@@ -34,7 +34,7 @@ const PlateDataComponent = ({
 
       {template && isTemplateEditorOpen && (
         <div className="p-4 mb-6 bg-neutral-50">
-          <PlateTemplateEditor
+          <PlateDataEditor
             template={template}
             onEdit={(color, price) =>
               setEditingPlate({ originalColor: color, price: String(price) })
@@ -57,4 +57,4 @@ const PlateDataComponent = ({
   );
 };
 
-export default PlateDataComponent;
+export default PlateDataViewer;
