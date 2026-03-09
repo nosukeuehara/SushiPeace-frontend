@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { RoomData } from "@/types";
-import { baseUrl } from "@/util/siteOrigin";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const useRoom = (roomId: string | undefined) => {
   return useQuery<RoomData>({
@@ -12,7 +12,6 @@ export const useRoom = (roomId: string | undefined) => {
         throw new Error(errorBody?.error || "ルーム情報の取得に失敗しました");
       }
       const raw = await res.json();
-      console.log("Fetched room data:", raw);
       const template = raw.template ?? {
         prices: raw.templateData ?? {},
       };
