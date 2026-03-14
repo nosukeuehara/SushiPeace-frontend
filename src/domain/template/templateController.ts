@@ -14,12 +14,11 @@ export function addPlate(price: number, template: PlateTemplate): PlateTemplate 
 
 export function updatePlate(
   oldLabel: string,
-  newLabel: string,
   newPrice: number,
   template: PlateTemplate,
 ): PlateTemplate {
   const updated = { ...template.prices };
   delete updated[oldLabel];
-  updated[newLabel] = newPrice;
+  updated[`${newPrice}円皿`] = newPrice;
   return { ...template, prices: updated };
 }

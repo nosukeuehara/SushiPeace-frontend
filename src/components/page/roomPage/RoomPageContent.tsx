@@ -72,13 +72,11 @@ export const RoomPageContent = (props: RoomContentProps) => {
   };
 
   const handleSaveBulk = () => {
-    let newTemplate = template;
-
-    bulkEntries.forEach((prevPrice) => {
-      const price = Number(prevPrice);
-      if (price <= 0) return;
-      newTemplate = addPlate(price, newTemplate);
-    });
+    const newTemplate = bulkEntries.reduce((currentTemplate, entry) => {
+      const price = Number(entry);
+      if (price <= 0) return currentTemplate;
+      return addPlate(price, currentTemplate);
+    }, template);
 
     handleUpdateTemplate(newTemplate.prices);
     setShowBulkModal(false);
@@ -91,7 +89,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
   };
 
   const handleStartEditPlate = (label: string, price: number) => {
-    setEditingPlate({ originalLabel: label, price: price });
+    setEditingPlate({ originalLabel: label, price });
   };
 
   const handleChangeEditingPlatePrice = (newPrice: number) => {
@@ -102,10 +100,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
   const handleSaveEditingPlate = () => {
     if (!editingPlate) return;
 
-    const oldLabel = editingPlate.originalLabel;
-    const newLabel = `${editingPlate.price}円皿`;
-
-    const newTemplate = updatePlate(oldLabel, newLabel, Number(editingPlate.price), template);
+    const newTemplate = updatePlate(editingPlate.originalLabel, editingPlate.price, template);
 
     handleUpdateTemplate(newTemplate.prices);
     setEditingPlate(null);
