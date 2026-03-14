@@ -11,7 +11,7 @@ export const GroupSummary = ({ members, prices, showRanking, total }: Props) => 
   const ranking = [...members]
     .map((m) => {
       const subtotal = Object.entries(m.counts).reduce(
-        (sum, [label, count]) => sum + count * (prices[label] ?? 0),
+        (sum, [color, count]) => sum + count * (prices[color] ?? 0),
         0,
       );
       return { ...m, subtotal };
