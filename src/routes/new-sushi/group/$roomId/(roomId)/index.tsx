@@ -26,14 +26,6 @@ export function RouteComponent() {
   const lastSentSeqRef = useRef(0);
   const { rankNotifications } = usePaymentNotice({ members, template, userId });
 
-  useSocketSync({
-    roomId: safeRoomId,
-    userId,
-    setMembers,
-    setTemplate,
-    lastSentSeqRef,
-  });
-
   const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
     useGroupRoomActions(
       userKey,
@@ -47,6 +39,14 @@ export function RouteComponent() {
     );
 
   useRoomState(safeRoomId, roomQuery.data);
+
+  useSocketSync({
+    roomId: safeRoomId,
+    userId,
+    setMembers,
+    setTemplate,
+    lastSentSeqRef,
+  });
 
   const onSelectUser = (id: string) => {
     handleSelectUser(id);
