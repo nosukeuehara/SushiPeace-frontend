@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { BulkPlateModalToggleButton } from "./BulkPlateModalToggleButton";
 
 type Props = {
   template: { prices: Record<string, number> };
@@ -19,10 +18,12 @@ export const PlateDataEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick
   };
 
   return (
-    <div className="p-4 bg-neutral-50">
-      <div className="flex justify-between mb-2">
+    <div className="p-4">
+      <div className="flex items-center justify-between mb-2">
         <span className="font-bold text-xl text-gray-600">皿データ</span>
-        <BulkPlateModalToggleButton onBulkClick={onBulkClick} />
+        <button className="text-teal-600" onClick={onBulkClick}>
+          一括登録
+        </button>
       </div>
 
       <ul className="mb-4 list-none p-0">
