@@ -1,26 +1,25 @@
-// wip: 皿の金額編集機能のリファクタリング
 import type { PlateTemplate } from "@/types";
 
-export function removePlate(targetColor: string, template: PlateTemplate): PlateTemplate {
+export function removePlate(targetLabel: string, template: PlateTemplate): PlateTemplate {
   const updated = { ...template.prices };
-  delete updated[targetColor];
+  delete updated[targetLabel];
   return { ...template, prices: updated };
 }
 
-export function addPlate(newColor: string, price: number, template: PlateTemplate): PlateTemplate {
+export function addPlate(price: number, template: PlateTemplate): PlateTemplate {
   const updated = { ...template.prices };
-  updated[newColor] = price;
+  updated[`${price}円皿`] = price;
   return { ...template, prices: updated };
 }
 
 export function overwritePlatePrice(
-  originalColor: string,
+  oldColor: string,
   newColor: string,
+  newPrice: number,
   template: PlateTemplate,
 ): PlateTemplate {
   const updated = { ...template.prices };
-  const price = updated[originalColor];
-  delete updated[originalColor];
-  updated[newColor] = price;
+  delete updated[oldColor];
+  updated[newColor] = newPrice;
   return { ...template, prices: updated };
 }
