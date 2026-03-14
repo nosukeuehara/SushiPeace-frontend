@@ -10,7 +10,7 @@ export function generateShareText(
 
   const memberTexts = members.map((m) => {
     const subtotal = Object.entries(m.counts).reduce(
-      (sum, [color, count]) => sum + count * (prices[color as string] ?? 0),
+      (sum, [label, count]) => sum + count * (prices[label as string] ?? 0),
       0,
     );
     total += subtotal;

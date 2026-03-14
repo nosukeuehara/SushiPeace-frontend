@@ -62,12 +62,12 @@ export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
 export const emitCount = (
   roomId: string | undefined,
   userId: string,
-  color: string,
+  label: string,
   delta: number,
   seq: number,
 ) => {
   if (!roomId) return;
-  socket.emit("count", { roomId, userId, color, delta, seq });
+  socket.emit("count", { roomId, userId, label, delta, seq });
 };
 
 export const emitTemplateUpdate = (roomId: string | undefined, prices: Record<string, number>) => {
