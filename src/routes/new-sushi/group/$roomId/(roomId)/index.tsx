@@ -19,18 +19,12 @@ export function RouteComponent() {
   const safeRoomId: string = roomId ?? "";
   const roomQuery = useRoom(safeRoomId);
   const [members, setMembers] = useState<MemberPlates[]>([]);
+  // TODO(優先度:高) テンプレートのキーが 100円皿 のようにテキストが含まれているため
+  // データ更新時に「円皿」と「円 皿」で同じvalueをもつ二つのデータができてしまう
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const lastSentSeqRef = useRef(0);
   const { rankNotifications } = usePaymentNotice({ members, template, userId });
-  const [showRanking, setShowRanking] = useState(false);
-  const [editingPlate, setEditingPlate] = useState<{
-    originalColor: string;
-    price: string;
-  } | null>(null);
-  const [showBulkModal, setShowBulkModal] = useState(false);
-  const [bulkEntries, setBulkEntries] = useState([""]);
-  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
   const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
     useGroupRoomActions(
       userKey,
@@ -57,6 +51,11 @@ export function RouteComponent() {
     handleSelectUser(id);
   };
 
+  const onChangeUser = () => {
+    localStorage.removeItem(`sushi-user-id-${roomId}`);
+    setUserId(null);
+  };
+
   return (
     <AsyncState query={roomQuery}>
       {(data) => (
@@ -66,23 +65,13 @@ export function RouteComponent() {
           members={members}
           onSelectUser={onSelectUser}
           rankNotifications={rankNotifications}
-          showRanking={showRanking}
-          setShowRanking={setShowRanking}
           safeRoomId={safeRoomId}
-          setUserId={setUserId}
+          onChangeUser={onChangeUser}
           template={template}
           total={total}
-          setIsTemplateEditorOpen={setIsTemplateEditorOpen}
-          isTemplateEditorOpen={isTemplateEditorOpen}
-          setEditingPlate={setEditingPlate}
-          setShowBulkModal={setShowBulkModal}
-          bulkEntries={bulkEntries}
-          setBulkEntries={setBulkEntries}
           handleUpdateTemplate={handleUpdateTemplate}
           handleAdd={handleAdd}
           handleRemove={handleRemove}
-          editingPlate={editingPlate}
-          showBulkModal={showBulkModal}
         />
       )}
     </AsyncState>
