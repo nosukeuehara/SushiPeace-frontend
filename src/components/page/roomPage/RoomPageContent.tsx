@@ -18,15 +18,15 @@ type RoomContentProps = {
   data: RoomData;
   userId: string | null;
   members: MemberPlates[];
-  onSelectUser: (id: string) => void;
   rankNotifications: {
     id: number;
     message: string;
   }[];
   safeRoomId: string;
-  onChangeUser: () => void;
   template: PlateTemplate | null;
   total: number;
+  onChangeUser: () => void;
+  onSelectUser: (id: string) => void;
   handleUpdateTemplate: (newPrices: Record<string, number>) => void;
   handleAdd: (uid: string, color: string) => void;
   handleRemove: (uid: string, color: string) => void;
