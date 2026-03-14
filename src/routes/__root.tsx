@@ -6,7 +6,7 @@ import { Maintenance } from "@/components/page/maintenance/Maintenance";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-const isMaintenance = import.meta.env.VITE_MAINTENANCE_MODE === "true";
+const isMaintenance = true;
 
 export const Route = createRootRoute({
   component: () => (
