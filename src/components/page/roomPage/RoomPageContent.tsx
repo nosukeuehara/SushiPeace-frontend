@@ -10,6 +10,7 @@ import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
 import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
 import ToggleRankingButton from "@/components/ToggleRankingButton";
+import { useState } from "react";
 
 type RoomContentProps = {
   data: RoomData;
@@ -20,21 +21,16 @@ type RoomContentProps = {
     id: number;
     message: string;
   }[];
-  showRanking: boolean;
-  setShowRanking: React.Dispatch<React.SetStateAction<boolean>>;
   safeRoomId: string;
   onChangeUser: () => void;
   template: PlateTemplate | null;
   total: number;
-  setIsTemplateEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isTemplateEditorOpen: boolean;
   setEditingPlate: React.Dispatch<
     React.SetStateAction<{
       originalColor: string;
       price: string;
     } | null>
   >;
-  setShowBulkModal: React.Dispatch<React.SetStateAction<boolean>>;
   bulkEntries: string[];
   setBulkEntries: React.Dispatch<React.SetStateAction<string[]>>;
   handleUpdateTemplate: (newPrices: Record<string, number>) => void;
@@ -44,7 +40,6 @@ type RoomContentProps = {
     originalColor: string;
     price: string;
   } | null;
-  showBulkModal: boolean;
 };
 
 export const RoomPageContent = (props: RoomContentProps) => {
@@ -54,24 +49,22 @@ export const RoomPageContent = (props: RoomContentProps) => {
     members,
     onSelectUser,
     rankNotifications,
-    showRanking,
-    setShowRanking,
     safeRoomId,
     onChangeUser,
     template,
     total,
-    setIsTemplateEditorOpen,
-    isTemplateEditorOpen,
     setEditingPlate,
-    setShowBulkModal,
     bulkEntries,
     setBulkEntries,
     handleUpdateTemplate,
     handleAdd,
     handleRemove,
     editingPlate,
-    showBulkModal,
   } = props;
+
+  const [showRanking, setShowRanking] = useState(false);
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [showTemplateEditor, setShowTemplateEditor] = useState(true);
 
   if (!userId) {
     return <MemberSelector members={members} onSelectUser={onSelectUser} />;
@@ -97,8 +90,8 @@ export const RoomPageContent = (props: RoomContentProps) => {
       />
 
       <PlateDataViewer
-        setIsTemplateEditorOpen={setIsTemplateEditorOpen}
-        isTemplateEditorOpen={isTemplateEditorOpen}
+        setShowTemplateEditor={setShowTemplateEditor}
+        showTemplateEditor={showTemplateEditor}
         template={template}
         setEditingPlate={setEditingPlate}
         handleUpdateTemplate={handleUpdateTemplate}

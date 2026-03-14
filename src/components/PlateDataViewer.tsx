@@ -3,15 +3,15 @@ import React from "react";
 import { PlateDataEditor } from "./PlateDataEditor";
 
 const PlateDataViewer = ({
-  setIsTemplateEditorOpen,
-  isTemplateEditorOpen,
+  setShowTemplateEditor: setShowTemplateEditorOpen,
+  showTemplateEditor,
   template,
   setEditingPlate,
   handleUpdateTemplate,
   setShowBulkModal,
 }: {
-  setIsTemplateEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isTemplateEditorOpen: boolean;
+  setShowTemplateEditor: React.Dispatch<React.SetStateAction<boolean>>;
+  showTemplateEditor: boolean;
   template: PlateTemplate | null;
   setEditingPlate: React.Dispatch<
     React.SetStateAction<{ originalColor: string; price: string } | null>
@@ -24,15 +24,15 @@ const PlateDataViewer = ({
       <div className="mb-4 text-center">
         <button
           className="text-gray-600 text-sm"
-          onClick={() => setIsTemplateEditorOpen((prev) => !prev)}
+          onClick={() => setShowTemplateEditorOpen((prev) => !prev)}
         >
           <span className="text-gray-600 px-4 py-1">
-            {isTemplateEditorOpen ? "皿設定 とじる" : "皿設定 ひらく"}
+            {showTemplateEditor ? "皿設定 とじる" : "皿設定 ひらく"}
           </span>
         </button>
       </div>
 
-      {template && isTemplateEditorOpen && (
+      {template && showTemplateEditor && (
         <div className="p-4 mb-6 bg-neutral-50">
           <PlateDataEditor
             template={template}

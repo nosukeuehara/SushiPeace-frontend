@@ -23,14 +23,11 @@ export function RouteComponent() {
   const [userId, setUserId] = useState<string | null>(null);
   const lastSentSeqRef = useRef(0);
   const { rankNotifications } = usePaymentNotice({ members, template, userId });
-  const [showRanking, setShowRanking] = useState(false);
   const [editingPlate, setEditingPlate] = useState<{
     originalColor: string;
     price: string;
   } | null>(null);
-  const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
-  const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(true);
   const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
     useGroupRoomActions(
       userKey,
@@ -71,23 +68,17 @@ export function RouteComponent() {
           members={members}
           onSelectUser={onSelectUser}
           rankNotifications={rankNotifications}
-          showRanking={showRanking}
-          setShowRanking={setShowRanking}
           safeRoomId={safeRoomId}
           onChangeUser={onChangeUser}
           template={template}
           total={total}
-          setIsTemplateEditorOpen={setIsTemplateEditorOpen}
-          isTemplateEditorOpen={isTemplateEditorOpen}
           setEditingPlate={setEditingPlate}
-          setShowBulkModal={setShowBulkModal}
           bulkEntries={bulkEntries}
           setBulkEntries={setBulkEntries}
           handleUpdateTemplate={handleUpdateTemplate}
           handleAdd={handleAdd}
           handleRemove={handleRemove}
           editingPlate={editingPlate}
-          showBulkModal={showBulkModal}
         />
       )}
     </AsyncState>
