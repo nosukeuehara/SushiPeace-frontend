@@ -13,6 +13,7 @@ import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
+import { addPlate, updatePlate } from "@/domain/template/templateController";
 
 type RoomContentProps = {
   data: RoomData;
@@ -28,8 +29,8 @@ type RoomContentProps = {
   onChangeUser: () => void;
   onSelectUser: (id: string) => void;
   handleUpdateTemplate: (newPrices: Record<string, number>) => void;
-  handleAdd: (uid: string, color: string) => void;
-  handleRemove: (uid: string, color: string) => void;
+  handleAdd: (uid: string, label: string) => void;
+  handleRemove: (uid: string, label: string) => void;
 };
 
 export const RoomPageContent = (props: RoomContentProps) => {
@@ -71,16 +72,13 @@ export const RoomPageContent = (props: RoomContentProps) => {
   };
 
   const handleSaveBulk = () => {
-    const updated = { ...template.prices };
+    const newTemplate = bulkEntries.reduce((currentTemplate, entry) => {
+      const price = Number(entry);
+      if (price <= 0) return currentTemplate;
+      return addPlate(price, currentTemplate);
+    }, template);
 
-    bulkEntries.forEach((price) => {
-      if (Number(price) > 0) {
-        const color = `${price}円皿`;
-        updated[color] = Number(price);
-      }
-    });
-
-    handleUpdateTemplate(updated);
+    handleUpdateTemplate(newTemplate.prices);
     setShowBulkModal(false);
     setBulkEntries([""]);
   };
@@ -90,11 +88,11 @@ export const RoomPageContent = (props: RoomContentProps) => {
     setBulkEntries([""]);
   };
 
-  const handleStartEditPlate = (color: string, price: number) => {
-    setEditingPlate({ originalColor: color, price: String(price) });
+  const handleStartEditPlate = (label: string, price: number) => {
+    setEditingPlate({ originalLabel: label, price });
   };
 
-  const handleChangeEditingPlatePrice = (newPrice: string) => {
+  const handleChangeEditingPlatePrice = (newPrice: number) => {
     if (!editingPlate) return;
     setEditingPlate({ ...editingPlate, price: newPrice });
   };
@@ -102,14 +100,9 @@ export const RoomPageContent = (props: RoomContentProps) => {
   const handleSaveEditingPlate = () => {
     if (!editingPlate) return;
 
-    const updated = { ...template.prices };
-    const oldColor = editingPlate.originalColor;
-    const newColor = `${editingPlate.price}円皿`;
+    const newTemplate = updatePlate(editingPlate.originalLabel, editingPlate.price, template);
 
-    delete updated[oldColor];
-    updated[newColor] = Number(editingPlate.price);
-
-    handleUpdateTemplate(updated);
+    handleUpdateTemplate(newTemplate.prices);
     setEditingPlate(null);
   };
 

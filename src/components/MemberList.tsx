@@ -5,8 +5,8 @@ type Props = {
   members: MemberPlates[];
   currentUserId: string;
   prices: Record<string, number>;
-  onAdd: (userId: string, color: string) => void;
-  onRemove: (userId: string, color: string) => void;
+  onAdd: (userId: string, label: string) => void;
+  onRemove: (userId: string, label: string) => void;
 };
 
 export const MemberList = ({ members, currentUserId, prices, onAdd, onRemove }: Props) => {
@@ -19,7 +19,7 @@ export const MemberList = ({ members, currentUserId, prices, onAdd, onRemove }: 
     <div className="flex flex-col mb-16">
       {sortedMembers.map((m) => {
         const total = Object.entries(m.counts).reduce(
-          (sum, [color, count]) => sum + count * (prices[color] ?? 0),
+          (sum, [label, count]) => sum + count * (prices[label] ?? 0),
           0,
         );
         const totalPlates = Object.values(m.counts).reduce((a, b) => a + b, 0);
