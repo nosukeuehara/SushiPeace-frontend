@@ -3,22 +3,17 @@ import { PlateDataEditor } from "./PlateDataEditor";
 
 export const PlateEditContainer = ({
   template,
-  setEditingPlate,
+  handleEdit,
   handleUpdateTemplate,
   setShowBulkModal,
   showTemplateEditor,
 }: {
   template: PlateTemplate;
-  setEditingPlate: React.Dispatch<
-    React.SetStateAction<{ originalColor: string; price: string } | null>
-  >;
+  handleEdit: (color: string, price: number) => void;
   handleUpdateTemplate: (updatedPrices: Record<string, number>) => void;
   setShowBulkModal: React.Dispatch<React.SetStateAction<boolean>>;
   showTemplateEditor: boolean;
 }) => {
-  const handleEdit = (color: string, price: number) => {
-    setEditingPlate({ originalColor: color, price: String(price) });
-  };
   const handleRemove = (color: string) => {
     const updated = { ...template.prices };
     delete updated[color];
