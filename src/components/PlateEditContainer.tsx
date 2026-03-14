@@ -1,6 +1,6 @@
 import type { PlateTemplate } from "@/types";
 import { PlateDataEditor } from "./PlateDataEditor";
-import { addPlate, removePlate } from "@/domain/plate/updateTemplate";
+import { addPlate, removePlate } from "@/domain/plate/templateController";
 
 export const PlateEditContainer = ({
   template,
