@@ -4,10 +4,12 @@ import { GroupSummary } from "@/components/GroupSummary";
 import { MemberList } from "@/components/MemberList";
 import { MemberSelector } from "@/components/MemberSelector";
 import PlateDataViewer from "@/components/PlateDataViewer";
-import RankingViewer from "@/components/RankingViewer";
 import { RankNotifications } from "@/components/RankNotifications";
 import { ShareReceiptButton } from "@/components/ShareReceiptButton";
 import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
+import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
+import UserChangeButton from "@/components/UserChangeButton";
+import ToggleRankingButton from "@/components/ToggleRankingButton";
 
 type RoomContentProps = {
   data: RoomData;
@@ -21,7 +23,7 @@ type RoomContentProps = {
   showRanking: boolean;
   setShowRanking: React.Dispatch<React.SetStateAction<boolean>>;
   safeRoomId: string;
-  setUserId: React.Dispatch<React.SetStateAction<string | null>>;
+  onChangeUser: () => void;
   template: PlateTemplate | null;
   total: number;
   setIsTemplateEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,7 +57,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
     showRanking,
     setShowRanking,
     safeRoomId,
-    setUserId,
+    onChangeUser,
     template,
     total,
     setIsTemplateEditorOpen,
@@ -82,12 +84,10 @@ export const RoomPageContent = (props: RoomContentProps) => {
         <h2 className="text-3xl font-bold text-gray-600">{data?.groupName}</h2>
       </div>
 
-      <RankingViewer
-        showRanking={showRanking}
-        setShowRanking={setShowRanking}
-        roomId={safeRoomId}
-        setUserId={setUserId}
-      />
+      <ActionButtonsRow>
+        <ToggleRankingButton showRanking={showRanking} setShowRanking={setShowRanking} />
+        <UserChangeButton onChangeUser={onChangeUser} />
+      </ActionButtonsRow>
 
       <GroupSummary
         members={members}

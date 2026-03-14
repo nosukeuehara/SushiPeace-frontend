@@ -57,6 +57,11 @@ export function RouteComponent() {
     handleSelectUser(id);
   };
 
+  const onChangeUser = () => {
+    localStorage.removeItem(`sushi-user-id-${roomId}`);
+    setUserId(null);
+  };
+
   return (
     <AsyncState query={roomQuery}>
       {(data) => (
@@ -69,7 +74,7 @@ export function RouteComponent() {
           showRanking={showRanking}
           setShowRanking={setShowRanking}
           safeRoomId={safeRoomId}
-          setUserId={setUserId}
+          onChangeUser={onChangeUser}
           template={template}
           total={total}
           setIsTemplateEditorOpen={setIsTemplateEditorOpen}
