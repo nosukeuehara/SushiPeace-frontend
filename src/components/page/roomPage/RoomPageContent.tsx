@@ -13,7 +13,7 @@ import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
-import { addPlate, updatePlate } from "@/domain/plate/templateController";
+import { addPlate, updatePlate } from "@/domain/template/templateController";
 
 type RoomContentProps = {
   data: RoomData;
