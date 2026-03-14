@@ -12,6 +12,7 @@ import UserChangeButton from "@/components/UserChangeButton";
 import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
+import { RequireReloadPage } from "../errorPage/RequireReloadPage";
 
 type RoomContentProps = {
   data: RoomData;
@@ -72,11 +73,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
   }
 
   if (!template) {
-    return (
-      <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
-        <div className="p-4 bg-neutral-50 text-gray-600">皿データを取得できませんでした。</div>
-      </div>
-    );
+    return <RequireReloadPage />;
   }
 
   return (
