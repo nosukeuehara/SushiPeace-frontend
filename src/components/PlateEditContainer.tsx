@@ -1,5 +1,6 @@
 import type { PlateTemplate } from "@/types";
 import { PlateDataEditor } from "./PlateDataEditor";
+import { addPlate, removePlate } from "@/domain/template/templateController";
 
 export const PlateEditContainer = ({
   template,
@@ -9,21 +10,19 @@ export const PlateEditContainer = ({
   showTemplateEditor,
 }: {
   template: PlateTemplate;
-  handleEdit: (color: string, price: number) => void;
+  handleEdit: (label: string, price: number) => void;
   handleUpdateTemplate: (updatedPrices: Record<string, number>) => void;
   setShowBulkModal: React.Dispatch<React.SetStateAction<boolean>>;
   showTemplateEditor: boolean;
 }) => {
-  const handleRemove = (color: string) => {
-    const updated = { ...template.prices };
-    delete updated[color];
-    handleUpdateTemplate(updated);
+  const handleRemove = (label: string) => {
+    const newTemplate = removePlate(label, template);
+    handleUpdateTemplate(newTemplate.prices);
   };
 
   const handleAdd = (price: number) => {
-    const color = `${price}円皿`;
-    const updated = { ...template.prices, [color]: price };
-    handleUpdateTemplate(updated);
+    const newTemplate = addPlate(price, template);
+    handleUpdateTemplate(newTemplate.prices);
   };
 
   if (!showTemplateEditor) {

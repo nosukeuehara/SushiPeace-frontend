@@ -56,8 +56,8 @@ export function usePaymentNotice({
     const total = members.reduce((sum, m) => {
       return (
         sum +
-        Object.entries(m.counts).reduce((s, [color, count]) => {
-          return s + count * (template.prices[color] ?? 0);
+        Object.entries(m.counts).reduce((s, [label, count]) => {
+          return s + count * (template.prices[label] ?? 0);
         }, 0)
       );
     }, 0);

@@ -1,22 +1,22 @@
 export type EditingPlate = {
-  originalColor: string;
-  price: string;
+  originalLabel: string;
+  price: number;
 };
 
 type Props = {
   editingPlate: EditingPlate;
-  onChange: (newPrice: string) => void;
+  onChange: (newPrice: number) => void;
   onSave: () => void;
   onCancel: () => void;
 };
 
 export const EditPlateModal = ({ editingPlate, onChange, onSave, onCancel }: Props) => {
-  const color = `${editingPlate.price}円皿`;
+  const label = `${editingPlate.price}円皿`;
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
       <div className="w-11/12 max-w-md p-6 bg-neutral-100 rounded-xs shadow-lg">
         <h3 className="mb-4 text-lg font-bold">皿の金額を変更</h3>
-        <p className="mb-3 text-sm">現在: {color}</p>
+        <p className="mb-3 text-sm">現在: {label}</p>
 
         <label className="flex flex-col mb-3 text-sm">
           金額（円）:
@@ -27,7 +27,7 @@ export const EditPlateModal = ({ editingPlate, onChange, onSave, onCancel }: Pro
             className="w-full p-2 mt-1 border border-gray-300 focus:outline-none focus:ring-0"
             value={String(editingPlate.price)}
             onChange={(e) => {
-              onChange(e.target.value.replace(/[^0-9]/g, ""));
+              onChange(Number(e.target.value.replace(/[^0-9]/g, "")));
             }}
           />
         </label>
