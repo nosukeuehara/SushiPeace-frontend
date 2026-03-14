@@ -89,18 +89,22 @@ export const RoomPageContent = (props: RoomContentProps) => {
   };
 
   const handleStartEditPlate = (label: string, price: number) => {
-    setEditingPlate({ originalLabel: label, price });
+    setEditingPlate({ originalLabel: label, price: String(price) });
   };
 
-  const handleChangeEditingPlatePrice = (newPrice: number) => {
+  const handleChangeEditingPlatePrice = (newPrice: string) => {
     if (!editingPlate) return;
-    setEditingPlate({ ...editingPlate, price: newPrice });
+    setEditingPlate({ ...editingPlate, price: String(newPrice) });
   };
 
   const handleSaveEditingPlate = () => {
     if (!editingPlate) return;
 
-    const newTemplate = updatePlate(editingPlate.originalLabel, editingPlate.price, template);
+    const newTemplate = updatePlate(
+      editingPlate.originalLabel,
+      Number(editingPlate.price),
+      template,
+    );
 
     handleUpdateTemplate(newTemplate.prices);
     setEditingPlate(null);

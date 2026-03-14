@@ -1,5 +1,5 @@
 export type EditingPlate = {
-  originalColor: string;
+  originalLabel: string;
   price: string;
 };
 
