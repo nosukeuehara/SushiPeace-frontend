@@ -70,6 +70,15 @@ export const RoomPageContent = (props: RoomContentProps) => {
   if (!userId) {
     return <MemberSelector members={members} onSelectUser={onSelectUser} />;
   }
+
+  if (!template) {
+    return (
+      <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
+        <div className="p-4 bg-neutral-50 text-gray-600">皿データを取得できませんでした。</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
       {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
@@ -85,7 +94,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
 
       <GroupSummary
         members={members}
-        prices={template?.prices ?? {}}
+        prices={template.prices ?? {}}
         showRanking={showRanking}
         total={total}
       />
@@ -106,7 +115,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
       <MemberList
         members={members}
         currentUserId={userId}
-        prices={template?.prices ?? {}}
+        prices={template.prices ?? {}}
         onAdd={handleAdd}
         onRemove={handleRemove}
       />
@@ -118,7 +127,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
           price={String(editingPlate.price)}
           onChange={(newPrice) => setEditingPlate({ ...editingPlate, price: newPrice })}
           onSave={() => {
-            const updated = { ...template!.prices };
+            const updated = { ...template.prices };
             const oldColor = editingPlate.originalColor;
             const newColor = `${editingPlate.price}円皿`;
             delete updated[oldColor];
@@ -136,7 +145,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
           onChange={setBulkEntries}
           onAddRow={() => setBulkEntries([...bulkEntries, ""])}
           onSave={() => {
-            const updated = { ...template?.prices };
+            const updated = { ...template.prices };
             bulkEntries.forEach((price) => {
               if (Number(price) > 0) {
                 const color = `${price}円皿`;
