@@ -12,14 +12,14 @@ export function addPlate(price: number, template: PlateTemplate): PlateTemplate 
   return { ...template, prices: updated };
 }
 
-export function overwritePlatePrice(
-  oldColor: string,
-  newColor: string,
+export function updatePlate(
+  oldLabel: string,
+  newLabel: string,
   newPrice: number,
   template: PlateTemplate,
 ): PlateTemplate {
   const updated = { ...template.prices };
-  delete updated[oldColor];
-  updated[newColor] = newPrice;
+  delete updated[oldLabel];
+  updated[newLabel] = newPrice;
   return { ...template, prices: updated };
 }

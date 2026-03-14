@@ -13,7 +13,7 @@ import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
-import { addPlate, overwritePlatePrice } from "@/domain/plate/updateTemplate";
+import { addPlate, updatePlate } from "@/domain/plate/updateTemplate";
 
 type RoomContentProps = {
   data: RoomData;
@@ -102,15 +102,10 @@ export const RoomPageContent = (props: RoomContentProps) => {
   const handleSaveEditingPlate = () => {
     if (!editingPlate) return;
 
-    const oldColor = editingPlate.originalLabel;
-    const newColor = `${editingPlate.price}円皿`;
+    const oldLabel = editingPlate.originalLabel;
+    const newLabel = `${editingPlate.price}円皿`;
 
-    const newTemplate = overwritePlatePrice(
-      oldColor,
-      newColor,
-      Number(editingPlate.price),
-      template,
-    );
+    const newTemplate = updatePlate(oldLabel, newLabel, Number(editingPlate.price), template);
 
     handleUpdateTemplate(newTemplate.prices);
     setEditingPlate(null);
