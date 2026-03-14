@@ -3,7 +3,7 @@ import { EditPlateModal } from "@/components/modals/EditPlateModal";
 import { GroupSummary } from "@/components/GroupSummary";
 import { MemberList } from "@/components/MemberList";
 import { MemberSelector } from "@/components/MemberSelector";
-import PlateDataViewer from "@/components/PlateDataViewer";
+import { PlateEditContainer } from "@/components/PlateEditContainer";
 import { RankNotifications } from "@/components/RankNotifications";
 import { ShareReceiptButton } from "@/components/ShareReceiptButton";
 import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
@@ -11,6 +11,7 @@ import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
 import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
+import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 
 type RoomContentProps = {
   data: RoomData;
@@ -89,13 +90,17 @@ export const RoomPageContent = (props: RoomContentProps) => {
         total={total}
       />
 
-      <PlateDataViewer
-        setShowTemplateEditor={setShowTemplateEditor}
+      <PlateEditorToggleButton
         showTemplateEditor={showTemplateEditor}
+        setShowTemplateEditor={setShowTemplateEditor}
+      />
+
+      <PlateEditContainer
         template={template}
         setEditingPlate={setEditingPlate}
         handleUpdateTemplate={handleUpdateTemplate}
         setShowBulkModal={setShowBulkModal}
+        showTemplateEditor={showTemplateEditor}
       />
 
       <MemberList
