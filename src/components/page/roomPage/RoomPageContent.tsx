@@ -1,5 +1,5 @@
 import { BulkPlateModal } from "@/components/modals/BulkPlateModal";
-import { EditPlateModal } from "@/components/modals/EditPlateModal";
+import { EditPlateModal, type EditingPlate } from "@/components/modals/EditPlateModal";
 import { GroupSummary } from "@/components/GroupSummary";
 import { MemberList } from "@/components/MemberList";
 import { MemberSelector } from "@/components/MemberSelector";
@@ -34,11 +34,6 @@ type RoomContentProps = {
   handleRemove: (uid: string, color: string) => void;
 };
 
-type EditingPlate = {
-  originalColor: string;
-  price: string;
-};
-
 export const RoomPageContent = (props: RoomContentProps) => {
   const {
     data,
@@ -58,12 +53,38 @@ export const RoomPageContent = (props: RoomContentProps) => {
   } = props;
 
   const [showRanking, setShowRanking] = useState(false);
+  // 皿括登録関連の状態
   const [showBulkModal, setShowBulkModal] = useState(false);
+
+  // 皿編集モーダル関連の状態
   const [showTemplateEditor, setShowTemplateEditor] = useState(true);
   const [editingPlate, setEditingPlate] = useState<EditingPlate | null>(null);
 
   const handleEdit = (color: string, price: number) => {
     setEditingPlate({ originalColor: color, price: String(price) });
+  };
+
+  const handleChangeEditingPrice = (newPrice: string) => {
+    if (!editingPlate) return;
+    setEditingPlate({ ...editingPlate, price: newPrice });
+  };
+
+  const handleSaveEditingPlate = () => {
+    if (!editingPlate || !template) return;
+
+    const updated = { ...template.prices };
+    const oldColor = editingPlate.originalColor;
+    const newColor = `${editingPlate.price}円皿`;
+
+    delete updated[oldColor];
+    updated[newColor] = Number(editingPlate.price);
+
+    handleUpdateTemplate(updated);
+    setEditingPlate(null);
+  };
+
+  const handleCancekEditingPlate = () => {
+    setEditingPlate(null);
   };
 
   if (!userId) {
@@ -119,18 +140,10 @@ export const RoomPageContent = (props: RoomContentProps) => {
 
       {editingPlate && (
         <EditPlateModal
-          price={editingPlate.price}
-          onChange={(newPrice) => setEditingPlate({ ...editingPlate, price: newPrice })}
-          onSave={() => {
-            const updated = { ...template.prices };
-            const oldColor = editingPlate.originalColor;
-            const newColor = `${editingPlate.price}円皿`;
-            delete updated[oldColor];
-            updated[newColor] = Number(editingPlate.price);
-            handleUpdateTemplate(updated);
-            setEditingPlate(null);
-          }}
-          onCancel={() => setEditingPlate(null)}
+          editingPlate={editingPlate}
+          onChange={handleChangeEditingPrice}
+          onSave={handleSaveEditingPlate}
+          onCancel={handleCancekEditingPlate}
         />
       )}
 
