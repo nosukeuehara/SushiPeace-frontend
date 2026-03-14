@@ -9,8 +9,8 @@ import { ShareReceiptButton } from "@/components/ShareReceiptButton";
 import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
 import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
-import ToggleRankingButton from "@/components/ToggleRankingButton";
 import { useState } from "react";
+import RankingToggleButton from "@/components/RankingToggleButton";
 
 type RoomContentProps = {
   data: RoomData;
@@ -78,7 +78,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
       </div>
 
       <ActionButtonsRow>
-        <ToggleRankingButton showRanking={showRanking} setShowRanking={setShowRanking} />
+        <RankingToggleButton showRanking={showRanking} setShowRanking={setShowRanking} />
         <UserChangeButton onChangeUser={onChangeUser} />
       </ActionButtonsRow>
 
