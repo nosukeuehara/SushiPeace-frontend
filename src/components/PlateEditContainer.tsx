@@ -21,7 +21,7 @@ export const PlateEditContainer = ({
   };
 
   const handleAdd = (price: number) => {
-    const color = `${price}円 皿`;
+    const color = `${price}円皿`;
     const updated = { ...template.prices, [color]: price };
     handleUpdateTemplate(updated);
   };

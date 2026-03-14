@@ -19,6 +19,8 @@ export function RouteComponent() {
   const safeRoomId: string = roomId ?? "";
   const roomQuery = useRoom(safeRoomId);
   const [members, setMembers] = useState<MemberPlates[]>([]);
+  // TODO(優先度:高) テンプレートのキーが 100円皿 のようにテキストが含まれているため
+  // データ更新時に「円皿」と「円 皿」で同じvalueをもつ二つのデータができてしまう
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const lastSentSeqRef = useRef(0);
