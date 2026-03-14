@@ -27,8 +27,6 @@ type RoomContentProps = {
   onChangeUser: () => void;
   template: PlateTemplate | null;
   total: number;
-  bulkEntries: string[];
-  setBulkEntries: React.Dispatch<React.SetStateAction<string[]>>;
   handleUpdateTemplate: (newPrices: Record<string, number>) => void;
   handleAdd: (uid: string, color: string) => void;
   handleRemove: (uid: string, color: string) => void;
@@ -45,32 +43,64 @@ export const RoomPageContent = (props: RoomContentProps) => {
     onChangeUser,
     template,
     total,
-    bulkEntries,
-    setBulkEntries,
     handleUpdateTemplate,
     handleAdd,
     handleRemove,
   } = props;
 
   const [showRanking, setShowRanking] = useState(false);
-  // 皿括登録関連の状態
-  const [showBulkModal, setShowBulkModal] = useState(false);
 
-  // 皿編集モーダル関連の状態
+  // 皿編集モーダル関連のstate
   const [showTemplateEditor, setShowTemplateEditor] = useState(true);
   const [editingPlate, setEditingPlate] = useState<EditingPlate | null>(null);
 
-  const handleEdit = (color: string, price: number) => {
+  // 皿一括登録関連のstate
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [bulkEntries, setBulkEntries] = useState([""]);
+
+  if (!userId) {
+    return <MemberSelector members={members} onSelectUser={onSelectUser} />;
+  }
+
+  if (!template) {
+    return <RequireReloadPage />;
+  }
+
+  const handleAddBulkRow = () => {
+    setBulkEntries((prev) => [...prev, ""]);
+  };
+
+  const handleSaveBulk = () => {
+    const updated = { ...template.prices };
+
+    bulkEntries.forEach((price) => {
+      if (Number(price) > 0) {
+        const color = `${price}円皿`;
+        updated[color] = Number(price);
+      }
+    });
+
+    handleUpdateTemplate(updated);
+    setShowBulkModal(false);
+    setBulkEntries([""]);
+  };
+
+  const handleCancelBulk = () => {
+    setShowBulkModal(false);
+    setBulkEntries([""]);
+  };
+
+  const handleStartEditPlate = (color: string, price: number) => {
     setEditingPlate({ originalColor: color, price: String(price) });
   };
 
-  const handleChangeEditingPrice = (newPrice: string) => {
+  const handleChangeEditingPlatePrice = (newPrice: string) => {
     if (!editingPlate) return;
     setEditingPlate({ ...editingPlate, price: newPrice });
   };
 
   const handleSaveEditingPlate = () => {
-    if (!editingPlate || !template) return;
+    if (!editingPlate) return;
 
     const updated = { ...template.prices };
     const oldColor = editingPlate.originalColor;
@@ -83,17 +113,9 @@ export const RoomPageContent = (props: RoomContentProps) => {
     setEditingPlate(null);
   };
 
-  const handleCancekEditingPlate = () => {
+  const handleCancelEditingPlate = () => {
     setEditingPlate(null);
   };
-
-  if (!userId) {
-    return <MemberSelector members={members} onSelectUser={onSelectUser} />;
-  }
-
-  if (!template) {
-    return <RequireReloadPage />;
-  }
 
   return (
     <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
@@ -110,7 +132,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
 
       <GroupSummary
         members={members}
-        prices={template.prices ?? {}}
+        prices={template.prices}
         showRanking={showRanking}
         total={total}
       />
@@ -122,7 +144,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
 
       <PlateEditContainer
         template={template}
-        handleEdit={handleEdit}
+        handleEdit={handleStartEditPlate}
         handleUpdateTemplate={handleUpdateTemplate}
         setShowBulkModal={setShowBulkModal}
         showTemplateEditor={showTemplateEditor}
@@ -131,7 +153,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
       <MemberList
         members={members}
         currentUserId={userId}
-        prices={template.prices ?? {}}
+        prices={template.prices}
         onAdd={handleAdd}
         onRemove={handleRemove}
       />
@@ -141,9 +163,9 @@ export const RoomPageContent = (props: RoomContentProps) => {
       {editingPlate && (
         <EditPlateModal
           editingPlate={editingPlate}
-          onChange={handleChangeEditingPrice}
+          onChange={handleChangeEditingPlatePrice}
           onSave={handleSaveEditingPlate}
-          onCancel={handleCancekEditingPlate}
+          onCancel={handleCancelEditingPlate}
         />
       )}
 
@@ -151,20 +173,9 @@ export const RoomPageContent = (props: RoomContentProps) => {
         isOpen={showBulkModal}
         entries={bulkEntries}
         onChange={setBulkEntries}
-        onAddRow={() => setBulkEntries([...bulkEntries, ""])}
-        onSave={() => {
-          const updated = { ...template.prices };
-          bulkEntries.forEach((price) => {
-            if (Number(price) > 0) {
-              const color = `${price}円皿`;
-              updated[color] = Number(price);
-            }
-          });
-          handleUpdateTemplate(updated);
-          setShowBulkModal(false);
-          setBulkEntries([""]);
-        }}
-        onCancel={() => setShowBulkModal(false)}
+        onAddRow={handleAddBulkRow}
+        onSave={handleSaveBulk}
+        onCancel={handleCancelBulk}
       />
     </div>
   );

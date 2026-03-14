@@ -23,7 +23,6 @@ export function RouteComponent() {
   const [userId, setUserId] = useState<string | null>(null);
   const lastSentSeqRef = useRef(0);
   const { rankNotifications } = usePaymentNotice({ members, template, userId });
-  const [bulkEntries, setBulkEntries] = useState([""]);
   const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
     useGroupRoomActions(
       userKey,
@@ -68,8 +67,6 @@ export function RouteComponent() {
           onChangeUser={onChangeUser}
           template={template}
           total={total}
-          bulkEntries={bulkEntries}
-          setBulkEntries={setBulkEntries}
           handleUpdateTemplate={handleUpdateTemplate}
           handleAdd={handleAdd}
           handleRemove={handleRemove}

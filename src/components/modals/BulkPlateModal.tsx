@@ -41,11 +41,6 @@ export const BulkPlateModal = ({
     });
   };
 
-  const closeAndReset = () => {
-    onChange([""]);
-    onCancel();
-  };
-
   return (
     <Activity mode={isOpen ? "visible" : "hidden"}>
       <div className="fixed inset-0 flex items-center justify-center bg-black/40">
@@ -97,7 +92,7 @@ export const BulkPlateModal = ({
               type="button"
               onClick={() => {
                 onSave();
-                closeAndReset();
+                onCancel();
               }}
               className="px-3 py-1 text-neutral-50 bg-teal-600 shadow"
             >
@@ -114,7 +109,7 @@ export const BulkPlateModal = ({
                   );
                   if (!ok) return;
                 }
-                closeAndReset();
+                onCancel();
               }}
               className="px-3 py-1 bg-red-600"
             >
