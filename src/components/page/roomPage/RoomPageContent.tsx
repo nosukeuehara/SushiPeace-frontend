@@ -13,12 +13,19 @@ import UserChangeButton from "@/components/UserChangeButton";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
-import { addPlate, updatePlate } from "@/domain/template/templateController";
+import {
+  addPlate,
+  removePlate,
+  removePlateCounts,
+  renamePlateCounts,
+  updatePlate,
+} from "@/domain/template/templateController";
 
 type RoomContentProps = {
   data: RoomData;
   userId: string | null;
   members: MemberPlates[];
+  setMembers: React.Dispatch<React.SetStateAction<MemberPlates[]>>;
   rankNotifications: {
     id: number;
     message: string;
@@ -37,6 +44,7 @@ export const RoomPageContent = ({
   data,
   userId,
   members,
+  setMembers,
   onSelectUser,
   rankNotifications,
   safeRoomId,
@@ -53,17 +61,28 @@ export const RoomPageContent = ({
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
 
-  // ユーザー未選択時は API レスポンスの members を優先して表示
   if (!userId) {
     return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
   }
 
-  // 初期同期前でも、data.templateData があれば画面を成立させる
   const currentTemplate = template ?? { prices: data.templateData ?? {} };
 
   if (!currentTemplate) {
     return <RequireReloadPage />;
   }
+
+  const handleAddPlate = (price: number) => {
+    const newTemplate = addPlate(price, currentTemplate);
+    handleUpdateTemplate(newTemplate.prices);
+  };
+
+  const handleRemovePlate = (label: string) => {
+    const newTemplate = removePlate(label, currentTemplate);
+    const newMembers = removePlateCounts(label, members);
+
+    setMembers(newMembers);
+    handleUpdateTemplate(newTemplate.prices);
+  };
 
   const handleAddBulkRow = () => {
     setBulkEntries((prev) => [...prev, ""]);
@@ -98,12 +117,13 @@ export const RoomPageContent = ({
   const handleSaveEditingPlate = () => {
     if (!editingPlate) return;
 
-    const newTemplate = updatePlate(
-      editingPlate.originalLabel,
-      Number(editingPlate.price),
-      currentTemplate,
-    );
+    const newPrice = Number(editingPlate.price);
 
+    const newTemplate = updatePlate(editingPlate.originalLabel, newPrice, currentTemplate);
+
+    const newMembers = renamePlateCounts(editingPlate.originalLabel, newPrice, members);
+
+    setMembers(newMembers);
     handleUpdateTemplate(newTemplate.prices);
     setEditingPlate(null);
   };
@@ -140,7 +160,8 @@ export const RoomPageContent = ({
       <PlateEditContainer
         template={currentTemplate}
         handleEdit={handleStartEditPlate}
-        handleUpdateTemplate={handleUpdateTemplate}
+        handleAddPlate={handleAddPlate}
+        handleRemovePlate={handleRemovePlate}
         setShowBulkModal={setShowBulkModal}
         showTemplateEditor={showTemplateEditor}
       />

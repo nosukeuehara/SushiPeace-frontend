@@ -89,6 +89,7 @@ export function RouteComponent() {
           data={data}
           userId={userId}
           members={members}
+          setMembers={setMembers}
           onSelectUser={onSelectUser}
           rankNotifications={rankNotifications}
           safeRoomId={safeRoomId}

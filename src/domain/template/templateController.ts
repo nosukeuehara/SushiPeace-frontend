@@ -22,3 +22,35 @@ export function updatePlate(
   updated[`${newPrice}円皿`] = newPrice;
   return { ...template, prices: updated };
 }
+
+import type { MemberPlates } from "@/types";
+
+export function removePlateCounts(targetLabel: string, members: MemberPlates[]): MemberPlates[] {
+  return members.map((member) => {
+    const updatedCounts = { ...member.counts };
+    delete updatedCounts[targetLabel];
+    return { ...member, counts: updatedCounts };
+  });
+}
+
+export function renamePlateCounts(
+  oldLabel: string,
+  newPrice: number,
+  members: MemberPlates[],
+): MemberPlates[] {
+  const newLabel = `${newPrice}円皿`;
+
+  return members.map((member) => {
+    const updatedCounts = { ...member.counts };
+    const currentCount = updatedCounts[oldLabel];
+
+    if (currentCount === undefined) {
+      return member;
+    }
+
+    delete updatedCounts[oldLabel];
+    updatedCounts[newLabel] = currentCount;
+
+    return { ...member, counts: updatedCounts };
+  });
+}

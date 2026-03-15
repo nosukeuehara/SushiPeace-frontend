@@ -28,7 +28,7 @@ export const ResultPage = ({ data, safeRoomId, shareText }: ResultPageProps) => 
       <ul className="mb-8 gap-7 flex flex-col">
         {data?.members?.map((m) => {
           const subtotal = Object.entries(m.counts).reduce(
-            (sum, [color, count]) => sum + count * templateData[color as string],
+            (sum, [color, count]) => sum + count * (templateData[color] ?? 0),
             0,
           );
           return (
@@ -47,7 +47,7 @@ export const ResultPage = ({ data, safeRoomId, shareText }: ResultPageProps) => 
             (total, m) =>
               total +
               Object.entries(m.counts).reduce(
-                (sum, [color, count]) => sum + count * templateData[color as string],
+                (sum, [color, count]) => sum + count * (templateData[color] ?? 0),
                 0,
               ),
             0,

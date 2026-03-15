@@ -1,28 +1,23 @@
 import type { PlateTemplate } from "@/types";
 import { PlateDataEditor } from "./PlateDataEditor";
-import { addPlate, removePlate } from "@/domain/template/templateController";
 
 export const PlateEditContainer = ({
   template,
   handleEdit,
-  handleUpdateTemplate,
+  handleAddPlate,
+  handleRemovePlate,
   setShowBulkModal,
   showTemplateEditor,
 }: {
   template: PlateTemplate;
   handleEdit: (label: string, price: number) => void;
-  handleUpdateTemplate: (updatedPrices: Record<string, number>) => void;
+  handleAddPlate: (price: number) => void;
+  handleRemovePlate: (label: string) => void;
   setShowBulkModal: React.Dispatch<React.SetStateAction<boolean>>;
   showTemplateEditor: boolean;
 }) => {
-  const handleRemove = (label: string) => {
-    const newTemplate = removePlate(label, template);
-    handleUpdateTemplate(newTemplate.prices);
-  };
-
   const handleAdd = (price: number) => {
-    const newTemplate = addPlate(price, template);
-    handleUpdateTemplate(newTemplate.prices);
+    handleAddPlate(price);
   };
 
   if (!showTemplateEditor) {
@@ -33,7 +28,7 @@ export const PlateEditContainer = ({
     <PlateDataEditor
       template={template}
       onEdit={handleEdit}
-      onRemove={handleRemove}
+      onRemove={handleRemovePlate}
       onAdd={handleAdd}
       onBulkClick={() => setShowBulkModal(true)}
     />
