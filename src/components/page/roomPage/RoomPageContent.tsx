@@ -60,7 +60,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
   const [bulkEntries, setBulkEntries] = useState([""]);
 
   if (!userId) {
-    return <MemberSelector members={members} onSelectUser={onSelectUser} />;
+    return <MemberSelector members={data.members} onSelectUser={onSelectUser} />;
   }
 
   if (!template) {
