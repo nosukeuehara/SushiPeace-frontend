@@ -14,12 +14,12 @@ function SushiResultComponent() {
   const { roomId } = useParams({ strict: false });
   const safeRoomId: string = roomId ?? "";
   const roomQuery = useRoom(safeRoomId);
-  const template = roomQuery.data?.template;
+  const template = roomQuery.data?.templateData;
   const shareUrl = `${window.location.origin}/new-sushi/group/${roomId}/result`;
   const shareText =
     roomQuery.data &&
     template &&
-    generateShareText(roomQuery.data.groupName, roomQuery.data.members, template.prices, shareUrl);
+    generateShareText(roomQuery.data.groupName, roomQuery.data.members, template, shareUrl);
 
   return (
     <AsyncState query={roomQuery} noDataText={noDataText}>

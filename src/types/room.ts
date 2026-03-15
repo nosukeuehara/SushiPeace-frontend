@@ -11,10 +11,10 @@ export type Room = {
 };
 
 export type RoomData = {
-  id: string;
   groupName: string;
   members: MemberPlates[];
   templateData: Record<string, number>;
+  createdAt: string;
 };
 
 export type RoomHistory = {
