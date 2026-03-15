@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BulkPlateModal } from "@/components/modals/BulkPlateModal";
 import { EditPlateModal, type EditingPlate } from "@/components/modals/EditPlateModal";
 import { GroupSummary } from "@/components/GroupSummary";
@@ -9,7 +10,6 @@ import { ShareReceiptButton } from "@/components/ShareReceiptButton";
 import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
 import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
-import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
@@ -33,37 +33,35 @@ type RoomContentProps = {
   handleRemove: (uid: string, label: string) => void;
 };
 
-export const RoomPageContent = (props: RoomContentProps) => {
-  const {
-    data,
-    userId,
-    members,
-    onSelectUser,
-    rankNotifications,
-    safeRoomId,
-    onChangeUser,
-    template,
-    total,
-    handleUpdateTemplate,
-    handleAdd,
-    handleRemove,
-  } = props;
-
+export const RoomPageContent = ({
+  data,
+  userId,
+  members,
+  onSelectUser,
+  rankNotifications,
+  safeRoomId,
+  onChangeUser,
+  template,
+  total,
+  handleUpdateTemplate,
+  handleAdd,
+  handleRemove,
+}: RoomContentProps) => {
   const [showRanking, setShowRanking] = useState(false);
-
-  // 皿編集モーダル関連のstate
   const [showTemplateEditor, setShowTemplateEditor] = useState(true);
   const [editingPlate, setEditingPlate] = useState<EditingPlate | null>(null);
-
-  // 皿一括登録関連のstate
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
 
+  // ユーザー未選択時は API レスポンスの members を優先して表示
   if (!userId) {
-    return <MemberSelector members={data.members} onSelectUser={onSelectUser} />;
+    return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
   }
 
-  if (!template) {
+  // 初期同期前でも、data.templateData があれば画面を成立させる
+  const currentTemplate = template ?? { prices: data.templateData ?? {} };
+
+  if (!currentTemplate) {
     return <RequireReloadPage />;
   }
 
@@ -72,11 +70,11 @@ export const RoomPageContent = (props: RoomContentProps) => {
   };
 
   const handleSaveBulk = () => {
-    const newTemplate = bulkEntries.reduce((currentTemplate, entry) => {
+    const newTemplate = bulkEntries.reduce((current, entry) => {
       const price = Number(entry);
-      if (price <= 0) return currentTemplate;
-      return addPlate(price, currentTemplate);
-    }, template);
+      if (price <= 0) return current;
+      return addPlate(price, current);
+    }, currentTemplate);
 
     handleUpdateTemplate(newTemplate.prices);
     setShowBulkModal(false);
@@ -103,7 +101,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
     const newTemplate = updatePlate(
       editingPlate.originalLabel,
       Number(editingPlate.price),
-      template,
+      currentTemplate,
     );
 
     handleUpdateTemplate(newTemplate.prices);
@@ -119,7 +117,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
       {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
 
       <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-600">{data?.groupName}</h2>
+        <h2 className="text-3xl font-bold text-gray-600">{data.groupName}</h2>
       </div>
 
       <ActionButtonsRow>
@@ -129,7 +127,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
 
       <GroupSummary
         members={members}
-        prices={template.prices}
+        prices={currentTemplate.prices}
         showRanking={showRanking}
         total={total}
       />
@@ -140,7 +138,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
       />
 
       <PlateEditContainer
-        template={template}
+        template={currentTemplate}
         handleEdit={handleStartEditPlate}
         handleUpdateTemplate={handleUpdateTemplate}
         setShowBulkModal={setShowBulkModal}
@@ -150,7 +148,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
       <MemberList
         members={members}
         currentUserId={userId}
-        prices={template.prices}
+        prices={currentTemplate.prices}
         onAdd={handleAdd}
         onRemove={handleRemove}
       />

@@ -1,4 +1,4 @@
-import type { MemberPlates, PlateTemplate } from "@/types";
+import type { MemberPlates } from "@/types";
 
 export type Member = {
   userId: string;
@@ -11,10 +11,10 @@ export type Room = {
 };
 
 export type RoomData = {
+  id: string;
   groupName: string;
   members: MemberPlates[];
-  template: PlateTemplate;
-  createdAt: string;
+  templateData: Record<string, number>;
 };
 
 export type RoomHistory = {
