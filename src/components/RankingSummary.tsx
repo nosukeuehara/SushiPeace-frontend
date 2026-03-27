@@ -7,7 +7,7 @@ type Props = {
   total: number;
 };
 
-export const GroupSummary = ({ members, prices, showRanking, total }: Props) => {
+export const RankingSummary = ({ members, prices, showRanking, total }: Props) => {
   const ranking = [...members]
     .map((m) => {
       const subtotal = Object.entries(m.counts).reduce(
