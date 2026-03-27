@@ -158,7 +158,7 @@ export const RoomPageContent = ({
       {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
 
       <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-600">{data.groupName}</h2>
+        <p className="text-3xl font-bold text-gray-600">{data.groupName}</p>
       </div>
 
       {/* ランキング・ユーザー切替ボタン */}
