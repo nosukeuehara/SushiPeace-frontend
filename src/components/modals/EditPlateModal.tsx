@@ -37,7 +37,7 @@ export const EditPlateModal = ({ editingPlate, onChange, onSave, onCancel }: Pro
             保存
           </button>
           <button onClick={onCancel} className="px-3 py-1 bg-gray-200">
-            キャンセル
+            <span className="text-gray-600">キャンセル</span>
           </button>
         </div>
       </div>
