@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import { useRoom } from "@/hooks/useRoom";
 import { useGroupRoomActions } from "@/hooks/useGroupRoomActions";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePaymentNotice } from "@/hooks/usePaymentNotice";
 import type { MemberPlates, PlateTemplate } from "@/types/plate";
 import { useRoomState } from "@/hooks/useRoomHistory";
@@ -15,16 +15,50 @@ export const Route = createFileRoute({
 
 export function RouteComponent() {
   const { roomId } = useParams({ strict: false });
-  const userKey = `sushi-user-id-${roomId}`;
-  const safeRoomId: string = roomId ?? "";
+  const safeRoomId = roomId ?? "";
+  const userKey = `sushi-user-id-${safeRoomId}`;
+
   const roomQuery = useRoom(safeRoomId);
+
   const [members, setMembers] = useState<MemberPlates[]>([]);
-  // TODO(優先度:高) テンプレートのキーが 100円皿 のようにテキストが含まれているため
-  // データ更新時に「円皿」と「円 皿」で同じvalueをもつ二つのデータができてしまう
   const [template, setTemplate] = useState<PlateTemplate | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+
   const lastSentSeqRef = useRef(0);
-  const { rankNotifications } = usePaymentNotice({ members, template, userId });
+  const initializedRoomIdRef = useRef<string | null>(null);
+
+  // 初回取得時に HTTP レスポンスで state を埋める
+  useEffect(() => {
+    const data = roomQuery.data;
+    if (!data || !safeRoomId) return;
+
+    // 同じ room に対して毎回上書きしない
+    if (initializedRoomIdRef.current === safeRoomId) return;
+
+    setMembers(data.members ?? []);
+    setTemplate({ prices: data.templateData ?? {} });
+    initializedRoomIdRef.current = safeRoomId;
+  }, [roomQuery.data, safeRoomId]);
+
+  // room が変わったら初期化フラグを戻す
+  useEffect(() => {
+    initializedRoomIdRef.current = null;
+    setMembers([]);
+    setTemplate(null);
+    setUserId(null);
+    lastSentSeqRef.current = 0;
+  }, [safeRoomId]);
+
+  useRoomState(safeRoomId, roomQuery.data);
+
+  useSocketSync({
+    roomId: safeRoomId,
+    userId,
+    setMembers,
+    setTemplate,
+    lastSentSeqRef,
+  });
+
   const { total, handleSelectUser, handleAdd, handleRemove, handleUpdateTemplate } =
     useGroupRoomActions(
       userKey,
@@ -37,22 +71,14 @@ export function RouteComponent() {
       lastSentSeqRef,
     );
 
-  useRoomState(safeRoomId, roomQuery.data);
-  useSocketSync({
-    roomId: safeRoomId,
-    userId,
-    setMembers,
-    setTemplate,
-    lastSentSeqRef,
-  });
+  const { rankNotifications } = usePaymentNotice({ members, template, userId });
 
   const onSelectUser = (id: string) => {
-    setUserId(id);
     handleSelectUser(id);
   };
 
   const onChangeUser = () => {
-    localStorage.removeItem(`sushi-user-id-${roomId}`);
+    localStorage.removeItem(userKey);
     setUserId(null);
   };
 
@@ -63,6 +89,7 @@ export function RouteComponent() {
           data={data}
           userId={userId}
           members={members}
+          setMembers={setMembers}
           onSelectUser={onSelectUser}
           rankNotifications={rankNotifications}
           safeRoomId={safeRoomId}

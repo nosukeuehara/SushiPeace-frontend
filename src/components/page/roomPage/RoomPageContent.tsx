@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { BulkPlateModal } from "@/components/modals/BulkPlateModal";
 import { EditPlateModal, type EditingPlate } from "@/components/modals/EditPlateModal";
-import { GroupSummary } from "@/components/GroupSummary";
+import { RankingSummary } from "@/components/RankingSummary";
 import { MemberList } from "@/components/MemberList";
 import { MemberSelector } from "@/components/MemberSelector";
 import { PlateEditContainer } from "@/components/PlateEditContainer";
@@ -9,16 +10,22 @@ import { ShareReceiptButton } from "@/components/ShareReceiptButton";
 import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
 import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
-import { useState } from "react";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
-import { addPlate, updatePlate } from "@/domain/template/templateController";
+import {
+  addPlate,
+  removePlate,
+  removePlateCounts,
+  renamePlateCounts,
+  updatePlate,
+} from "@/domain/template/templateController";
 
 type RoomContentProps = {
   data: RoomData;
   userId: string | null;
   members: MemberPlates[];
+  setMembers: React.Dispatch<React.SetStateAction<MemberPlates[]>>;
   rankNotifications: {
     id: number;
     message: string;
@@ -33,50 +40,60 @@ type RoomContentProps = {
   handleRemove: (uid: string, label: string) => void;
 };
 
-export const RoomPageContent = (props: RoomContentProps) => {
-  const {
-    data,
-    userId,
-    members,
-    onSelectUser,
-    rankNotifications,
-    safeRoomId,
-    onChangeUser,
-    template,
-    total,
-    handleUpdateTemplate,
-    handleAdd,
-    handleRemove,
-  } = props;
-
+export const RoomPageContent = ({
+  data,
+  userId,
+  members,
+  setMembers,
+  onSelectUser,
+  rankNotifications,
+  safeRoomId,
+  onChangeUser,
+  template,
+  total,
+  handleUpdateTemplate,
+  handleAdd,
+  handleRemove,
+}: RoomContentProps) => {
   const [showRanking, setShowRanking] = useState(false);
-
-  // 皿編集モーダル関連のstate
   const [showTemplateEditor, setShowTemplateEditor] = useState(true);
   const [editingPlate, setEditingPlate] = useState<EditingPlate | null>(null);
-
-  // 皿一括登録関連のstate
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
 
   if (!userId) {
-    return <MemberSelector members={members} onSelectUser={onSelectUser} />;
+    return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
   }
 
-  if (!template) {
+  const currentTemplate = template ?? { prices: data.templateData ?? {} };
+
+  if (!currentTemplate) {
     return <RequireReloadPage />;
   }
+
+  const handleAddPlate = (price: number) => {
+    const newTemplate = addPlate(price, currentTemplate);
+    handleUpdateTemplate(newTemplate.prices);
+  };
+
+  const handleRemovePlate = (label: string) => {
+    const newTemplate = removePlate(label, currentTemplate);
+    const newMembers = removePlateCounts(label, members);
+
+    setMembers(newMembers);
+    handleUpdateTemplate(newTemplate.prices);
+  };
 
   const handleAddBulkRow = () => {
     setBulkEntries((prev) => [...prev, ""]);
   };
 
   const handleSaveBulk = () => {
-    const newTemplate = bulkEntries.reduce((currentTemplate, entry) => {
+    const newTemplate = bulkEntries.reduce((current, entry) => {
       const price = Number(entry);
-      if (price <= 0) return currentTemplate;
-      return addPlate(price, currentTemplate);
-    }, template);
+      if (price <= 0) return current;
+      return addPlate(price, current);
+    }, currentTemplate);
 
     handleUpdateTemplate(newTemplate.prices);
     setShowBulkModal(false);
@@ -89,19 +106,24 @@ export const RoomPageContent = (props: RoomContentProps) => {
   };
 
   const handleStartEditPlate = (label: string, price: number) => {
-    setEditingPlate({ originalLabel: label, price });
+    setEditingPlate({ originalLabel: label, price: String(price) });
   };
 
-  const handleChangeEditingPlatePrice = (newPrice: number) => {
+  const handleChangeEditingPlatePrice = (newPrice: string) => {
     if (!editingPlate) return;
-    setEditingPlate({ ...editingPlate, price: newPrice });
+    setEditingPlate({ ...editingPlate, price: String(newPrice) });
   };
 
   const handleSaveEditingPlate = () => {
     if (!editingPlate) return;
 
-    const newTemplate = updatePlate(editingPlate.originalLabel, editingPlate.price, template);
+    const newPrice = Number(editingPlate.price);
 
+    const newTemplate = updatePlate(editingPlate.originalLabel, newPrice, currentTemplate);
+
+    const newMembers = renamePlateCounts(editingPlate.originalLabel, newPrice, members);
+
+    setMembers(newMembers);
     handleUpdateTemplate(newTemplate.prices);
     setEditingPlate(null);
   };
@@ -112,47 +134,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
 
   return (
     <div className="relative max-w-xl mx-auto min-h-screen px-5 py-16 bg-white">
-      {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
-
-      <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-600">{data?.groupName}</h2>
-      </div>
-
-      <ActionButtonsRow>
-        <RankingToggleButton showRanking={showRanking} setShowRanking={setShowRanking} />
-        <UserChangeButton onChangeUser={onChangeUser} />
-      </ActionButtonsRow>
-
-      <GroupSummary
-        members={members}
-        prices={template.prices}
-        showRanking={showRanking}
-        total={total}
-      />
-
-      <PlateEditorToggleButton
-        showTemplateEditor={showTemplateEditor}
-        setShowTemplateEditor={setShowTemplateEditor}
-      />
-
-      <PlateEditContainer
-        template={template}
-        handleEdit={handleStartEditPlate}
-        handleUpdateTemplate={handleUpdateTemplate}
-        setShowBulkModal={setShowBulkModal}
-        showTemplateEditor={showTemplateEditor}
-      />
-
-      <MemberList
-        members={members}
-        currentUserId={userId}
-        prices={template.prices}
-        onAdd={handleAdd}
-        onRemove={handleRemove}
-      />
-
-      <ShareReceiptButton roomId={safeRoomId} />
-
+      {/* 編集用モーダル */}
       {editingPlate && (
         <EditPlateModal
           editingPlate={editingPlate}
@@ -162,6 +144,7 @@ export const RoomPageContent = (props: RoomContentProps) => {
         />
       )}
 
+      {/* 一括登録用モーダル */}
       <BulkPlateModal
         isOpen={showBulkModal}
         entries={bulkEntries}
@@ -170,6 +153,55 @@ export const RoomPageContent = (props: RoomContentProps) => {
         onSave={handleSaveBulk}
         onCancel={handleCancelBulk}
       />
+
+      {/* ランク通知 */}
+      {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
+
+      <div className="mb-4 text-center">
+        <p className="text-3xl font-bold text-gray-600">{data.groupName}</p>
+      </div>
+
+      {/* ランキング・ユーザー切替ボタン */}
+      <ActionButtonsRow>
+        <RankingToggleButton showRanking={showRanking} setShowRanking={setShowRanking} />
+        <UserChangeButton onChangeUser={onChangeUser} />
+      </ActionButtonsRow>
+
+      {/* グループの皿データ一覧、<RankingToggleButton/>で表示切替 */}
+      <RankingSummary
+        members={members}
+        prices={currentTemplate.prices}
+        showRanking={showRanking}
+        total={total}
+      />
+
+      {/* 皿編集用トグルボタン、<PlateEditorToggleButton/>で表示切替 */}
+      <PlateEditorToggleButton
+        showTemplateEditor={showTemplateEditor}
+        setShowTemplateEditor={setShowTemplateEditor}
+      />
+
+      {/* 皿編集用コンテナ */}
+      <PlateEditContainer
+        template={currentTemplate}
+        handleEdit={handleStartEditPlate}
+        handleAddPlate={handleAddPlate}
+        handleRemovePlate={handleRemovePlate}
+        setShowBulkModal={setShowBulkModal}
+        showTemplateEditor={showTemplateEditor}
+      />
+
+      {/* メンバーリスト、金額ごとのお皿の枚数を表示 */}
+      <MemberList
+        members={members}
+        currentUserId={userId}
+        prices={currentTemplate.prices}
+        onAdd={handleAdd}
+        onRemove={handleRemove}
+      />
+
+      {/* 個別金額の共有ボタン */}
+      <ShareReceiptButton roomId={safeRoomId} />
     </div>
   );
 };

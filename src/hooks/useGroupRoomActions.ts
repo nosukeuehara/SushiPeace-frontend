@@ -29,15 +29,15 @@ export function useGroupRoomActions(
 
     for (const [k, d] of Object.entries(batch)) {
       if (d === 0) continue;
-      const [uid, label] = k.split("::");
+      const [uid, color] = k.split("::");
       const seq = ++lastSentSeqRef.current;
-      emitCount(roomId, uid, label, d, seq);
+      emitCount(roomId, uid, color, d, seq);
     }
   }, [lastSentSeqRef, roomId]);
 
   const queueDelta = useCallback(
-    (uid: string, label: string, delta: number) => {
-      const key = `${uid}::${label}`;
+    (uid: string, color: string, delta: number) => {
+      const key = `${uid}::${color}`;
       pendingDeltaRef.current[key] = (pendingDeltaRef.current[key] ?? 0) + delta;
 
       // 次のtickでまとめてflush
@@ -50,13 +50,13 @@ export function useGroupRoomActions(
   );
 
   const applyLocalDelta = useCallback(
-    (uid: string, label: string, delta: number) => {
+    (uid: string, color: string, delta: number) => {
       setMembers((prev) =>
         prev.map((m) => {
           if (m.userId !== uid) return m;
-          const current = m.counts[label] ?? 0;
+          const current = m.counts[color] ?? 0;
           const next = Math.max(0, current + delta);
-          return { ...m, counts: { ...m.counts, [label]: next } };
+          return { ...m, counts: { ...m.counts, [color]: next } };
         }),
       );
     },
@@ -72,17 +72,17 @@ export function useGroupRoomActions(
   );
 
   const handleAdd = useCallback(
-    (uid: string, label: string) => {
-      applyLocalDelta(uid, label, +1);
-      queueDelta(uid, label, +1);
+    (uid: string, color: string) => {
+      applyLocalDelta(uid, color, +1);
+      queueDelta(uid, color, +1);
     },
     [applyLocalDelta, queueDelta],
   );
 
   const handleRemove = useCallback(
-    (uid: string, label: string) => {
-      applyLocalDelta(uid, label, -1);
-      queueDelta(uid, label, -1);
+    (uid: string, color: string) => {
+      applyLocalDelta(uid, color, -1);
+      queueDelta(uid, color, -1);
     },
     [applyLocalDelta, queueDelta],
   );
@@ -100,7 +100,7 @@ export function useGroupRoomActions(
       (sum, m) =>
         sum +
         Object.entries(m.counts).reduce(
-          (s, [label, count]) => s + count * (template?.prices?.[label] ?? 0),
+          (s, [color, count]) => s + count * (template?.prices?.[color] ?? 0),
           0,
         ),
       0,

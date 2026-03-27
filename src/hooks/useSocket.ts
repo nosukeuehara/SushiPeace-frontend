@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { socket } from "@/lib/socket";
 import type { MemberPlates } from "@/types";
 
@@ -15,31 +15,8 @@ type UseSocketParams = {
 };
 
 export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
-  const [isJoined, setIsJoined] = useState(false);
-
   useEffect(() => {
     if (!roomId) return;
-
-    socket.connect();
-
-    socket.emit("join", { roomId }, (response: { ok: boolean }) => {
-      if (response?.ok) {
-        console.log("Joined room:", roomId);
-        setIsJoined(true);
-      } else {
-        console.error("Failed to join room:", roomId);
-      }
-    });
-
-    return () => {
-      socket.disconnect();
-      setIsJoined(false);
-    };
-  }, [roomId]);
-
-  // join完了後のみsyncイベントを購読
-  useEffect(() => {
-    if (!isJoined) return;
 
     const handleSync = (payload: {
       members: MemberPlates[];
@@ -49,25 +26,36 @@ export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
       onSync(payload.members, payload.templateData, payload.meta);
     };
 
+    if (!socket.connected) {
+      socket.connect();
+    }
+
+    socket.off("sync", handleSync);
     socket.on("sync", handleSync);
 
-    // 二重に購読されないようにクリーンアップ
-    // 依存配列が変化したときと使用する側のコンポーネントがunmountされるとき実行
+    socket.emit("join", { roomId }, (response: { ok: boolean }) => {
+      if (response?.ok) {
+        console.log("Joined room:", roomId);
+      } else {
+        console.error("Failed to join room:", roomId);
+      }
+    });
+
     return () => {
       socket.off("sync", handleSync);
     };
-  }, [isJoined, onSync]);
+  }, [roomId, onSync]);
 };
 
 export const emitCount = (
   roomId: string | undefined,
   userId: string,
-  label: string,
+  color: string,
   delta: number,
   seq: number,
 ) => {
   if (!roomId) return;
-  socket.emit("count", { roomId, userId, label, delta, seq });
+  socket.emit("count", { roomId, userId, color, delta, seq });
 };
 
 export const emitTemplateUpdate = (roomId: string | undefined, prices: Record<string, number>) => {

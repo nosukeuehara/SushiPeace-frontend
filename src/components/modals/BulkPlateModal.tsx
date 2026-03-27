@@ -75,6 +75,8 @@ export const BulkPlateModal = ({
           <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
             <button
               type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onTouchStart={(e) => e.preventDefault()}
               onPointerDown={(e) => e.preventDefault()}
               onClick={() => {
                 const nextIndex = entries.length;
@@ -109,9 +111,9 @@ export const BulkPlateModal = ({
                 }
                 onCancel();
               }}
-              className="px-3 py-1 bg-red-600"
+              className="px-3 py-1 bg-gray-200"
             >
-              <span className="text-stone-100">キャンセル</span>
+              <span className="text-gray-600">キャンセル</span>
             </button>
           </div>
         </div>

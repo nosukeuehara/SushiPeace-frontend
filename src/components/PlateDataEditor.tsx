@@ -3,8 +3,8 @@ import { BulkPlateModalToggleButton } from "./BulkPlateModalToggleButton";
 
 type Props = {
   template: { prices: Record<string, number> };
-  onEdit: (label: string, price: number) => void;
-  onRemove: (label: string) => void;
+  onEdit: (color: string, price: number) => void;
+  onRemove: (color: string) => void;
   onAdd: (price: number) => void;
   onBulkClick: () => void;
 };
@@ -12,9 +12,9 @@ type Props = {
 export const PlateDataEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick }: Props) => {
   const [newPrice, setNewPrice] = useState("");
 
-  const confirmAndRemovePlate = (label: string) => {
-    if (window.confirm(`本当に${label}を削除しますか？`)) {
-      onRemove(label);
+  const confirmAndRemovePlate = (color: string) => {
+    if (window.confirm(`本当に${color}を削除しますか？`)) {
+      onRemove(color);
     }
   };
 
@@ -32,9 +32,9 @@ export const PlateDataEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick
           <ul className="mb-4 list-none p-0">
             {Object.entries(template.prices)
               .sort((a, b) => b[1] - a[1])
-              .map(([label, price]) => (
+              .map(([color, price]) => (
                 <li
-                  key={`plate-${label}`}
+                  key={`plate-${color}`}
                   className="grid items-baseline grid-cols-[1fr_auto] py-1"
                 >
                   <div className="flex items-baseline">
@@ -45,10 +45,10 @@ export const PlateDataEditor = ({ template, onEdit, onRemove, onAdd, onBulkClick
                   </div>
 
                   <div className="flex gap-5">
-                    <button onClick={() => onEdit(label, price)}>
+                    <button onClick={() => onEdit(color, price)}>
                       <span className="text-gray-600">編集</span>
                     </button>
-                    <button onClick={() => confirmAndRemovePlate(label)}>
+                    <button onClick={() => confirmAndRemovePlate(color)}>
                       <span className="text-red-700">削除</span>
                     </button>
                   </div>
