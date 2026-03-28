@@ -10,7 +10,7 @@ export const MemberPlateDataList = ({ otherMembers, prices }: Props) => {
     <div className="flex flex-col mb-16">
       {otherMembers.map((m) => {
         const total = Object.entries(m.counts).reduce(
-          (sum, [color, count]) => sum + count * (prices[color] ?? 0),
+          (sum, [plate, count]) => sum + count * (prices[plate] ?? 0),
           0,
         );
         const totalPlates = Object.values(m.counts).reduce((a, b) => a + b, 0);
