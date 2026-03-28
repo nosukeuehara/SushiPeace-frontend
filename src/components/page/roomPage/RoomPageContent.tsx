@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BulkPlateModal } from "@/components/modals/BulkPlateModal";
 import { EditPlateModal, type EditingPlate } from "@/components/modals/EditPlateModal";
 import { RankingSummary } from "@/components/RankingSummary";
-import { MemberPlateDataList } from "@/components/MemberList";
+import { MemberPlateDataList } from "@/components/MemberPlateDataList";
 import { MemberSelector } from "@/components/MemberSelector";
 import { PlateEditContainer } from "@/components/PlateEditContainer";
 import { RankNotifications } from "@/components/RankNotifications";
