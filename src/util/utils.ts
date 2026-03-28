@@ -14,3 +14,10 @@ export function splitMembersByCurrentUser(
   const otherMembers = members.filter((m) => m.userId !== currentUserId);
   return { currentUser: currentMember, otherMembers };
 }
+
+export function calcTotal(m: MemberPlates, prices: Record<string, number>): number {
+  return Object.entries(m.counts).reduce(
+    (sum, [plate, count]) => sum + count * (prices[plate] ?? 0),
+    0,
+  );
+}

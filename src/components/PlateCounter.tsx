@@ -1,4 +1,5 @@
 import type { MemberPlates } from "@/types";
+import { calcTotal } from "@/util/utils";
 
 type Props = {
   member: MemberPlates;
@@ -9,17 +10,14 @@ type Props = {
 };
 
 export const UserControlPanel = ({ member, onAdd, onRemove, prices }: Props) => {
-  const total = Object.entries(member.counts).reduce(
-    (sum, [color, count]) => sum + count * (prices[color] ?? 0),
-    0,
-  );
-
   return (
     <div>
       <div className="flex items-baseline justify-start gap-2 py-5">
         <h4 className="text-xl font-bold text-gray-600">{member.name}：</h4>
         <p className="font-bold">
-          <span className="text-2xl font-semibold text-gray-600">{total.toLocaleString()} 円</span>
+          <span className="text-2xl font-semibold text-gray-600">
+            {calcTotal(member, prices).toLocaleString()} 円
+          </span>
         </p>
       </div>
 
