@@ -205,7 +205,7 @@ export const RoomPageContent = ({
         />
       )}
 
-      {/* メンバーリスト、金額ごとのお皿の枚数を表示 */}
+      {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
       <MemberList otherMembers={otherMembers} prices={currentTemplate.prices} />
 
       {/* 個別金額の共有ボタン */}
