@@ -21,7 +21,7 @@ import {
   renamePlateCounts,
   updatePlate,
 } from "@/domain/template/templateController";
-import { UserControlPanel } from "@/components/PlateCounter";
+import { UserControlPanel } from "@/components/UserControlPanel";
 
 type RoomContentProps = {
   data: RoomData;
