@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BulkPlateModal } from "@/components/modals/BulkPlateModal";
 import { EditPlateModal, type EditingPlate } from "@/components/modals/EditPlateModal";
 import { RankingSummary } from "@/components/RankingSummary";
-import { MemberList } from "@/components/MemberList";
+import { MemberPlateDataList } from "@/components/MemberList";
 import { MemberSelector } from "@/components/MemberSelector";
 import { PlateEditContainer } from "@/components/PlateEditContainer";
 import { RankNotifications } from "@/components/RankNotifications";
@@ -206,7 +206,7 @@ export const RoomPageContent = ({
       )}
 
       {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
-      <MemberList otherMembers={otherMembers} prices={currentTemplate.prices} />
+      <MemberPlateDataList otherMembers={otherMembers} prices={currentTemplate.prices} />
 
       {/* 個別金額の共有ボタン */}
       <ShareReceiptButton roomId={safeRoomId} />

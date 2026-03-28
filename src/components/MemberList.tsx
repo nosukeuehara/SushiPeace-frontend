@@ -5,7 +5,7 @@ type Props = {
   prices: Record<string, number>;
 };
 
-export const MemberList = ({ otherMembers, prices }: Props) => {
+export const MemberPlateDataList = ({ otherMembers, prices }: Props) => {
   return (
     <div className="flex flex-col mb-16">
       {otherMembers.map((m) => {
