@@ -4,7 +4,7 @@ import { useGroupRoomActions } from "@/hooks/useGroupRoomActions";
 import { useEffect, useRef, useState } from "react";
 import { usePaymentNotice } from "@/hooks/usePaymentNotice";
 import type { MemberPlates, PlateTemplate } from "@/types/plate";
-import { useRoomState } from "@/hooks/useRoomHistory";
+import { useUpdateRoomState } from "@/hooks/useRoomHistory";
 import { useSocketSync } from "@/hooks/useSocketSync";
 import { AsyncState } from "@/components/states/AsyncState";
 import { RoomPageContent } from "@/components/page/roomPage/RoomPageContent";
@@ -49,7 +49,8 @@ export function RouteComponent() {
     lastSentSeqRef.current = 0;
   }, [safeRoomId]);
 
-  useRoomState(safeRoomId, roomQuery.data);
+  // roomId とデータが揃ったら履歴を更新
+  useUpdateRoomState(safeRoomId, roomQuery.data);
 
   useSocketSync({
     roomId: safeRoomId,
