@@ -13,7 +13,6 @@ import UserChangeButton from "@/components/UserChangeButton";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
-import { UserControlPanel } from "@/components/UserContorolPanel";
 import { splitMembersByCurrentUser } from "@/util/utils";
 import {
   addPlate,
@@ -22,6 +21,7 @@ import {
   renamePlateCounts,
   updatePlate,
 } from "@/domain/template/templateController";
+import { UserControlPanel } from "@/components/PlateCounter";
 
 type RoomContentProps = {
   data: RoomData;
@@ -198,10 +198,10 @@ export const RoomPageContent = ({
       {/* ユーザーのカウント操作用コンポーネント */}
       {currentUser && (
         <UserControlPanel
-          currentUser={currentUser}
-          prices={currentTemplate.prices}
+          member={currentUser}
           onAdd={handleAdd}
           onRemove={handleRemove}
+          prices={currentTemplate.prices}
         />
       )}
 
