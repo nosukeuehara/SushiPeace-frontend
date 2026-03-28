@@ -3,14 +3,14 @@ import type { MemberPlates, PlateTemplate } from "@/types";
 export function generateShareText(
   groupName: string,
   members: MemberPlates[],
-  prices: PlateTemplate["prices"],
+  template: PlateTemplate,
   shareUrl: string,
 ): string {
   let total = 0;
 
   const memberTexts = members.map((m) => {
     const subtotal = Object.entries(m.counts).reduce(
-      (sum, [color, count]) => sum + count * (prices[color as string] ?? 0),
+      (sum, [color, count]) => sum + count * (template.prices[color as string] ?? 0),
       0,
     );
     total += subtotal;

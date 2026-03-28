@@ -7,3 +7,10 @@ export type RoomData = {
   members: MemberPlates[];
   template: PlateTemplate;
 };
+
+export type RoomHistory = {
+  roomId: string;
+  groupName: string;
+  createdAt: string;
+  lastAccessedAt: string;
+};
