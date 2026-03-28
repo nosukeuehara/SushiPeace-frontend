@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BulkPlateModal } from "@/components/modals/BulkPlateModal";
 import { EditPlateModal, type EditingPlate } from "@/components/modals/EditPlateModal";
 import { RankingSummary } from "@/components/RankingSummary";
-import { MemberList } from "@/components/MemberList";
+import { MemberPlateDataList } from "@/components/MemberPlateDataList";
 import { MemberSelector } from "@/components/MemberSelector";
 import { PlateEditContainer } from "@/components/PlateEditContainer";
 import { RankNotifications } from "@/components/RankNotifications";
@@ -13,6 +13,7 @@ import UserChangeButton from "@/components/UserChangeButton";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
 import { RequireReloadPage } from "../errorPage/RequireReloadPage";
+import { splitMembersByCurrentUser } from "@/util/utils";
 import {
   addPlate,
   removePlate,
@@ -20,6 +21,7 @@ import {
   renamePlateCounts,
   updatePlate,
 } from "@/domain/template/templateController";
+import { UserControlPanel } from "@/components/UserControlPanel";
 
 type RoomContentProps = {
   data: RoomData;
@@ -60,6 +62,8 @@ export const RoomPageContent = ({
   const [editingPlate, setEditingPlate] = useState<EditingPlate | null>(null);
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
+
+  const { currentUser, otherMembers } = splitMembersByCurrentUser(members, userId);
 
   if (!userId) {
     return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
@@ -191,14 +195,18 @@ export const RoomPageContent = ({
         showTemplateEditor={showTemplateEditor}
       />
 
-      {/* メンバーリスト、金額ごとのお皿の枚数を表示 */}
-      <MemberList
-        members={members}
-        currentUserId={userId}
-        prices={currentTemplate.prices}
-        onAdd={handleAdd}
-        onRemove={handleRemove}
-      />
+      {/* ユーザーのカウント操作用コンポーネント */}
+      {currentUser && (
+        <UserControlPanel
+          member={currentUser}
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+          prices={currentTemplate.prices}
+        />
+      )}
+
+      {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
+      <MemberPlateDataList otherMembers={otherMembers} prices={currentTemplate.prices} />
 
       {/* 個別金額の共有ボタン */}
       <ShareReceiptButton roomId={safeRoomId} />

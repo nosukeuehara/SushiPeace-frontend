@@ -4,10 +4,10 @@ import { useGroupRoomActions } from "@/hooks/useGroupRoomActions";
 import { useEffect, useRef, useState } from "react";
 import { usePaymentNotice } from "@/hooks/usePaymentNotice";
 import type { MemberPlates, PlateTemplate } from "@/types/plate";
-import { useRoomState } from "@/hooks/useRoomHistory";
 import { useSocketSync } from "@/hooks/useSocketSync";
 import { AsyncState } from "@/components/states/AsyncState";
 import { RoomPageContent } from "@/components/page/roomPage/RoomPageContent";
+import { updateRoomHistory } from "@/util/roomHistory";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -49,7 +49,12 @@ export function RouteComponent() {
     lastSentSeqRef.current = 0;
   }, [safeRoomId]);
 
-  useRoomState(safeRoomId, roomQuery.data);
+  // roomId とデータが揃ったら履歴を更新
+  useEffect(() => {
+    if (roomQuery.data && safeRoomId) {
+      updateRoomHistory(safeRoomId, roomQuery.data.groupName, roomQuery.data.createdAt);
+    }
+  }, [roomQuery.data, safeRoomId]);
 
   useSocketSync({
     roomId: safeRoomId,

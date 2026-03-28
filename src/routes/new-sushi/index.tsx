@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useCreateRoom } from "@/hooks/useCreateRoom";
-import { type Member } from "@/api";
+import { type Member } from "@/service/api";
 import { getRoomHistory, removeRoomHistory } from "@/util/roomHistory";
+import { ErrorViewer } from "@/components/common/ErrorViewer";
 
 export const Route = createFileRoute({
   component: NewRoom,
@@ -16,9 +16,7 @@ export default function NewRoom() {
   const [members, setMembers] = useState<Member[] | []>([]);
   const [memberName, setMemberName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { mutate, isPending } = useCreateRoom((data) => {
-    navigate({ to: `/new-sushi/group/${data.roomId}/share` });
-  });
+  const { mutate, isPending, error, reset } = useCreateRoom();
 
   const handleRemoveRoomHistory = (roomId: string) => {
     if (window.confirm("本当に削除しますか？")) {
@@ -45,10 +43,19 @@ export default function NewRoom() {
       return;
     }
 
-    mutate({
-      groupName,
-      members: validMembers,
-    });
+    reset();
+
+    mutate(
+      {
+        groupName,
+        members: validMembers,
+      },
+      {
+        onSuccess: (data) => {
+          navigate({ to: `/new-sushi/group/${data.roomId}/share` });
+        },
+      },
+    );
   };
 
   const addMember = () => {
@@ -129,6 +136,7 @@ export default function NewRoom() {
       </div>
 
       <div className="mt-10">
+        <ErrorViewer error={error} />
         <button
           type="button"
           className="w-full px-4 py-2 font-bold text-neutral-50 bg-rose-400 shadow"
