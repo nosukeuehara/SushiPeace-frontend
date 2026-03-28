@@ -1,14 +1,14 @@
-export type Member = {
+export interface Member {
   userId: string;
   name: string;
-};
+}
 
-export type CreateRoomPayload = {
+export interface CreateRoomPayload {
   groupName: string;
   members: Member[];
-};
+}
 
-export type CreateRoomResponse = {
+export interface CreateRoomResponse {
   roomId: string;
   shareUrl: string;
-};
+}

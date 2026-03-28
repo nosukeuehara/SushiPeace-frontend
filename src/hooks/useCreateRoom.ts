@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { createRoom, type CreateRoomPayload, type CreateRoomResponse } from "@/api";
+import { createRoom } from "@/service/api";
 
-export const useCreateRoom = (onSuccess: (data: CreateRoomResponse) => void) => {
+export const useCreateRoom = () => {
   return useMutation({
-    mutationFn: (payload: CreateRoomPayload) => createRoom(payload),
-    onSuccess,
+    mutationFn: createRoom,
   });
 };
