@@ -7,7 +7,7 @@ import { MemberSelector } from "@/components/MemberSelector";
 import { PlateEditContainer } from "@/components/PlateEditContainer";
 import { RankNotifications } from "@/components/RankNotifications";
 import { ShareReceiptButton } from "@/components/ShareReceiptButton";
-import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
+import type { MemberPlates, RoomData } from "@/types";
 import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
 import RankingToggleButton from "@/components/RankingToggleButton";
@@ -32,7 +32,6 @@ type RoomContentProps = {
     message: string;
   }[];
   safeRoomId: string;
-  template: PlateTemplate | null;
   total: number;
   onChangeUser: () => void;
   onSelectUser: (id: string) => void;
@@ -50,7 +49,6 @@ export const RoomPageContent = ({
   rankNotifications,
   safeRoomId,
   onChangeUser,
-  template,
   total,
   handleUpdateTemplate,
   handleAdd,
@@ -62,13 +60,19 @@ export const RoomPageContent = ({
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
 
-  const { currentUser, otherMembers } = splitMembersByCurrentUser(members, userId);
-
   if (!userId) {
     return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
   }
 
-  const currentTemplate = template ?? data.template;
+  const { currentUser, otherMembers } = splitMembersByCurrentUser(members, userId);
+
+  if (!currentUser) {
+    return (
+      <div className="text-center text-gray-600">ユーザーデータの読み込みに失敗しました。</div>
+    );
+  }
+
+  const currentTemplate = data.template;
 
   const handleAddPlate = (price: number) => {
     const newTemplate = addPlate(price, currentTemplate);
@@ -192,14 +196,12 @@ export const RoomPageContent = ({
       />
 
       {/* ユーザーのカウント操作用コンポーネント */}
-      {currentUser && (
-        <UserControlPanel
-          member={currentUser}
-          onAdd={handleAdd}
-          onRemove={handleRemove}
-          prices={currentTemplate.prices}
-        />
-      )}
+      <UserControlPanel
+        member={currentUser}
+        onAdd={handleAdd}
+        onRemove={handleRemove}
+        prices={currentTemplate.prices}
+      />
 
       {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
       <MemberPlateDataList otherMembers={otherMembers} prices={currentTemplate.prices} />
