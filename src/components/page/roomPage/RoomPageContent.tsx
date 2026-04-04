@@ -12,7 +12,6 @@ import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
 import RankingToggleButton from "@/components/RankingToggleButton";
 import { PlateEditorToggleButton } from "@/components/PlateEditorToggleButton";
-import { RequireReloadPage } from "../errorPage/RequireReloadPage";
 import { splitMembersByCurrentUser } from "@/util/utils";
 import {
   addPlate,
@@ -69,11 +68,7 @@ export const RoomPageContent = ({
     return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
   }
 
-  const currentTemplate = template ?? { prices: data.templateData ?? {} };
-
-  if (!currentTemplate) {
-    return <RequireReloadPage />;
-  }
+  const currentTemplate = template ?? data.template;
 
   const handleAddPlate = (price: number) => {
     const newTemplate = addPlate(price, currentTemplate);

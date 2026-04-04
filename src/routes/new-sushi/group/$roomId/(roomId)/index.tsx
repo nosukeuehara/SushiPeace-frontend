@@ -27,7 +27,7 @@ export function RouteComponent() {
   const lastSentSeqRef = useRef(0);
   const initializedRoomIdRef = useRef<string | null>(null);
 
-  // 初回取得時に HTTP レスポンスで state を埋める
+  // 初回取得時に整形済みの RoomData で state を初期化する
   useEffect(() => {
     const data = roomQuery.data;
     if (!data || !safeRoomId) return;
@@ -36,7 +36,7 @@ export function RouteComponent() {
     if (initializedRoomIdRef.current === safeRoomId) return;
 
     setMembers(data.members ?? []);
-    setTemplate({ prices: data.templateData ?? {} });
+    setTemplate(data.template);
     initializedRoomIdRef.current = safeRoomId;
   }, [roomQuery.data, safeRoomId]);
 

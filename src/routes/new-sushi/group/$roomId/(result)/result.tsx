@@ -14,7 +14,7 @@ function SushiResultComponent() {
   const { roomId } = useParams({ strict: false });
   const safeRoomId: string = roomId ?? "";
   const roomQuery = useRoom(safeRoomId);
-  const template = roomQuery.data?.templateData;
+  const template = roomQuery.data?.template;
   const shareUrl = `${window.location.origin}/new-sushi/group/${roomId}/result`;
   const shareText =
     roomQuery.data &&

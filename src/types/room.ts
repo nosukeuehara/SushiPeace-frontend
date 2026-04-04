@@ -1,20 +1,11 @@
-import type { MemberPlates } from "@/types";
-
-export type Member = {
-  userId: string;
-  name: string;
-};
-
-export type Room = {
-  groupName: string;
-  members: Member[];
-};
+import type { MemberPlates, PlateTemplate } from "@/types";
 
 export type RoomData = {
+  roomId: string;
   groupName: string;
-  members: MemberPlates[];
-  templateData: Record<string, number>;
   createdAt: string;
+  members: MemberPlates[];
+  template: PlateTemplate;
 };
 
 export type RoomHistory = {
