@@ -88,8 +88,9 @@ export function RouteComponent() {
   };
 
   return (
-    <AsyncState query={roomQuery}>
-      {(data) => (
+    <AsyncState
+      query={roomQuery}
+      render={(data) => (
         <RoomPageContent
           data={data}
           userId={userId}
@@ -99,13 +100,12 @@ export function RouteComponent() {
           rankNotifications={rankNotifications}
           safeRoomId={safeRoomId}
           onChangeUser={onChangeUser}
-          template={template}
           total={total}
           handleUpdateTemplate={handleUpdateTemplate}
           handleAdd={handleAdd}
           handleRemove={handleRemove}
         />
       )}
-    </AsyncState>
+    />
   );
 }

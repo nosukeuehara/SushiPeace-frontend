@@ -11,7 +11,7 @@ type QueryLike<T> = {
 
 type Props<T> = {
   query: QueryLike<T>;
-  children: (data: T) => ReactNode;
+  render: (data: T) => ReactNode;
   className?: string;
   loadingText?: string;
   noDataText?: string;
@@ -20,7 +20,7 @@ type Props<T> = {
 
 export const AsyncState = <T,>({
   query,
-  children,
+  render,
   className = "mx-auto max-w-xl min-h-screen pt-[20%]",
   loadingText = "読み込み中...",
   noDataText = "データが存在しません",
@@ -42,5 +42,5 @@ export const AsyncState = <T,>({
     return <NoDataState className={className} message={noDataText} />;
   }
 
-  return <>{children(query.data)}</>;
+  return <>{render(query.data)}</>;
 };
