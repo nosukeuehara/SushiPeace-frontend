@@ -156,6 +156,7 @@ export const RoomPageContent = ({
       {/* ランク通知 */}
       {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
 
+      {/* グループ名表示 */}
       <div className="mb-4 text-center">
         <p className="text-3xl font-bold text-gray-600">{data.groupName}</p>
       </div>
@@ -174,13 +175,13 @@ export const RoomPageContent = ({
         total={total}
       />
 
-      {/* 皿編集用トグルボタン、<PlateEditorToggleButton/>で表示切替 */}
+      {/* 皿編集用トグルボタン */}
       <PlateEditorToggleButton
         showTemplateEditor={showTemplateEditor}
         setShowTemplateEditor={setShowTemplateEditor}
       />
 
-      {/* 皿編集用コンテナ */}
+      {/* 皿編集用コンテナ、<PlateEditorToggleButton/>で表示切替 */}
       <PlateEditContainer
         template={currentTemplate}
         handleEdit={handleStartEditPlate}
