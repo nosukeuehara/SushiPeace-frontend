@@ -8,6 +8,7 @@ import { useSocketSync } from "@/hooks/useSocketSync";
 import { AsyncState } from "@/components/states/AsyncState";
 import { RoomPageContent } from "@/components/page/roomPage/RoomPageContent";
 import { updateRoomHistory } from "@/util/roomHistory";
+import NoDataState from "@/components/states/NoDataState";
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -87,12 +88,22 @@ export function RouteComponent() {
     setUserId(null);
   };
 
+  if (!template) {
+    return (
+      <NoDataState
+        className={"mx-auto max-w-xl min-h-screen pt-[20%]"}
+        message="お皿の情報が存在しません"
+      />
+    );
+  }
+
   return (
     <AsyncState
       query={roomQuery}
       render={(data) => (
         <RoomPageContent
           data={data}
+          template={template}
           userId={userId}
           members={members}
           setMembers={setMembers}

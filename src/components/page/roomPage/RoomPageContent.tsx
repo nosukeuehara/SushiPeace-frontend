@@ -7,7 +7,7 @@ import { MemberSelector } from "@/components/MemberSelector";
 import { PlateEditContainer } from "@/components/PlateEditContainer";
 import { RankNotifications } from "@/components/RankNotifications";
 import { ShareReceiptButton } from "@/components/ShareReceiptButton";
-import type { MemberPlates, RoomData } from "@/types";
+import type { MemberPlates, PlateTemplate, RoomData } from "@/types";
 import { ActionButtonsRow } from "@/components/common/ActionButtonsRow";
 import UserChangeButton from "@/components/UserChangeButton";
 import RankingToggleButton from "@/components/RankingToggleButton";
@@ -24,6 +24,7 @@ import { UserControlPanel } from "@/components/UserControlPanel";
 
 type RoomContentProps = {
   data: RoomData;
+  template: PlateTemplate;
   userId: string | null;
   members: MemberPlates[];
   setMembers: React.Dispatch<React.SetStateAction<MemberPlates[]>>;
@@ -42,6 +43,7 @@ type RoomContentProps = {
 
 export const RoomPageContent = ({
   data,
+  template,
   userId,
   members,
   setMembers,
@@ -72,7 +74,7 @@ export const RoomPageContent = ({
     );
   }
 
-  const currentTemplate = data.template;
+  const currentTemplate = template;
 
   const handleAddPlate = (price: number) => {
     const newTemplate = addPlate(price, currentTemplate);
