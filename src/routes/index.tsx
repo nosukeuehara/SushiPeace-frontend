@@ -87,7 +87,7 @@ function StepCard({ n, title, caption, img, alt }: Step) {
   );
 }
 
-function Home() {
+export function Home() {
   return (
     <div className="text-center max-w-xl mx-auto">
       <div className="flex flex-col justify-between px-5 pt-16 pb-8 bg-rose-300 min-h-[52vh]">
