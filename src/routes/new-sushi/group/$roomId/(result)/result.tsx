@@ -22,10 +22,12 @@ function SushiResultComponent() {
     generateShareText(roomQuery.data.groupName, roomQuery.data.members, template, shareUrl);
 
   return (
-    <AsyncState query={roomQuery} noDataText={noDataText}>
-      {(data) => {
+    <AsyncState
+      query={roomQuery}
+      noDataText={noDataText}
+      render={(data) => {
         return <ResultPage data={data} safeRoomId={safeRoomId} shareText={shareText} />;
       }}
-    </AsyncState>
+    />
   );
 }
