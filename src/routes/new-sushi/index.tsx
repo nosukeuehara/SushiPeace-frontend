@@ -79,8 +79,11 @@ export default function NewRoom() {
       <h1 className="mb-4 text-3xl font-bold text-center text-gray-600">寿司ルーム作成</h1>
 
       <div className="pt-6">
-        <h3 className="mb-2 text-lg text-gray-600">ルーム名</h3>
+        <label htmlFor="groupName" className="mb-2 text-lg text-gray-600">
+          ルーム名
+        </label>
         <input
+          id="groupName"
           className="w-full p-2 mb-8 bg-white border border-gray-300 focus:outline-none focus:ring-0"
           value={groupName}
           name="groupName"
@@ -88,11 +91,14 @@ export default function NewRoom() {
           placeholder="ルーム名"
         />
       </div>
-      <h3 className="mb-2 text-lg text-gray-600">メンバーを追加してください</h3>
 
       <div className="flex gap-1 w-full mb-3">
+        <label htmlFor="memberName" className="mb-2 text-lg text-gray-600">
+          メンバーを追加してください
+        </label>
         <input
           ref={inputRef}
+          id="memberName"
           name="memberName"
           className="p-2 w-full bg-white border border-gray-300 focus:outline-none"
           value={memberName}

@@ -1,26 +1,34 @@
-import {
-  Outlet,
-  RouterProvider,
-  createMemoryHistory,
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from "@tanstack/react-router";
-import { type FC, type ReactNode } from "react";
+import { render } from "@testing-library/react";
+import { createRouter, RouterProvider, createMemoryHistory } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { routeTree } from "@/routeTree.gen";
 
-export const DummyRouter: FC<{ component: () => ReactNode }> = ({ component }) => {
-  const rootRoute = createRootRoute({
-    component: Outlet,
+export function renderWithRouter(initialPath = "/") {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
   });
 
-  const indexRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "/",
-    component,
+  const router = createRouter({
+    routeTree,
+    history: createMemoryHistory({
+      initialEntries: [initialPath],
+    }),
   });
 
-  const routeTree = rootRoute.addChildren([indexRoute]);
-  const history = createMemoryHistory({ initialEntries: ["/"] });
-  const router = createRouter({ routeTree, history });
-  return <RouterProvider router={router} />;
-};
+  return {
+    ...render(
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>,
+    ),
+    router,
+    queryClient,
+  };
+}
