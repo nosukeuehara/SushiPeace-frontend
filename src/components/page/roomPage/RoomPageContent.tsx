@@ -24,6 +24,7 @@ import { UserControlPanel } from "@/components/UserControlPanel";
 
 type RoomContentProps = {
   data: RoomData;
+  template: PlateTemplate;
   userId: string | null;
   members: MemberPlates[];
   setMembers: React.Dispatch<React.SetStateAction<MemberPlates[]>>;
@@ -32,7 +33,6 @@ type RoomContentProps = {
     message: string;
   }[];
   safeRoomId: string;
-  template: PlateTemplate | null;
   total: number;
   onChangeUser: () => void;
   onSelectUser: (id: string) => void;
@@ -43,6 +43,7 @@ type RoomContentProps = {
 
 export const RoomPageContent = ({
   data,
+  template,
   userId,
   members,
   setMembers,
@@ -50,7 +51,6 @@ export const RoomPageContent = ({
   rankNotifications,
   safeRoomId,
   onChangeUser,
-  template,
   total,
   handleUpdateTemplate,
   handleAdd,
@@ -62,13 +62,19 @@ export const RoomPageContent = ({
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkEntries, setBulkEntries] = useState([""]);
 
-  const { currentUser, otherMembers } = splitMembersByCurrentUser(members, userId);
-
   if (!userId) {
     return <MemberSelector members={data.members ?? []} onSelectUser={onSelectUser} />;
   }
 
-  const currentTemplate = template ?? data.template;
+  const { currentUser, otherMembers } = splitMembersByCurrentUser(members, userId);
+
+  if (!currentUser) {
+    return (
+      <div className="text-center text-gray-600">ユーザーデータの読み込みに失敗しました。</div>
+    );
+  }
+
+  const currentTemplate = template;
 
   const handleAddPlate = (price: number) => {
     const newTemplate = addPlate(price, currentTemplate);
@@ -156,6 +162,7 @@ export const RoomPageContent = ({
       {/* ランク通知 */}
       {rankNotifications.length > 0 && <RankNotifications notifications={rankNotifications} />}
 
+      {/* グループ名表示 */}
       <div className="mb-4 text-center">
         <p className="text-3xl font-bold text-gray-600">{data.groupName}</p>
       </div>
@@ -174,13 +181,13 @@ export const RoomPageContent = ({
         total={total}
       />
 
-      {/* 皿編集用トグルボタン、<PlateEditorToggleButton/>で表示切替 */}
+      {/* 皿編集用トグルボタン */}
       <PlateEditorToggleButton
         showTemplateEditor={showTemplateEditor}
         setShowTemplateEditor={setShowTemplateEditor}
       />
 
-      {/* 皿編集用コンテナ */}
+      {/* 皿編集用コンテナ、<PlateEditorToggleButton/>で表示切替 */}
       <PlateEditContainer
         template={currentTemplate}
         handleEdit={handleStartEditPlate}
@@ -191,14 +198,12 @@ export const RoomPageContent = ({
       />
 
       {/* ユーザーのカウント操作用コンポーネント */}
-      {currentUser && (
-        <UserControlPanel
-          member={currentUser}
-          onAdd={handleAdd}
-          onRemove={handleRemove}
-          prices={currentTemplate.prices}
-        />
-      )}
+      <UserControlPanel
+        member={currentUser}
+        onAdd={handleAdd}
+        onRemove={handleRemove}
+        prices={currentTemplate.prices}
+      />
 
       {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
       <MemberPlateDataList otherMembers={otherMembers} prices={currentTemplate.prices} />
