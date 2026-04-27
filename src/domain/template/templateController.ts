@@ -8,7 +8,7 @@ export function removePlate(targetLabel: string, template: PlateTemplate): Plate
 
 export function addPlate(price: number, template: PlateTemplate): PlateTemplate {
   const updated = { ...template.prices };
-  updated[`${price}円皿`] = price;
+  updated[price] = price;
   return { ...template, prices: updated };
 }
 
@@ -19,7 +19,7 @@ export function updatePlate(
 ): PlateTemplate {
   const updated = { ...template.prices };
   delete updated[oldLabel];
-  updated[`${newPrice}円皿`] = newPrice;
+  updated[newPrice] = newPrice;
   return { ...template, prices: updated };
 }
 
@@ -38,7 +38,7 @@ export function renamePlateCounts(
   newPrice: number,
   members: MemberPlates[],
 ): MemberPlates[] {
-  const newLabel = `${newPrice}円皿`;
+  const newLabel = newPrice;
 
   return members.map((member) => {
     const updatedCounts = { ...member.counts };
