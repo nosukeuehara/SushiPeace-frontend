@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { renderWithRouter } from "../router/DummyRouter";
+import { renderWithRouter } from "../../router/DummyRouter";
 
 describe("login route", () => {
   it("トップページが表示される", async () => {
