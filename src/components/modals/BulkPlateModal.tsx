@@ -71,8 +71,7 @@ export const BulkPlateModal = ({
               />
             </div>
           ))}
-
-          <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
+          <div className="flex justify-end">
             <button
               type="button"
               onMouseDown={(e) => e.preventDefault()}
@@ -87,7 +86,9 @@ export const BulkPlateModal = ({
             >
               <span className="text-gray-600">＋行を追加</span>
             </button>
+          </div>
 
+          <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={() => {
@@ -111,9 +112,9 @@ export const BulkPlateModal = ({
                 }
                 onCancel();
               }}
-              className="px-3 py-1 bg-gray-200"
+              className="px-3 py-1 bg-red-700"
             >
-              <span className="text-gray-600">キャンセル</span>
+              <span className="text-white">キャンセル</span>
             </button>
           </div>
         </div>
