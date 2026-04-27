@@ -199,7 +199,7 @@ export const RoomPageContent = ({
 
       {/* ユーザーのカウント操作用コンポーネント */}
       <UserControlPanel
-        member={currentUser}
+        currentUser={currentUser}
         onAdd={handleAdd}
         onRemove={handleRemove}
         prices={currentTemplate.prices}
