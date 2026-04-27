@@ -53,7 +53,12 @@ export function RouteComponent() {
   // roomId とデータが揃ったら履歴を更新
   useEffect(() => {
     if (roomQuery.data && safeRoomId) {
-      updateRoomHistory(safeRoomId, roomQuery.data.groupName, roomQuery.data.createdAt);
+      updateRoomHistory(
+        safeRoomId,
+        roomQuery.data.groupName,
+        roomQuery.data.createdAt,
+        new Date().toISOString(),
+      );
     }
   }, [roomQuery.data, safeRoomId]);
 

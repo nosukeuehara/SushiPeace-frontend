@@ -1,39 +1,50 @@
 import type { RoomHistory } from "@/types";
 
-export function removeRoomHistory(roomId: string) {
-  const key = "sushi-room-history";
-  const raw = localStorage.getItem(key);
-  const history: RoomHistory[] = raw ? JSON.parse(raw) : [];
-  const updated = history.filter((h) => h.roomId !== roomId);
-  localStorage.setItem(key, JSON.stringify(updated));
-}
+const ROOM_HISTORY_KEY = "sushi-room-history";
 
-export function getRoomHistory(): RoomHistory[] {
-  const key = "sushi-room-history";
-  const raw = localStorage.getItem(key);
+export function readRoomHistories(): Array<RoomHistory> {
+  const raw = localStorage.getItem(ROOM_HISTORY_KEY);
   return raw ? JSON.parse(raw) : [];
 }
 
-export function updateRoomHistory(roomId: string, groupName: string, createdAt: string) {
-  const key = "sushi-room-history";
-  const raw = localStorage.getItem(key);
-  const history: RoomHistory[] = raw ? JSON.parse(raw) : [];
+export function saveRoomHistories(histories: Array<RoomHistory>) {
+  localStorage.setItem(ROOM_HISTORY_KEY, JSON.stringify(histories));
+}
 
-  const now = new Date().toISOString();
-
-  const updated = [
-    ...history.filter((h) => h.roomId !== roomId),
+export function upsertRoomHistory(
+  histories: RoomHistory[],
+  roomId: string,
+  groupName: string,
+  createdAt: string,
+  now: string,
+): RoomHistory[] {
+  return [
+    ...histories.filter((h) => h.roomId !== roomId),
     {
       roomId,
       groupName,
       createdAt: new Date(createdAt).toISOString(),
       lastAccessedAt: now,
     },
-  ];
+  ].sort((a, b) => new Date(b.lastAccessedAt).getTime() - new Date(a.lastAccessedAt).getTime());
+}
 
-  updated.sort(
-    (a, b) => new Date(b.lastAccessedAt).getTime() - new Date(a.lastAccessedAt).getTime(),
-  );
+export function getRoomHistory(): RoomHistory[] {
+  return readRoomHistories();
+}
 
-  localStorage.setItem(key, JSON.stringify(updated));
+export function removeRoomHistory(roomId: string) {
+  const histories = readRoomHistories();
+  saveRoomHistories(histories.filter((h) => h.roomId !== roomId));
+}
+
+export function updateRoomHistory(
+  roomId: string,
+  groupName: string,
+  createdAt: string,
+  now: string,
+) {
+  const histories = readRoomHistories();
+  const updated = upsertRoomHistory(histories, roomId, groupName, createdAt, now);
+  saveRoomHistories(updated);
 }
