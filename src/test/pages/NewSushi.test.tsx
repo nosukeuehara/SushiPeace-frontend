@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { renderWithRouter } from "./utils/DummyRouter";
+import { renderWithRouter } from "../router/DummyRouter";
 
 describe("room create route", () => {
   it("ルーム作成ページが表示される", async () => {
