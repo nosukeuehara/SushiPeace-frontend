@@ -16,7 +16,7 @@ export const UserControlPanel = ({ member, onAdd, onRemove, prices }: Props) => 
         <h4 className="text-xl font-bold text-gray-600">{member.name}：</h4>
         <p className="font-bold">
           <span className="text-2xl font-semibold text-gray-600">
-            {calcTotal(member, prices).toLocaleString()} 円
+            {calcTotal(member).toLocaleString()} 円
           </span>
         </p>
       </div>

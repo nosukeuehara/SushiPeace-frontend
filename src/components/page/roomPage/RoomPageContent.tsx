@@ -206,7 +206,7 @@ export const RoomPageContent = ({
       />
 
       {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
-      <MemberPlateDataList otherMembers={otherMembers} prices={currentTemplate.prices} />
+      <MemberPlateDataList otherMembers={otherMembers} />
 
       {/* 個別金額の共有ボタン */}
       <ShareReceiptButton roomId={safeRoomId} />

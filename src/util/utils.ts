@@ -14,9 +14,6 @@ export function splitMembersByCurrentUser(
   return { currentUser: currentMember, otherMembers };
 }
 
-export function calcTotal(m: MemberPlates, prices: Record<string, number>): number {
-  return Object.entries(m.counts).reduce(
-    (sum, [plate, count]) => sum + count * (prices[plate] ?? 0),
-    0,
-  );
+export function calcTotal(m: MemberPlates): number {
+  return Object.entries(m.counts).reduce((sum, [price, count]) => sum + Number(price) * count, 0);
 }

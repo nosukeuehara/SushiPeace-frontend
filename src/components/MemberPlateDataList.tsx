@@ -3,10 +3,9 @@ import { calcTotal } from "@/util/utils";
 
 type Props = {
   otherMembers: MemberPlates[];
-  prices: Record<string, number>;
 };
 
-export const MemberPlateDataList = ({ otherMembers, prices }: Props) => {
+export const MemberPlateDataList = ({ otherMembers }: Props) => {
   return (
     <div className="flex flex-col mb-16">
       {otherMembers.map((m) => {
@@ -16,7 +15,7 @@ export const MemberPlateDataList = ({ otherMembers, prices }: Props) => {
           <div key={m.userId} className="flex justify-between items-baseline">
             <span className="text-base font-semibold text-gray-600">{m.name}</span>
             <span className="text-sm text-gray-600">
-              {totalPlates}皿 / {calcTotal(m, prices).toLocaleString()}円
+              {totalPlates}皿 / {calcTotal(m).toLocaleString()}円
             </span>
           </div>
         );
