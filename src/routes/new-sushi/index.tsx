@@ -92,35 +92,37 @@ export default function NewRoom() {
         />
       </div>
 
-      <div className="flex gap-1 w-full mb-3">
+      <div className="mb-3">
         <label htmlFor="memberName" className="mb-2 text-lg text-gray-600">
           メンバーを追加してください
         </label>
-        <input
-          ref={inputRef}
-          id="memberName"
-          name="memberName"
-          className="p-2 w-full bg-white border border-gray-300 focus:outline-none"
-          value={memberName}
-          onChange={(e) => setMemberName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              addMember();
-            }
-          }}
-          placeholder="メンバー名"
-        />
-        <button
-          type="button"
-          className="w-20 font-bold text-neutral-50 bg-teal-500 shadow"
-          onMouseDown={(e) => e.preventDefault()}
-          onTouchStart={(e) => e.preventDefault()}
-          onClick={addMember}
-          tabIndex={-1}
-        >
-          追加
-        </button>
+        <div className="flex gap-1">
+          <input
+            ref={inputRef}
+            id="memberName"
+            name="memberName"
+            className="p-2 w-full bg-white border border-gray-300 focus:outline-none"
+            value={memberName}
+            onChange={(e) => setMemberName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addMember();
+              }
+            }}
+            placeholder="メンバー名"
+          />
+          <button
+            type="button"
+            className="w-20 font-bold text-neutral-50 bg-teal-500 shadow"
+            onMouseDown={(e) => e.preventDefault()}
+            onTouchStart={(e) => e.preventDefault()}
+            onClick={addMember}
+            tabIndex={-1}
+          >
+            追加
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
