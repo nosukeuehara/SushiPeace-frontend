@@ -2,14 +2,14 @@ import type { MemberPlates } from "@/types";
 import { calcTotal } from "@/util/utils";
 
 type Props = {
-  member: MemberPlates;
-  onAdd: (userId: string, color: string) => void;
-  onRemove: (userId: string, color: string) => void;
+  currentUser: MemberPlates;
+  onAdd: (userId: string, platePrice: string) => void;
+  onRemove: (userId: string, platePrice: string) => void;
   readonly?: boolean;
   prices: Record<string, number>;
 };
 
-export const UserControlPanel = ({ member, onAdd, onRemove, prices }: Props) => {
+export const UserControlPanel = ({ currentUser: member, onAdd, onRemove, prices }: Props) => {
   return (
     <div>
       <div className="flex items-baseline justify-start gap-2 py-5">
@@ -24,8 +24,8 @@ export const UserControlPanel = ({ member, onAdd, onRemove, prices }: Props) => 
       <div className="flex flex-col gap-4 mb-6">
         {Object.entries(prices)
           .sort((a, b) => b[1] - a[1])
-          .map(([color, price]) => (
-            <div key={`${color}-${price}`} className="flex items-center justify-between gap-2">
+          .map(([platePrice, price]) => (
+            <div key={`${platePrice}-${price}`} className="flex items-center justify-between gap-2">
               <div className="font-bold text-base text-gray-600 flex items-center">
                 <div className="w-[100px] text-right">
                   <span className="text-xl">{price}円</span>
@@ -36,17 +36,19 @@ export const UserControlPanel = ({ member, onAdd, onRemove, prices }: Props) => 
               <div className="flex flex-1 justify-end gap-2">
                 <div className="flex items-center gap-2">
                   <button
+                    aria-label={`${price}円皿を削除`}
                     className="size-8 rounded-full"
-                    onClick={() => onRemove(member.userId, color)}
+                    onClick={() => onRemove(member.userId, platePrice)}
                   >
                     <span className="text-gray-600 text-2xl">ー</span>
                   </button>
                   <div className="text-xl text-gray-600 font-bold w-8 text-center">
-                    {member.counts[color] ?? 0}
+                    {member.counts[platePrice] ?? 0}
                   </div>
                   <button
+                    aria-label={`${price}円皿を追加`}
                     className="size-8 rounded-full"
-                    onClick={() => onAdd(member.userId, color)}
+                    onClick={() => onAdd(member.userId, platePrice)}
                   >
                     <span className="text-gray-600 text-2xl font-bold">＋</span>
                   </button>
