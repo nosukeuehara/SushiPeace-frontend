@@ -23,3 +23,7 @@ export function calculateGroupAmount(members: MemberPlates[]): number {
 
   return total;
 }
+
+export async function copyTextToClipboard(shareText: string) {
+  await navigator.clipboard.writeText(shareText);
+}

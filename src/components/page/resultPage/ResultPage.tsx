@@ -1,3 +1,4 @@
+import CopyTextToClipboadBtn from "@/components/CopyTextToClipboadBtn";
 import type { RoomData } from "@/types";
 import { Link } from "@tanstack/react-router";
 
@@ -12,6 +13,7 @@ export const ResultPage = ({ data, safeRoomId, shareText }: ResultPageProps) => 
   if (!template) {
     return <p>テンプレートが見つかりません</p>;
   }
+
   return (
     <div className="max-w-xl mx-auto bg-white min-h-screen px-5 py-16">
       <div className="flex flex-col items-center mb-10">
@@ -65,15 +67,7 @@ export const ResultPage = ({ data, safeRoomId, shareText }: ResultPageProps) => 
         value={shareText ?? ""}
       />
 
-      <button
-        className="block w-full px-4 py-2 font-bold text-neutral-50  shadow bg-teal-500"
-        onClick={() => {
-          navigator.clipboard.writeText(shareText ?? "");
-          alert("共有テキストをコピーしました！");
-        }}
-      >
-        📋 コピーして共有
-      </button>
+      <CopyTextToClipboadBtn shareText={shareText} />
     </div>
   );
 };
