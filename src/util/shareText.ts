@@ -1,5 +1,5 @@
 import type { MemberPlates } from "@/types";
-import { calcTotal, calcTotalPerMember } from "./utils";
+import { calculateGroupAmount, calculateMemberAmount } from "./utils";
 
 export function generateShareText(
   groupName: string,
@@ -11,7 +11,7 @@ export function generateShareText(
 
 export function generateShareMemberText(members: MemberPlates[]) {
   const memberTexts = members.map((m) => {
-    const subtotal = calcTotalPerMember(m);
+    const subtotal = calculateMemberAmount(m);
     return `🍵 ${m.name}：${subtotal.toLocaleString()}円`;
   });
 
@@ -19,7 +19,7 @@ export function generateShareMemberText(members: MemberPlates[]) {
 }
 
 export function generateShareTotalText(members: MemberPlates[]): string {
-  const total = calcTotal(members);
+  const total = calculateGroupAmount(members);
 
   return `合計金額：${total.toLocaleString()}円`;
 }

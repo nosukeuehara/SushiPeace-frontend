@@ -14,6 +14,12 @@ export function splitMembersByCurrentUser(
   return { currentUser: currentMember, otherMembers };
 }
 
-export function calcTotal(m: MemberPlates): number {
+export function calculateMemberAmount(m: MemberPlates): number {
   return Object.entries(m.counts).reduce((sum, [price, count]) => sum + Number(price) * count, 0);
+}
+
+export function calculateGroupAmount(members: MemberPlates[]): number {
+  const total = members.reduce((t, m) => t + calculateMemberAmount(m), 0);
+
+  return total;
 }

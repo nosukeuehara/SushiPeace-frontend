@@ -1,5 +1,5 @@
 import type { MemberPlates } from "@/types";
-import { calcTotalPerMember } from "@/util/utils";
+import { calculateMemberAmount } from "@/util/utils";
 
 type Props = {
   currentUser: MemberPlates;
@@ -16,7 +16,7 @@ export const UserControlPanel = ({ currentUser: member, onAdd, onRemove, prices 
         <h4 className="text-xl font-bold text-gray-600">{member.name}：</h4>
         <p className="font-bold">
           <span className="text-2xl font-semibold text-gray-600">
-            {calcTotalPerMember(member).toLocaleString()} 円
+            {calculateMemberAmount(member).toLocaleString()} 円
           </span>
         </p>
       </div>

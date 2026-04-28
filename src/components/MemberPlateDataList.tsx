@@ -1,5 +1,5 @@
 import type { MemberPlates } from "@/types";
-import { calcTotalPerMember } from "@/util/utils";
+import { calculateMemberAmount } from "@/util/utils";
 
 type Props = {
   otherMembers: MemberPlates[];
@@ -15,7 +15,7 @@ export const MemberPlateDataList = ({ otherMembers }: Props) => {
           <div key={m.userId} className="flex justify-between items-baseline">
             <span className="text-base font-semibold text-gray-600">{m.name}</span>
             <span className="text-sm text-gray-600">
-              {totalPlates}皿 / {calcTotalPerMember(m).toLocaleString()}円
+              {totalPlates}皿 / {calculateMemberAmount(m).toLocaleString()}円
             </span>
           </div>
         );

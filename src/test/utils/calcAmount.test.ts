@@ -1,5 +1,5 @@
 import type { MemberPlates } from "@/types";
-import { calcTotal, calcTotalPerMember } from "@/util/utils";
+import { calculateGroupAmount, calculateMemberAmount } from "@/util/utils";
 import { describe, expect, it } from "vitest";
 
 describe("calc amount", () => {
@@ -9,7 +9,7 @@ describe("calc amount", () => {
       name: "のすけ",
       counts: { "200": 2 },
     };
-    const result = calcTotalPerMember(member);
+    const result = calculateMemberAmount(member);
     expect(result).toBe(400);
   });
 
@@ -19,7 +19,7 @@ describe("calc amount", () => {
       name: "のすけ",
       counts: {},
     };
-    const result = calcTotalPerMember(member);
+    const result = calculateMemberAmount(member);
     expect(result).toBe(0);
   });
 
@@ -36,7 +36,7 @@ describe("calc amount", () => {
         counts: { "400": 3 },
       },
     ];
-    const result = calcTotal(members);
+    const result = calculateGroupAmount(members);
     expect(result).toBe(1600);
   });
 
@@ -53,7 +53,7 @@ describe("calc amount", () => {
         counts: {},
       },
     ];
-    const result = calcTotal(members);
+    const result = calculateGroupAmount(members);
     expect(result).toBe(0);
   });
 });
