@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import type { MemberPlates, PlateTemplate } from "@/types";
-import { useSocket } from "./useSocket";
+import { useSocket } from "./socket/useSocket";
 
 export function useSocketSync({
   roomId,
@@ -39,7 +39,6 @@ export function useSocketSync({
 
   useSocket({
     roomId,
-    userId,
     onSync: handleSync,
   });
 }
