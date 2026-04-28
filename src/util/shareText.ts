@@ -1,23 +1,25 @@
-import type { MemberPlates, PlateTemplate } from "@/types";
+import type { MemberPlates } from "@/types";
+import { calcTotal, calcTotalPerMember } from "./utils";
 
 export function generateShareText(
   groupName: string,
   members: MemberPlates[],
-  template: PlateTemplate,
   shareUrl: string,
 ): string {
-  let total = 0;
+  return `🍣 ${groupName}の会計\n\n${generateShareTotalText(members)}\n${generateShareMemberText(members)}\n\n🔗 ${shareUrl}`;
+}
 
+export function generateShareMemberText(members: MemberPlates[]) {
   const memberTexts = members.map((m) => {
-    const subtotal = Object.entries(m.counts).reduce(
-      (sum, [color, count]) => sum + count * (template.prices[color as string] ?? 0),
-      0,
-    );
-    total += subtotal;
-    return `・ ${m.name}：${subtotal.toLocaleString()}円`;
+    const subtotal = calcTotalPerMember(m);
+    return `🍵 ${m.name}：${subtotal.toLocaleString()}円`;
   });
 
-  return `🍣 ${groupName}の会計\n\n合計金額：${total.toLocaleString()}円\n${memberTexts.join(
-    "\n",
-  )}\n\n🔗 ${shareUrl}`;
+  return memberTexts.join("\n");
+}
+
+export function generateShareTotalText(members: MemberPlates[]): string {
+  const total = calcTotal(members);
+
+  return `合計金額：${total.toLocaleString()}円`;
 }

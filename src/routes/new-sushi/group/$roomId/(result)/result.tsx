@@ -19,7 +19,7 @@ function SushiResultComponent() {
   const shareText =
     roomQuery.data &&
     template &&
-    generateShareText(roomQuery.data.groupName, roomQuery.data.members, template, shareUrl);
+    generateShareText(roomQuery.data.groupName, roomQuery.data.members, shareUrl);
 
   return (
     <AsyncState
