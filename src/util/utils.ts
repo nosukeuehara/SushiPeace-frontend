@@ -27,3 +27,7 @@ export function calculateGroupAmount(members: MemberPlates[]): number {
 export async function copyTextToClipboard(shareText: string) {
   await navigator.clipboard.writeText(shareText);
 }
+
+export function generateShareUrl(origin: string, roomId: string) {
+  return new URL(`/new-sushi/group/${roomId}/result`, origin).toString();
+}

@@ -3,6 +3,7 @@ import { useRoom } from "@/hooks/useRoom";
 import { generateShareText } from "@/util/shareText";
 import { AsyncState } from "@/components/states/AsyncState";
 import { ResultPage } from "@/components/page/resultPage/ResultPage";
+import { generateShareUrl } from "@/util/utils";
 
 const noDataText = "データの取得に失敗しました";
 
@@ -15,7 +16,7 @@ function SushiResultComponent() {
   const safeRoomId: string = roomId ?? "";
   const roomQuery = useRoom(safeRoomId);
   const template = roomQuery.data?.template;
-  const shareUrl = `${window.location.origin}/new-sushi/group/${roomId}/result`;
+  const shareUrl = generateShareUrl(window.location.origin, safeRoomId);
   const shareText =
     roomQuery.data &&
     template &&
