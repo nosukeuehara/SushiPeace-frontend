@@ -14,9 +14,20 @@ export function splitMembersByCurrentUser(
   return { currentUser: currentMember, otherMembers };
 }
 
-export function calcTotal(m: MemberPlates, prices: Record<string, number>): number {
-  return Object.entries(m.counts).reduce(
-    (sum, [plate, count]) => sum + count * (prices[plate] ?? 0),
-    0,
-  );
+export function calculateMemberAmount(m: MemberPlates): number {
+  return Object.entries(m.counts).reduce((sum, [price, count]) => sum + Number(price) * count, 0);
+}
+
+export function calculateGroupAmount(members: MemberPlates[]): number {
+  const total = members.reduce((t, m) => t + calculateMemberAmount(m), 0);
+
+  return total;
+}
+
+export async function copyTextToClipboard(shareText: string) {
+  await navigator.clipboard.writeText(shareText);
+}
+
+export function generateShareUrl(origin: string, roomId: string) {
+  return new URL(`/new-sushi/group/${roomId}/result`, origin).toString();
 }

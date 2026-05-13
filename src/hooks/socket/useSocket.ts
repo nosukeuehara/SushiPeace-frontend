@@ -1,20 +1,21 @@
 import { useEffect } from "react";
-import { socket } from "@/lib/socket";
 import type { MemberPlates } from "@/types";
+import type { ISocketClient } from "./ISocket";
+import { socket as defaultSocket } from "@/lib/socket";
 
 type SyncMeta = { sourceUserId?: string; sourceSeq?: number };
 
 type UseSocketParams = {
   roomId: string;
-  userId: string | null;
   onSync: (
     members: MemberPlates[],
     templateData: Record<string, number> | null,
     meta?: SyncMeta,
   ) => void;
+  socketClient?: ISocketClient;
 };
 
-export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
+export const useSocket = ({ roomId, onSync, socketClient = defaultSocket }: UseSocketParams) => {
   useEffect(() => {
     if (!roomId) return;
 
@@ -26,14 +27,14 @@ export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
       onSync(payload.members, payload.templateData, payload.meta);
     };
 
-    if (!socket.connected) {
-      socket.connect();
+    if (!socketClient.connected) {
+      socketClient.connect();
     }
 
-    socket.off("sync", handleSync);
-    socket.on("sync", handleSync);
+    socketClient.off("sync", handleSync);
+    socketClient.on("sync", handleSync);
 
-    socket.emit("join", { roomId }, (response: { ok: boolean }) => {
+    socketClient.emit("join", { roomId }, (response: { ok: boolean }) => {
       if (response?.ok) {
         console.log("Joined room:", roomId);
       } else {
@@ -42,9 +43,9 @@ export const useSocket = ({ roomId, onSync }: UseSocketParams) => {
     });
 
     return () => {
-      socket.off("sync", handleSync);
+      socketClient.off("sync", handleSync);
     };
-  }, [roomId, onSync]);
+  }, [roomId, onSync, socketClient]);
 };
 
 export const emitCount = (
@@ -53,12 +54,17 @@ export const emitCount = (
   color: string,
   delta: number,
   seq: number,
+  socketClient: ISocketClient = defaultSocket,
 ) => {
   if (!roomId) return;
-  socket.emit("count", { roomId, userId, color, delta, seq });
+  socketClient.emit("count", { roomId, userId, color, delta, seq });
 };
 
-export const emitTemplateUpdate = (roomId: string | undefined, prices: Record<string, number>) => {
+export const emitTemplateUpdate = (
+  roomId: string | undefined,
+  prices: Record<string, number>,
+  socketClient = defaultSocket,
+) => {
   if (!roomId) return;
-  socket.emit("updateTemplate", { roomId, prices });
+  socketClient.emit("updateTemplate", { roomId, prices });
 };

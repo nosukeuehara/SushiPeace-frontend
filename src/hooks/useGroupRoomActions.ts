@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { emitCount, emitTemplateUpdate } from "./useSocket";
+import { emitCount, emitTemplateUpdate } from "./socket/useSocket";
 import type { MemberPlates, PlateTemplate } from "@/types";
 
 export function useGroupRoomActions(

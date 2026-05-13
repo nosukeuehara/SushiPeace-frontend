@@ -199,14 +199,14 @@ export const RoomPageContent = ({
 
       {/* ユーザーのカウント操作用コンポーネント */}
       <UserControlPanel
-        member={currentUser}
+        currentUser={currentUser}
         onAdd={handleAdd}
         onRemove={handleRemove}
         prices={currentTemplate.prices}
       />
 
       {/* メンバーリスト、ユーザー以外のメンバーで金額ごとのお皿の枚数を表示 */}
-      <MemberPlateDataList otherMembers={otherMembers} prices={currentTemplate.prices} />
+      <MemberPlateDataList otherMembers={otherMembers} />
 
       {/* 個別金額の共有ボタン */}
       <ShareReceiptButton roomId={safeRoomId} />
